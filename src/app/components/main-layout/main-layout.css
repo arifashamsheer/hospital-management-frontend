@@ -726,3 +726,270 @@ mat-toolbar button:focus-visible {
       auto !important;
   }
 }
+/* ================================
+   TOP TOOLBAR
+================================ */
+
+.top-toolbar{
+
+height:75px;
+
+padding:0 30px;
+
+display:flex;
+
+align-items:center;
+
+background:linear-gradient(135deg,#0d47a1,#42a5f5)!important;
+
+box-shadow:0 12px 30px rgba(0,0,0,.18);
+
+}
+
+.logo-section{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+animation:slideLeft .8s;
+
+}
+
+.logo-icon{
+
+font-size:34px;
+
+width:34px;
+
+height:34px;
+
+color:white;
+
+}
+
+.logo{
+
+font-size:30px;
+
+font-weight:700;
+
+color:white;
+
+}
+
+.spacer{
+
+flex:1;
+
+}
+
+/* ================================
+   NAVIGATION
+================================ */
+
+.top-nav{
+
+display:flex;
+
+gap:35px;
+
+margin-left:60px;
+
+animation:fadeDown 1s;
+
+}
+
+.top-nav a{
+
+text-decoration:none;
+
+color:white;
+
+font-size:17px;
+
+font-weight:600;
+
+position:relative;
+
+transition:.3s;
+
+padding:5px 0;
+
+}
+
+.top-nav a::after{
+
+content:"";
+
+position:absolute;
+
+left:0;
+
+bottom:-6px;
+
+width:0;
+
+height:3px;
+
+background:white;
+
+transition:.3s;
+
+border-radius:20px;
+
+}
+
+.top-nav a:hover{
+
+transform:translateY(-2px);
+
+}
+
+.top-nav a:hover::after{
+
+width:100%;
+
+}
+
+/* ================================
+   USER
+================================ */
+
+.user-section{
+
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+animation:slideRight .8s;
+
+}
+
+.user-section mat-icon{
+
+color:white;
+
+}
+
+.user-name{
+
+font-size:18px;
+
+font-weight:600;
+
+color:white;
+
+}
+
+.user-section button{
+
+border-radius:30px;
+
+color:white!important;
+
+border:1px solid rgba(255,255,255,.6);
+
+background:rgba(255,255,255,.12);
+
+transition:.3s;
+
+}
+
+.user-section button:hover{
+
+background:white;
+
+color:#1565c0!important;
+
+transform:translateY(-2px);
+
+}
+
+/* ================================
+   Animations
+================================ */
+
+@keyframes slideLeft{
+
+from{
+
+opacity:0;
+
+transform:translateX(-40px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateX(0);
+
+}
+
+}
+
+@keyframes slideRight{
+
+from{
+
+opacity:0;
+
+transform:translateX(40px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateX(0);
+
+}
+
+}
+
+@keyframes fadeDown{
+
+from{
+
+opacity:0;
+
+transform:translateY(-20px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+/* ================================
+   MOBILE
+================================ */
+
+@media(max-width:1000px){
+
+.top-nav{
+
+display:none;
+
+}
+
+.logo{
+
+font-size:22px;
+
+}
+
+}

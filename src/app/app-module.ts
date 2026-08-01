@@ -60,6 +60,7 @@ import { PaymentSuccess } from './components/payment-success/payment-success';
 import { MyPayments } from './components/my-payments/my-payments';
 
 import { authInterceptor } from './interceptors/auth-interceptor';
+import { Home } from './components/home/home';
 
 @NgModule({
   declarations: [
@@ -99,7 +100,8 @@ import { authInterceptor } from './interceptors/auth-interceptor';
 
     PaymentStr,
     PaymentSuccess,
-    MyPayments
+    MyPayments,
+    Home
   ],
 
   imports: [

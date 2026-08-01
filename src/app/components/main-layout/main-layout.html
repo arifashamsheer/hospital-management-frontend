@@ -19,6 +19,29 @@
       </span>
 
     </div>
+     <nav
+    class="top-nav"
+    *ngIf="user?.role === 'patient'"
+  >
+
+    <a routerLink="/patient-dashboard">
+      Home
+    </a>
+
+    <a routerLink="/book-appointment">
+      Services
+    </a>
+
+    <a routerLink="/patient-profile">
+      About
+    </a>
+
+    <a routerLink="/my-payments">
+      Contact
+    </a>
+
+  </nav>
+
 
     <button
       mat-button

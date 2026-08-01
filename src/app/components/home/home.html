@@ -1,0 +1,645 @@
+<div class="home-page">
+
+  <!-- ===================================================
+       NAVIGATION
+  ==================================================== -->
+
+  <header class="navbar">
+
+    <a
+      class="brand"
+      routerLink="/"
+    >
+      <span class="brand-icon">
+        <mat-icon>
+          local_hospital
+        </mat-icon>
+      </span>
+
+      <span class="brand-text">
+        <strong>CarePlus</strong>
+        <small>Hospital Management</small>
+      </span>
+    </a>
+
+
+    <nav class="nav-links">
+
+      <a href="#home">
+        Home
+      </a>
+
+      <a href="#services">
+        Services
+      </a>
+
+      <a href="#about">
+        About
+      </a>
+
+      <a href="#contact">
+        Contact
+      </a>
+
+    </nav>
+
+
+    <div class="nav-actions">
+
+      <button
+        mat-stroked-button
+        type="button"
+        (click)="goToLogin()"
+      >
+        <mat-icon>login</mat-icon>
+        Login
+      </button>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="goToRegister()"
+      >
+        <mat-icon>person_add</mat-icon>
+        Register
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <!-- ===================================================
+       HERO SECTION
+  ==================================================== -->
+
+  <main
+    id="home"
+    class="hero-section"
+  >
+
+    <div class="hero-content">
+
+      <div class="hero-badge">
+        <mat-icon>verified</mat-icon>
+        Safe and convenient healthcare
+      </div>
+
+
+      <h1>
+        Better healthcare with
+        <span>smart hospital management</span>
+      </h1>
+
+
+      <p class="hero-description">
+        Book appointments, connect with doctors,
+        manage medical information and complete
+        secure online payments from one simple
+        hospital portal.
+      </p>
+
+
+      <div class="hero-actions">
+
+        <button
+          mat-raised-button
+          color="primary"
+          type="button"
+          class="primary-button"
+          (click)="goToLogin()"
+        >
+          <mat-icon>login</mat-icon>
+          Login to Portal
+        </button>
+
+
+        <button
+          mat-stroked-button
+          type="button"
+          class="secondary-button"
+          (click)="scrollToServices()"
+        >
+          <mat-icon>medical_services</mat-icon>
+          Explore Services
+        </button>
+
+      </div>
+
+
+      <div class="trust-items">
+
+        <span>
+          <mat-icon>check_circle</mat-icon>
+          Secure login
+        </span>
+
+        <span>
+          <mat-icon>check_circle</mat-icon>
+          Online appointments
+        </span>
+
+        <span>
+          <mat-icon>check_circle</mat-icon>
+          Stripe payments
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- Hero visual -->
+
+    <div class="hero-visual">
+
+      <div class="visual-circle"></div>
+
+
+      <div class="portal-card">
+
+        <div class="portal-header">
+
+          <div class="hospital-icon">
+            <mat-icon>local_hospital</mat-icon>
+          </div>
+
+          <div>
+            <strong>CarePlus Hospital</strong>
+            <span>Digital Healthcare Portal</span>
+          </div>
+
+        </div>
+
+
+        <div class="portal-doctor">
+
+          <div class="doctor-icon">
+            <mat-icon>medical_services</mat-icon>
+          </div>
+
+          <div>
+            <strong>Qualified Doctors</strong>
+            <span>Consult experienced specialists</span>
+          </div>
+
+          <mat-icon class="verified-icon">
+            verified
+          </mat-icon>
+
+        </div>
+
+
+        <div class="appointment-preview">
+
+          <div>
+            <span>Upcoming Appointment</span>
+            <strong>Cardiology Consultation</strong>
+          </div>
+
+          <div class="date-box">
+            <strong>15</strong>
+            <span>AUG</span>
+          </div>
+
+        </div>
+
+
+        <div class="portal-stats">
+
+          <div>
+            <strong>50+</strong>
+            <span>Doctors</span>
+          </div>
+
+          <div>
+            <strong>5K+</strong>
+            <span>Patients</span>
+          </div>
+
+          <div>
+            <strong>24/7</strong>
+            <span>Support</span>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="floating-card card-one">
+
+        <mat-icon>event_available</mat-icon>
+
+        <div>
+          <strong>Easy Booking</strong>
+          <span>Choose your preferred time</span>
+        </div>
+
+      </div>
+
+
+      <div class="floating-card card-two">
+
+        <mat-icon>payments</mat-icon>
+
+        <div>
+          <strong>Secure Payments</strong>
+          <span>Powered by Stripe</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- ===================================================
+       STATISTICS
+  ==================================================== -->
+
+  <section class="statistics-section">
+
+    <div>
+      <strong>50+</strong>
+      <span>Qualified Doctors</span>
+    </div>
+
+    <div>
+      <strong>5,000+</strong>
+      <span>Registered Patients</span>
+    </div>
+
+    <div>
+      <strong>12,000+</strong>
+      <span>Appointments</span>
+    </div>
+
+    <div>
+      <strong>98%</strong>
+      <span>Patient Satisfaction</span>
+    </div>
+
+  </section>
+
+
+  <!-- ===================================================
+       SERVICES
+  ==================================================== -->
+
+  <section
+    id="services"
+    class="content-section services-section"
+  >
+
+    <div class="section-heading">
+
+      <span>Our Services</span>
+
+      <h2>
+        Everything you need in one hospital portal
+      </h2>
+
+      <p>
+        Simple healthcare management for patients,
+        doctors and hospital administrators.
+      </p>
+
+    </div>
+
+
+    <div class="services-grid">
+
+      <article class="service-card">
+
+        <div class="service-icon blue">
+          <mat-icon>event_available</mat-icon>
+        </div>
+
+        <h3>Online Appointments</h3>
+
+        <p>
+          Select an available doctor and reserve
+          your preferred appointment time.
+        </p>
+
+      </article>
+
+
+      <article class="service-card">
+
+        <div class="service-icon purple">
+          <mat-icon>medical_services</mat-icon>
+        </div>
+
+        <h3>Qualified Doctors</h3>
+
+        <p>
+          View doctor profiles, specializations
+          and available consultation schedules.
+        </p>
+
+      </article>
+
+
+      <article class="service-card">
+
+        <div class="service-icon green">
+          <mat-icon>health_and_safety</mat-icon>
+        </div>
+
+        <h3>Patient Records</h3>
+
+        <p>
+          Keep personal information and medical
+          history organized and securely available.
+        </p>
+
+      </article>
+
+
+      <article class="service-card">
+
+        <div class="service-icon orange">
+          <mat-icon>payments</mat-icon>
+        </div>
+
+        <h3>Secure Payments</h3>
+
+        <p>
+          Complete consultation payments securely
+          through Stripe.
+        </p>
+
+      </article>
+
+    </div>
+
+  </section>
+
+
+  <!-- ===================================================
+       ABOUT
+  ==================================================== -->
+
+  <section
+    id="about"
+    class="content-section about-section"
+  >
+
+    <div class="about-content">
+
+      <span class="section-label">
+        About Our System
+      </span>
+
+      <h2>
+        One organized platform for every hospital role
+      </h2>
+
+      <p>
+        CarePlus connects patients, doctors and
+        administrators through a protected role-based
+        hospital management application.
+      </p>
+
+
+      <div class="feature-list">
+
+        <div class="feature-item">
+
+          <mat-icon>
+            admin_panel_settings
+          </mat-icon>
+
+          <div>
+            <strong>Role-based security</strong>
+
+            <span>
+              Separate protected dashboards for
+              patients, doctors and administrators.
+            </span>
+          </div>
+
+        </div>
+
+
+        <div class="feature-item">
+
+          <mat-icon>schedule</mat-icon>
+
+          <div>
+            <strong>Doctor availability</strong>
+
+            <span>
+              Patients can choose from available
+              doctor schedules without duplicate
+              booking.
+            </span>
+          </div>
+
+        </div>
+
+
+        <div class="feature-item">
+
+          <mat-icon>receipt_long</mat-icon>
+
+          <div>
+            <strong>Payment records</strong>
+
+            <span>
+              View payment status, transaction
+              details and payment history.
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="role-panel">
+
+      <div class="role-panel-icon">
+        <mat-icon>dashboard_customize</mat-icon>
+      </div>
+
+      <h3>
+        Designed for every role
+      </h3>
+
+
+      <div class="role-item">
+
+        <span>
+          <mat-icon>person</mat-icon>
+        </span>
+
+        <div>
+          <strong>Patient</strong>
+          <small>Book, pay and track appointments</small>
+        </div>
+
+      </div>
+
+
+      <div class="role-item">
+
+        <span>
+          <mat-icon>medical_services</mat-icon>
+        </span>
+
+        <div>
+          <strong>Doctor</strong>
+          <small>Manage consultations and schedules</small>
+        </div>
+
+      </div>
+
+
+      <div class="role-item">
+
+        <span>
+          <mat-icon>admin_panel_settings</mat-icon>
+        </span>
+
+        <div>
+          <strong>Administrator</strong>
+          <small>Manage hospital operations</small>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ===================================================
+       CALL TO ACTION
+  ==================================================== -->
+
+  <section class="cta-section">
+
+    <div>
+      <span>Start today</span>
+
+      <h2>
+        Manage your healthcare more easily
+      </h2>
+
+      <p>
+        Create a patient account or log in to your
+        existing hospital portal.
+      </p>
+    </div>
+
+
+    <div class="cta-buttons">
+
+      <button
+        mat-raised-button
+        type="button"
+        (click)="goToRegister()"
+      >
+        Create Patient Account
+      </button>
+
+      <button
+        mat-stroked-button
+        type="button"
+        (click)="goToLogin()"
+      >
+        Login
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- ===================================================
+       FOOTER
+  ==================================================== -->
+
+  <footer
+    id="contact"
+    class="footer"
+  >
+
+    <div class="footer-about">
+
+      <div class="brand footer-brand">
+
+        <span class="brand-icon">
+          <mat-icon>local_hospital</mat-icon>
+        </span>
+
+        <span class="brand-text">
+          <strong>CarePlus</strong>
+          <small>Hospital Management</small>
+        </span>
+
+      </div>
+
+      <p>
+        Secure and convenient digital healthcare
+        management for patients and hospital staff.
+      </p>
+
+    </div>
+
+
+    <div class="footer-links">
+
+      <h3>Quick Links</h3>
+
+      <a routerLink="/">
+        Home
+      </a>
+
+      <a routerLink="/login">
+        Login
+      </a>
+
+      <a routerLink="/register">
+        Register
+      </a>
+
+    </div>
+
+
+    <div class="footer-contact">
+
+      <h3>Contact</h3>
+
+      <p>
+        <mat-icon>location_on</mat-icon>
+        Sharjah, UAE
+      </p>
+
+      <p>
+        <mat-icon>phone</mat-icon>
+        +971 50 123 4567
+      </p>
+
+      <p>
+        <mat-icon>email</mat-icon>
+        care@careplus.ae
+      </p>
+
+    </div>
+
+
+    <div class="footer-bottom">
+      © 2026 CarePlus Hospital Management System
+    </div>
+
+  </footer>
+
+</div>

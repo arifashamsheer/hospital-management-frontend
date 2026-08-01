@@ -34,6 +34,7 @@ import { PaymentStr } from './components/payment-str/payment-str';
 import { PaymentSuccess } from './components/payment-success/payment-success';
 import { MyPayments } from './components/my-payments/my-payments';
 import { AdminPayments } from './components/admin-payments/admin-payments';
+import { Home } from './components/home/home';
 
 // const routes: Routes = [
 //   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -168,238 +169,274 @@ import { AdminPayments } from './components/admin-payments/admin-payments';
 // },
 //   { path: '**', redirectTo: 'login' }
 // ];
+// const routes: Routes = [
+
+//   {
+//     path: '',
+//     component: MainLayout,
+//     children: [
+
+//       {
+//         path: '',
+//         redirectTo: 'login',
+//         pathMatch: 'full'
+//       },
+
+//       {
+//         path: 'patient-dashboard',
+//         component: PatientDashboard,
+//         canActivate: [authGuard, roleGuard],
+//         data: {
+//           roles: ['patient']
+//         }
+//       },
+
+//       {
+//         path: 'patient-profile',
+//         component: PatientProfile,
+//         canActivate: [authGuard, roleGuard],
+//         data: {
+//           roles: ['patient']
+//         }
+//       },
+//       {
+//   path: 'patient-edit-profile',
+//   component: PatientEditProfile,
+//   canActivate: [authGuard, roleGuard],
+//   data: {
+//     roles: ['patient']
+//   }
+// },
+
+//       {
+//         path: 'book-appointment',
+//         component: BookAppointment,
+//         canActivate: [authGuard, roleGuard],
+//         data: {
+//           roles: ['patient']
+//         }
+//       },
+
+//       {
+//         path: 'my-appointments',
+//         component: MyAppointments,
+//         canActivate: [authGuard, roleGuard],
+//         data: {
+//           roles: ['patient']
+//         }
+//       },
+
+//       {
+//         path: 'doctor-dashboard',
+//         component: DoctorDashboard,
+//         canActivate: [authGuard, roleGuard],
+//         data: {
+//           roles: ['doctor']
+//         }
+//       },
+
+//       {
+//         path: 'doctor-profile',
+//         component: DoctorProfile,
+//         canActivate: [authGuard, roleGuard],
+//         data: {
+//           roles: ['doctor']
+//         }
+//       },
+
+//       {
+//         path: 'edit-doctor-profile',
+//         component: EditDoctorProfile,
+//         canActivate: [authGuard, roleGuard],
+//         data: {
+//           roles: ['doctor']
+//         }
+//       },
+
+//       {
+//         path: 'doctor-appointments',
+//         component: DoctorAppointments,
+//         canActivate: [authGuard, roleGuard],
+//         data: {
+//           roles: ['doctor']
+//         }
+//       },
+
+//       {
+//         path: 'admin-dashboard',
+//         component: AdminDashboard,
+//         canActivate: [authGuard, roleGuard],
+//         data: {
+//           roles: ['admin']
+//         }
+//       },
+
+//       {
+//         path: 'admin-doctors',
+//         component: AdminDoctors,
+//         canActivate: [authGuard, roleGuard],
+//         data: {
+//           roles: ['admin']
+//         }
+//       },
+
+//       {
+//         path: 'admin-patients',
+//         component: AdminPatients,
+//         canActivate: [authGuard, roleGuard],
+//         data: {
+//           roles: ['admin']
+//         }
+//       },
+//       {
+//   path: 'admin-patient-details/:id',
+//   component: AdminPatientDetails,
+//   canActivate: [authGuard, roleGuard],
+//   data: {
+//     roles: ['admin']
+//   }
+// },
+// {
+//   path: 'edit-patient/:id',
+//   component: EditPatient,
+//   canActivate: [authGuard, roleGuard],
+//   data: {
+//     roles: ['admin']
+//   }
+// },
+
+//       {
+//         path: 'admin-appointments',
+//         component: AdminAppointments,
+//         canActivate: [authGuard, roleGuard],
+//         data: {
+//           roles: ['admin']
+//         }
+//       },
+//       {
+//   path: 'admin-doctor-details/:id',
+//   component: AdminDoctorDetails,
+//   canActivate: [authGuard, roleGuard],
+//   data: {
+//     roles: ['admin']
+//   }
+// },
+
+//       {
+//   path: 'add-patient',
+//   component: AddPatient,
+//   canActivate: [authGuard, roleGuard],
+//   data: {
+//     roles: ['admin']
+//   }
+// },
+
+// {
+//   path: 'add-appointment',
+//   component: AddAppointment,
+//   canActivate: [authGuard, roleGuard],
+//   data: {
+//     roles: ['admin']
+//   }
+// },
+// {
+//   path: 'admin-appointment-details/:id',
+//   component: AdminAppointmentDetails,
+//   canActivate: [
+//     authGuard,
+//     roleGuard
+//   ],
+//   data: {
+//     roles: ['admin']
+//   }
+// },
+// {
+//   path: 'payment/:appointmentId',
+//   component: PaymentStr,
+//   canActivate: [ authGuard,roleGuard ],
+//   data: {
+//     roles: ['patient']
+//   }
+// },
+// {
+//   path: 'payment-success',
+//   component: PaymentSuccess,
+//   canActivate: [ authGuard, roleGuard ],
+//   data: {
+//     roles: ['patient']
+//   }
+// },
+// {
+//   path: 'my-payments',
+//   component: MyPayments,
+//   canActivate: [authGuard, roleGuard],
+//   data: {
+//     roles: ['patient']
+//   }
+// },
+// {
+//   path: 'admin-payments',
+//   component: AdminPayments,
+//   canActivate: [authGuard, roleGuard],
+//   data: {
+//     roles: ['admin']
+//   }
+// },
+// {
+//   path: 'edit-doctor/:id',
+//   component: EditDoctor,
+//   canActivate: [authGuard, roleGuard],
+//   data: {
+//     roles: ['admin']
+//   }
+// },
+
+//       {
+//         path: 'register-doctor',
+//         component: RegisterDoctor,
+//         canActivate: [authGuard, roleGuard],
+//         data: {
+//           roles: ['admin']
+//         }
+//       }
+
+//     ]
+//   },
+//   {
+//     path: '',
+//     component: Home
+//   },
+
+//   {
+//     path: 'login',
+//     component: LoginComponents
+//   },
+
+//   {
+//     path: 'register',
+//     component: Register
+//   },
+//   {
+//     path: 'access-denied',
+//     component: AccessDenied
+//   },
+
+//   {
+//     path: '**',
+//     redirectTo: ''
+//   }
+
+// ];
 const routes: Routes = [
+
+  // =====================================================
+  // PUBLIC ROUTES
+  // =====================================================
 
   {
     path: '',
-    component: MainLayout,
-    children: [
-
-      {
-        path: '',
-        redirectTo: 'login',
-        pathMatch: 'full'
-      },
-
-      {
-        path: 'patient-dashboard',
-        component: PatientDashboard,
-        canActivate: [authGuard, roleGuard],
-        data: {
-          roles: ['patient']
-        }
-      },
-
-      {
-        path: 'patient-profile',
-        component: PatientProfile,
-        canActivate: [authGuard, roleGuard],
-        data: {
-          roles: ['patient']
-        }
-      },
-      {
-  path: 'patient-edit-profile',
-  component: PatientEditProfile,
-  canActivate: [authGuard, roleGuard],
-  data: {
-    roles: ['patient']
-  }
-},
-
-      {
-        path: 'book-appointment',
-        component: BookAppointment,
-        canActivate: [authGuard, roleGuard],
-        data: {
-          roles: ['patient']
-        }
-      },
-
-      {
-        path: 'my-appointments',
-        component: MyAppointments,
-        canActivate: [authGuard, roleGuard],
-        data: {
-          roles: ['patient']
-        }
-      },
-
-      {
-        path: 'doctor-dashboard',
-        component: DoctorDashboard,
-        canActivate: [authGuard, roleGuard],
-        data: {
-          roles: ['doctor']
-        }
-      },
-
-      {
-        path: 'doctor-profile',
-        component: DoctorProfile,
-        canActivate: [authGuard, roleGuard],
-        data: {
-          roles: ['doctor']
-        }
-      },
-
-      {
-        path: 'edit-doctor-profile',
-        component: EditDoctorProfile,
-        canActivate: [authGuard, roleGuard],
-        data: {
-          roles: ['doctor']
-        }
-      },
-
-      {
-        path: 'doctor-appointments',
-        component: DoctorAppointments,
-        canActivate: [authGuard, roleGuard],
-        data: {
-          roles: ['doctor']
-        }
-      },
-
-      {
-        path: 'admin-dashboard',
-        component: AdminDashboard,
-        canActivate: [authGuard, roleGuard],
-        data: {
-          roles: ['admin']
-        }
-      },
-
-      {
-        path: 'admin-doctors',
-        component: AdminDoctors,
-        canActivate: [authGuard, roleGuard],
-        data: {
-          roles: ['admin']
-        }
-      },
-
-      {
-        path: 'admin-patients',
-        component: AdminPatients,
-        canActivate: [authGuard, roleGuard],
-        data: {
-          roles: ['admin']
-        }
-      },
-      {
-  path: 'admin-patient-details/:id',
-  component: AdminPatientDetails,
-  canActivate: [authGuard, roleGuard],
-  data: {
-    roles: ['admin']
-  }
-},
-{
-  path: 'edit-patient/:id',
-  component: EditPatient,
-  canActivate: [authGuard, roleGuard],
-  data: {
-    roles: ['admin']
-  }
-},
-
-      {
-        path: 'admin-appointments',
-        component: AdminAppointments,
-        canActivate: [authGuard, roleGuard],
-        data: {
-          roles: ['admin']
-        }
-      },
-      {
-  path: 'admin-doctor-details/:id',
-  component: AdminDoctorDetails,
-  canActivate: [authGuard, roleGuard],
-  data: {
-    roles: ['admin']
-  }
-},
-
-      {
-  path: 'add-patient',
-  component: AddPatient,
-  canActivate: [authGuard, roleGuard],
-  data: {
-    roles: ['admin']
-  }
-},
-
-{
-  path: 'add-appointment',
-  component: AddAppointment,
-  canActivate: [authGuard, roleGuard],
-  data: {
-    roles: ['admin']
-  }
-},
-{
-  path: 'admin-appointment-details/:id',
-  component: AdminAppointmentDetails,
-  canActivate: [
-    authGuard,
-    roleGuard
-  ],
-  data: {
-    roles: ['admin']
-  }
-},
-{
-  path: 'payment/:appointmentId',
-  component: PaymentStr,
-  canActivate: [ authGuard,roleGuard ],
-  data: {
-    roles: ['patient']
-  }
-},
-{
-  path: 'payment-success',
-  component: PaymentSuccess,
-  canActivate: [ authGuard, roleGuard ],
-  data: {
-    roles: ['patient']
-  }
-},
-{
-  path: 'my-payments',
-  component: MyPayments,
-  canActivate: [authGuard, roleGuard],
-  data: {
-    roles: ['patient']
-  }
-},
-{
-  path: 'admin-payments',
-  component: AdminPayments,
-  canActivate: [authGuard, roleGuard],
-  data: {
-    roles: ['admin']
-  }
-},
-{
-  path: 'edit-doctor/:id',
-  component: EditDoctor,
-  canActivate: [authGuard, roleGuard],
-  data: {
-    roles: ['admin']
-  }
-},
-
-      {
-        path: 'register-doctor',
-        component: RegisterDoctor,
-        canActivate: [authGuard, roleGuard],
-        data: {
-          roles: ['admin']
-        }
-      }
-
-    ]
+    component: Home,
+    pathMatch: 'full'
   },
 
   {
@@ -411,14 +448,348 @@ const routes: Routes = [
     path: 'register',
     component: Register
   },
+
   {
     path: 'access-denied',
     component: AccessDenied
   },
 
+
+  // =====================================================
+  // PROTECTED ROUTES WITH MAIN LAYOUT
+  // =====================================================
+
+  {
+    path: '',
+    component: MainLayout,
+
+    children: [
+
+      // -----------------------------
+      // Patient routes
+      // -----------------------------
+
+      {
+        path: 'patient-dashboard',
+        component: PatientDashboard,
+        canActivate: [
+          authGuard,
+          roleGuard
+        ],
+        data: {
+          roles: ['patient']
+        }
+      },
+
+      {
+        path: 'patient-profile',
+        component: PatientProfile,
+        canActivate: [
+          authGuard,
+          roleGuard
+        ],
+        data: {
+          roles: ['patient']
+        }
+      },
+
+      {
+        path: 'patient-edit-profile',
+        component: PatientEditProfile,
+        canActivate: [
+          authGuard,
+          roleGuard
+        ],
+        data: {
+          roles: ['patient']
+        }
+      },
+
+      {
+        path: 'book-appointment',
+        component: BookAppointment,
+        canActivate: [
+          authGuard,
+          roleGuard
+        ],
+        data: {
+          roles: ['patient']
+        }
+      },
+
+      {
+        path: 'my-appointments',
+        component: MyAppointments,
+        canActivate: [
+          authGuard,
+          roleGuard
+        ],
+        data: {
+          roles: ['patient']
+        }
+      },
+
+      {
+        path: 'payment/:appointmentId',
+        component: PaymentStr,
+        canActivate: [
+          authGuard,
+          roleGuard
+        ],
+        data: {
+          roles: ['patient']
+        }
+      },
+
+      {
+        path: 'payment-success',
+        component: PaymentSuccess,
+        canActivate: [
+          authGuard,
+          roleGuard
+        ],
+        data: {
+          roles: ['patient']
+        }
+      },
+
+      {
+        path: 'my-payments',
+        component: MyPayments,
+        canActivate: [
+          authGuard,
+          roleGuard
+        ],
+        data: {
+          roles: ['patient']
+        }
+      },
+
+
+      // -----------------------------
+      // Doctor routes
+      // -----------------------------
+
+      {
+        path: 'doctor-dashboard',
+        component: DoctorDashboard,
+        canActivate: [
+          authGuard,
+          roleGuard
+        ],
+        data: {
+          roles: ['doctor']
+        }
+      },
+
+      {
+        path: 'doctor-profile',
+        component: DoctorProfile,
+        canActivate: [
+          authGuard,
+          roleGuard
+        ],
+        data: {
+          roles: ['doctor']
+        }
+      },
+
+      {
+        path: 'edit-doctor-profile',
+        component: EditDoctorProfile,
+        canActivate: [
+          authGuard,
+          roleGuard
+        ],
+        data: {
+          roles: ['doctor']
+        }
+      },
+
+      {
+        path: 'doctor-appointments',
+        component: DoctorAppointments,
+        canActivate: [
+          authGuard,
+          roleGuard
+        ],
+        data: {
+          roles: ['doctor']
+        }
+      },
+
+
+      // -----------------------------
+      // Admin routes
+      // -----------------------------
+
+      {
+        path: 'admin-dashboard',
+        component: AdminDashboard,
+        canActivate: [
+          authGuard,
+          roleGuard
+        ],
+        data: {
+          roles: ['admin']
+        }
+      },
+
+      {
+        path: 'admin-doctors',
+        component: AdminDoctors,
+        canActivate: [
+          authGuard,
+          roleGuard
+        ],
+        data: {
+          roles: ['admin']
+        }
+      },
+
+      {
+        path: 'admin-doctor-details/:id',
+        component: AdminDoctorDetails,
+        canActivate: [
+          authGuard,
+          roleGuard
+        ],
+        data: {
+          roles: ['admin']
+        }
+      },
+
+      {
+        path: 'edit-doctor/:id',
+        component: EditDoctor,
+        canActivate: [
+          authGuard,
+          roleGuard
+        ],
+        data: {
+          roles: ['admin']
+        }
+      },
+
+      {
+        path: 'register-doctor',
+        component: RegisterDoctor,
+        canActivate: [
+          authGuard,
+          roleGuard
+        ],
+        data: {
+          roles: ['admin']
+        }
+      },
+
+      {
+        path: 'admin-patients',
+        component: AdminPatients,
+        canActivate: [
+          authGuard,
+          roleGuard
+        ],
+        data: {
+          roles: ['admin']
+        }
+      },
+
+      {
+        path: 'admin-patient-details/:id',
+        component: AdminPatientDetails,
+        canActivate: [
+          authGuard,
+          roleGuard
+        ],
+        data: {
+          roles: ['admin']
+        }
+      },
+
+      {
+        path: 'edit-patient/:id',
+        component: EditPatient,
+        canActivate: [
+          authGuard,
+          roleGuard
+        ],
+        data: {
+          roles: ['admin']
+        }
+      },
+
+      {
+        path: 'add-patient',
+        component: AddPatient,
+        canActivate: [
+          authGuard,
+          roleGuard
+        ],
+        data: {
+          roles: ['admin']
+        }
+      },
+
+      {
+        path: 'admin-appointments',
+        component: AdminAppointments,
+        canActivate: [
+          authGuard,
+          roleGuard
+        ],
+        data: {
+          roles: ['admin']
+        }
+      },
+
+      {
+        path: 'admin-appointment-details/:id',
+        component: AdminAppointmentDetails,
+        canActivate: [
+          authGuard,
+          roleGuard
+        ],
+        data: {
+          roles: ['admin']
+        }
+      },
+
+      {
+        path: 'add-appointment',
+        component: AddAppointment,
+        canActivate: [
+          authGuard,
+          roleGuard
+        ],
+        data: {
+          roles: ['admin']
+        }
+      },
+
+      {
+        path: 'admin-payments',
+        component: AdminPayments,
+        canActivate: [
+          authGuard,
+          roleGuard
+        ],
+        data: {
+          roles: ['admin']
+        }
+      }
+
+    ]
+  },
+
+
+  // =====================================================
+  // UNKNOWN URL
+  // =====================================================
+
   {
     path: '**',
-    redirectTo: 'login'
+    redirectTo: ''
   }
 
 ];
