@@ -1,6 +1,7 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Patient } from '../../models/patient';
 import { Apiservice } from '../../services/apiservice';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-patient-profile',
@@ -8,12 +9,12 @@ import { Apiservice } from '../../services/apiservice';
   templateUrl: './patient-profile.html',
   styleUrl: './patient-profile.css',
 })
-export class PatientProfile {
+export class PatientProfile implements OnInit{
   patient!: Patient;
 
 
   constructor(
-    private apiService: Apiservice,
+    private apiService: Apiservice, private router: Router,
     private cd: ChangeDetectorRef
   ) { }
 
@@ -39,6 +40,13 @@ export class PatientProfile {
 
 
 
+
+  }
+  editProfile(): void {
+
+    this.router.navigate([
+      '/patient-edit-profile'
+    ]);
 
   }
 

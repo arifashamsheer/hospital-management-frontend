@@ -1,0 +1,314 @@
+<div class="admin-dashboard">
+
+  <div class="dashboard-header">
+
+    <div>
+      <h1>Admin Dashboard</h1>
+
+      <p>
+        Welcome to the Hospital Management System
+      </p>
+    </div>
+
+    <div class="header-actions">
+
+      <button
+        mat-stroked-button
+        type="button"
+        (click)="refreshDashboard()"
+        [disabled]="isLoading"
+      >
+        <mat-icon>refresh</mat-icon>
+        Refresh
+      </button>
+
+      <button
+        mat-raised-button
+        color="warn"
+        type="button"
+        (click)="logout()"
+      >
+        <mat-icon>logout</mat-icon>
+        Logout
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div
+    class="loading-container"
+    *ngIf="isLoading"
+  >
+    <mat-spinner diameter="45">
+    </mat-spinner>
+
+    <p>Loading dashboard...</p>
+  </div>
+
+
+  <div
+    class="error-container"
+    *ngIf="!isLoading && errorMessage"
+  >
+    <mat-icon>error_outline</mat-icon>
+
+    <h3>Unable to load dashboard</h3>
+
+    <p>{{ errorMessage }}</p>
+
+    <button
+      mat-stroked-button
+      type="button"
+      (click)="refreshDashboard()"
+      [disabled]="isLoading"
+    >
+      <mat-icon>refresh</mat-icon>
+      Try Again
+    </button>
+
+  </div>
+
+
+  <div
+    *ngIf="
+      !isLoading &&
+      !errorMessage
+    "
+  >
+
+    <div class="stats-grid">
+
+      <mat-card
+        class="stat-card"
+        (click)="goToPatients()"
+      >
+        <div class="stat-icon patient-icon">
+          <mat-icon>groups</mat-icon>
+        </div>
+
+        <div class="stat-content">
+          <p>Total Patients</p>
+          <h2>{{ stats.patients }}</h2>
+        </div>
+      </mat-card>
+
+
+      <mat-card
+        class="stat-card"
+        (click)="goToDoctors()"
+      >
+        <div class="stat-icon doctor-icon">
+          <mat-icon>
+            medical_services
+          </mat-icon>
+        </div>
+
+        <div class="stat-content">
+          <p>Total Doctors</p>
+          <h2>{{ stats.doctors }}</h2>
+        </div>
+      </mat-card>
+
+
+      <mat-card
+        class="stat-card"
+        (click)="goToAppointments()"
+      >
+        <div class="stat-icon appointment-icon">
+          <mat-icon>event</mat-icon>
+        </div>
+
+        <div class="stat-content">
+          <p>Total Appointments</p>
+
+          <h2>
+            {{ stats.appointments }}
+          </h2>
+        </div>
+      </mat-card>
+
+
+      <mat-card
+        class="stat-card"
+        (click)="goToAppointments()"
+      >
+        <div class="stat-icon pending-icon">
+          <mat-icon>pending_actions</mat-icon>
+        </div>
+
+        <div class="stat-content">
+          <p>Pending Appointments</p>
+
+          <h2>
+            {{ stats.pendingAppointments }}
+          </h2>
+        </div>
+      </mat-card>
+
+    </div>
+
+
+    <div class="charts-grid">
+
+      <mat-card class="chart-card">
+
+        <mat-card-header>
+          <mat-card-title>
+            Appointments by Month
+          </mat-card-title>
+
+          <mat-card-subtitle>
+            Monthly appointment activity
+          </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+
+          <div class="chart-container">
+
+            <canvas
+              baseChart
+              [data]="appointmentChartData"
+              [options]="appointmentChartOptions"
+              [type]="appointmentChartType"
+            >
+            </canvas>
+
+          </div>
+
+        </mat-card-content>
+
+      </mat-card>
+
+
+      <mat-card class="chart-card">
+
+        <mat-card-header>
+          <mat-card-title>
+            Payment Status
+          </mat-card-title>
+
+          <mat-card-subtitle>
+            Current payment distribution
+          </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+
+          <div class="chart-container">
+
+            <canvas
+              baseChart
+              [data]="paymentChartData"
+              [options]="paymentChartOptions"
+              [type]="paymentChartType"
+            >
+            </canvas>
+
+          </div>
+
+        </mat-card-content>
+
+      </mat-card>
+
+    </div>
+
+
+    <mat-card class="quick-actions-card">
+
+      <mat-card-header>
+
+        <mat-card-title>
+          Quick Actions
+        </mat-card-title>
+
+        <mat-card-subtitle>
+          Manage hospital information
+        </mat-card-subtitle>
+
+      </mat-card-header>
+
+
+      <mat-card-content>
+
+        <div class="quick-actions">
+
+          <button
+            mat-raised-button
+            color="primary"
+            type="button"
+            (click)="goToDoctors()"
+          >
+            <mat-icon>
+              medical_services
+            </mat-icon>
+
+            Manage Doctors
+          </button>
+
+
+          <button
+            mat-raised-button
+            color="primary"
+            type="button"
+            (click)="goToPatients()"
+          >
+            <mat-icon>groups</mat-icon>
+            Manage Patients
+          </button>
+
+
+          <button
+            mat-raised-button
+            color="primary"
+            type="button"
+            (click)="goToAppointments()"
+          >
+            <mat-icon>event_note</mat-icon>
+            Manage Appointments
+          </button>
+
+
+          <button
+            mat-raised-button
+            color="accent"
+            type="button"
+            (click)="goToRegisterDoctor()"
+          >
+            <mat-icon>person_add</mat-icon>
+            Add Doctor
+          </button>
+
+
+          <button
+            mat-raised-button
+            color="primary"
+            type="button"
+            (click)="goToAddPatient()"
+          >
+            <mat-icon>person_add_alt</mat-icon>
+            Add Patient
+          </button>
+
+
+          <button
+            mat-raised-button
+            color="primary"
+            type="button"
+            (click)="goToAddAppointment()"
+          >
+            <mat-icon>event_available</mat-icon>
+            Create Appointment
+          </button>
+
+        </div>
+
+      </mat-card-content>
+
+    </mat-card>
+
+  </div>
+
+</div>

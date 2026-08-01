@@ -1,0 +1,114 @@
+<div class="details-page" *ngIf="!isLoading">
+
+  <mat-card>
+
+    <mat-card-header>
+
+      <mat-card-title>
+
+        Appointment Details
+
+      </mat-card-title>
+
+    </mat-card-header>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-content>
+
+      <h3>Patient Information</h3>
+
+      <p><strong>Name:</strong> {{appointment.patientId?.name}}</p>
+
+      <p><strong>Email:</strong> {{appointment.patientId?.email}}</p>
+
+      <p><strong>Phone:</strong> {{appointment.patientId?.phone}}</p>
+
+      <mat-divider></mat-divider>
+
+      <h3>Doctor Information</h3>
+
+      <p><strong>Name:</strong> {{appointment.doctorId?.name}}</p>
+
+      <p><strong>Specialization:</strong> {{appointment.doctorId?.specialization}}</p>
+
+      <p><strong>Email:</strong> {{appointment.doctorId?.email}}</p>
+
+      <mat-divider></mat-divider>
+
+      <h3>Appointment</h3>
+
+      <p><strong>Date:</strong> {{appointment.date}}</p>
+
+      <p><strong>Time:</strong> {{appointment.time}}</p>
+
+      <p><strong>Reason:</strong> {{appointment.reason}}</p>
+
+      <p>
+
+        <strong>Status:</strong>
+
+        <span
+          class="status"
+          [ngClass]="appointment.status?.toLowerCase()">
+
+          {{appointment.status}}
+
+        </span>
+
+      </p>
+
+      <div class="button-row">
+
+        <button
+          mat-raised-button
+          color="primary"
+          *ngIf="appointment.status=='Pending'"
+          (click)="changeStatus('Approved')">
+
+          Approve
+
+        </button>
+
+        <button
+          mat-raised-button
+          color="warn"
+          *ngIf="appointment.status!='Cancelled'"
+          (click)="changeStatus('Cancelled')">
+
+          Cancel
+
+        </button>
+
+        <button
+          mat-raised-button
+          *ngIf="appointment.status=='Approved'"
+          (click)="changeStatus('Completed')">
+
+          Complete
+
+        </button>
+
+        <button
+          mat-stroked-button
+          (click)="goBack()">
+
+          Back
+
+        </button>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>
+
+<div
+  class="loading"
+  *ngIf="isLoading">
+
+  <mat-spinner></mat-spinner>
+
+</div>

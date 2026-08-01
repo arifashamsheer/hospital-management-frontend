@@ -1,0 +1,173 @@
+<div class="success-page">
+
+  <mat-card class="success-card">
+
+    <mat-card-content>
+
+      <div
+        class="loading-container"
+        *ngIf="isLoading"
+      >
+        <mat-spinner diameter="45">
+        </mat-spinner>
+
+        <p>Loading payment details...</p>
+      </div>
+
+
+      <div
+        class="error-box"
+        *ngIf="!isLoading && errorMessage"
+      >
+        <mat-icon>error_outline</mat-icon>
+
+        <h2>Unable to load payment</h2>
+
+        <p>{{ errorMessage }}</p>
+
+        <button
+          mat-raised-button
+          color="primary"
+          type="button"
+          (click)="goToAppointments()"
+        >
+          My Appointments
+        </button>
+      </div>
+
+
+      <div
+        class="success-content"
+        *ngIf="
+          !isLoading &&
+          !errorMessage &&
+          payment
+        "
+      >
+
+        <div class="success-icon">
+          <mat-icon>check_circle</mat-icon>
+        </div>
+
+        <h1>Payment Successful</h1>
+
+        <p class="success-message">
+          Your appointment payment was completed
+          successfully.
+        </p>
+
+
+        <div class="payment-summary">
+
+          <div class="summary-row">
+            <span>Payment Status</span>
+
+            <strong class="paid-status">
+              {{ payment.paymentStatus }}
+            </strong>
+          </div>
+
+          <div class="summary-row">
+            <span>Amount Paid</span>
+
+            <strong>
+              {{
+                payment.currency
+                  | uppercase
+              }}
+              {{
+                payment.amount
+                  | number:'1.2-2'
+              }}
+            </strong>
+          </div>
+
+          <div class="summary-row">
+            <span>Transaction ID</span>
+
+            <strong class="transaction">
+              {{ payment.transactionId }}
+            </strong>
+          </div>
+
+          <div class="summary-row">
+            <span>Doctor</span>
+
+            <strong>
+              Dr.
+              {{ payment.doctorId?.name }}
+            </strong>
+          </div>
+
+          <div class="summary-row">
+            <span>Appointment Date</span>
+
+            <strong>
+              {{
+                payment.appointmentId?.date
+                  | date:'dd MMM yyyy'
+              }}
+            </strong>
+          </div>
+
+          <div class="summary-row">
+            <span>Appointment Time</span>
+
+            <strong>
+              {{ payment.appointmentId?.time }}
+            </strong>
+          </div>
+
+          <div class="summary-row">
+            <span>Paid At</span>
+
+            <strong>
+              {{
+                payment.paidAt
+                  | date:'dd MMM yyyy, h:mm a'
+              }}
+            </strong>
+          </div>
+
+        </div>
+
+
+        <div class="action-buttons">
+          <button
+  mat-stroked-button
+  color="primary"
+  type="button"
+  (click)="downloadReceipt()"
+>
+  <mat-icon>download</mat-icon>
+  Download Receipt
+</button>
+
+          <button
+            mat-stroked-button
+            type="button"
+            (click)="goToDashboard()"
+          >
+            <mat-icon>dashboard</mat-icon>
+            Dashboard
+          </button>
+
+          <button
+            mat-raised-button
+            color="primary"
+            type="button"
+            (click)="goToAppointments()"
+          >
+            <mat-icon>event</mat-icon>
+            My Appointments
+          </button>
+
+        </div>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>

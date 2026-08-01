@@ -1,0 +1,659 @@
+/* =========================================================
+   REGISTER DOCTOR PAGE
+   Hospital Management System
+========================================================= */
+
+:host {
+  display: block;
+}
+
+/* ---------------------------------------------------------
+   Page container
+--------------------------------------------------------- */
+
+.register-page {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 26px;
+  box-sizing: border-box;
+  animation: pageFadeIn 0.55s ease-out both;
+}
+
+/* ---------------------------------------------------------
+   Page header
+--------------------------------------------------------- */
+
+.page-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 24px;
+  padding: 25px 28px;
+  overflow: hidden;
+  border-radius: 22px;
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #0d47a1 0%,
+      #1976d2 52%,
+      #42a5f5 100%
+    );
+
+  box-shadow:
+    0 14px 34px
+    rgba(25, 118, 210, 0.23);
+
+  animation:
+    headerSlideDown
+    0.65s
+    ease-out
+    both;
+}
+
+.page-header::before,
+.page-header::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background:
+    rgba(255, 255, 255, 0.12);
+  pointer-events: none;
+}
+
+.page-header::before {
+  width: 170px;
+  height: 170px;
+  top: -100px;
+  right: 130px;
+
+  animation:
+    floatingCircle
+    6s
+    ease-in-out
+    infinite;
+}
+
+.page-header::after {
+  width: 110px;
+  height: 110px;
+  right: -30px;
+  bottom: -60px;
+
+  animation:
+    floatingCircle
+    5s
+    ease-in-out
+    0.8s
+    infinite reverse;
+}
+
+.page-header > * {
+  position: relative;
+  z-index: 1;
+}
+
+.page-header h1 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 31px;
+  line-height: 1.2;
+  font-weight: 720;
+  letter-spacing: -0.5px;
+}
+
+.page-header p {
+  margin: 7px 0 0;
+  color:
+    rgba(255, 255, 255, 0.83);
+  font-size: 14px;
+}
+
+.page-header button {
+  min-height: 42px;
+  padding-inline: 17px;
+  border-radius: 999px;
+  color: #ffffff;
+  border-color:
+    rgba(255, 255, 255, 0.65);
+  background:
+    rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+
+  transition:
+    transform 0.25s ease,
+    background-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.page-header button:hover {
+  transform: translateY(-3px);
+  background:
+    rgba(255, 255, 255, 0.22);
+  box-shadow:
+    0 9px 20px
+    rgba(0, 0, 0, 0.14);
+}
+
+.page-header button:active {
+  transform:
+    translateY(-1px)
+    scale(0.98);
+}
+
+.page-header button mat-icon {
+  margin-right: 5px;
+}
+
+/* ---------------------------------------------------------
+   Doctor card
+--------------------------------------------------------- */
+
+.doctor-card {
+  overflow: hidden;
+  border:
+    1px solid
+    rgba(15, 23, 42, 0.06);
+  border-radius: 24px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff 0%,
+      #f8fbff 100%
+    );
+
+  box-shadow:
+    0 14px 38px
+    rgba(15, 23, 42, 0.1);
+
+  animation:
+    cardSlideUp
+    0.75s
+    ease-out
+    0.12s
+    both;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.doctor-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 20px 44px
+    rgba(15, 23, 42, 0.14);
+}
+
+.doctor-card mat-card-header {
+  position: relative;
+  padding: 25px 28px 13px;
+}
+
+.doctor-card mat-card-header::after {
+  content: "";
+  position: absolute;
+  left: 28px;
+  bottom: 0;
+  width: 58px;
+  height: 3px;
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #1976d2,
+      #42a5f5
+    );
+}
+
+.doctor-card mat-card-title {
+  color: #172033;
+  font-size: 23px;
+  font-weight: 680;
+}
+
+.doctor-card mat-card-subtitle {
+  margin-top: 6px;
+  color: #667085;
+  line-height: 1.55;
+}
+
+.doctor-card mat-card-content {
+  padding: 25px 28px 30px;
+}
+
+/* ---------------------------------------------------------
+   Messages
+--------------------------------------------------------- */
+
+.message {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 13px 15px;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.message mat-icon {
+  width: 23px;
+  height: 23px;
+  font-size: 23px;
+  flex: 0 0 auto;
+}
+
+.success-message {
+  color: #1b5e20;
+  border:
+    1px solid #c8e6c9;
+
+  background:
+    linear-gradient(
+      135deg,
+      #effff2,
+      #f8fff9
+    );
+
+  animation:
+    successSlideDown
+    0.45s
+    ease;
+}
+
+.error-message {
+  color: #b42318;
+  border:
+    1px solid #ffcdd2;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fff4f4,
+      #fffafa
+    );
+
+  animation:
+    errorShake
+    0.42s
+    ease;
+}
+
+/* ---------------------------------------------------------
+   Form
+--------------------------------------------------------- */
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+  gap: 5px 18px;
+}
+
+/* ---------------------------------------------------------
+   Material form fields
+--------------------------------------------------------- */
+
+::ng-deep
+.doctor-card
+.mat-mdc-text-field-wrapper {
+  border-radius: 14px;
+  background: #fbfcfe;
+}
+
+::ng-deep
+.doctor-card
+.mdc-text-field--outlined:not(
+  .mdc-text-field--disabled
+)
+.mdc-notched-outline__leading,
+::ng-deep
+.doctor-card
+.mdc-text-field--outlined:not(
+  .mdc-text-field--disabled
+)
+.mdc-notched-outline__notch,
+::ng-deep
+.doctor-card
+.mdc-text-field--outlined:not(
+  .mdc-text-field--disabled
+)
+.mdc-notched-outline__trailing {
+  border-color:
+    rgba(15, 23, 42, 0.15);
+}
+
+::ng-deep
+.doctor-card
+.mat-mdc-form-field.mat-focused
+.mdc-notched-outline__leading,
+::ng-deep
+.doctor-card
+.mat-mdc-form-field.mat-focused
+.mdc-notched-outline__notch,
+::ng-deep
+.doctor-card
+.mat-mdc-form-field.mat-focused
+.mdc-notched-outline__trailing {
+  border-color: #1976d2;
+  border-width: 2px;
+}
+
+::ng-deep
+.doctor-card
+.mat-mdc-form-field-icon-prefix {
+  padding-right: 10px;
+  color: #667085;
+
+  transition:
+    color 0.22s ease,
+    transform 0.22s ease;
+}
+
+::ng-deep
+.doctor-card
+.mat-mdc-form-field.mat-focused
+.mat-mdc-form-field-icon-prefix {
+  color: #1976d2;
+  transform: scale(1.06);
+}
+
+::ng-deep
+.doctor-card
+.mat-mdc-form-field-subscript-wrapper {
+  min-height: 23px;
+}
+
+/* ---------------------------------------------------------
+   Form actions
+--------------------------------------------------------- */
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 13px;
+  margin-top: 18px;
+  padding-top: 22px;
+
+  border-top:
+    1px solid
+    rgba(15, 23, 42, 0.08);
+}
+
+.form-actions button {
+  min-width: 145px;
+  min-height: 48px;
+  border-radius: 13px;
+  font-weight: 600;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    filter 0.25s ease;
+}
+
+.form-actions button:hover:not(:disabled) {
+  transform: translateY(-3px);
+}
+
+.form-actions button:active:not(:disabled) {
+  transform:
+    translateY(-1px)
+    scale(0.99);
+}
+
+.form-actions button[mat-stroked-button] {
+  color: #475467;
+  background: #ffffff;
+  border-color:
+    rgba(15, 23, 42, 0.16);
+}
+
+.form-actions button[mat-stroked-button]:hover:not(:disabled) {
+  background: #f8fafc;
+
+  box-shadow:
+    0 8px 18px
+    rgba(15, 23, 42, 0.09);
+}
+
+.form-actions button[mat-raised-button] {
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #1565c0,
+      #42a5f5
+    ) !important;
+
+  box-shadow:
+    0 10px 24px
+    rgba(25, 118, 210, 0.24);
+}
+
+.form-actions button[mat-raised-button]:hover:not(:disabled) {
+  filter: brightness(1.04);
+
+  box-shadow:
+    0 15px 30px
+    rgba(25, 118, 210, 0.32);
+}
+
+.form-actions button:disabled {
+  opacity: 0.68;
+}
+
+.form-actions mat-icon {
+  margin-right: 6px;
+}
+
+/* ---------------------------------------------------------
+   Focus accessibility
+--------------------------------------------------------- */
+
+.page-header button:focus-visible,
+.form-actions button:focus-visible {
+  outline:
+    3px solid
+    rgba(25, 118, 210, 0.3);
+  outline-offset: 3px;
+}
+
+/* ---------------------------------------------------------
+   Animations
+--------------------------------------------------------- */
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes headerSlideDown {
+  from {
+    opacity: 0;
+    transform:
+      translateY(-22px);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0);
+  }
+}
+
+@keyframes cardSlideUp {
+  from {
+    opacity: 0;
+    transform:
+      translateY(28px)
+      scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+@keyframes successSlideDown {
+  from {
+    opacity: 0;
+    transform:
+      translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0);
+  }
+}
+
+@keyframes errorShake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-7px);
+  }
+
+  75% {
+    transform: translateX(7px);
+  }
+}
+
+@keyframes floatingCircle {
+  0%,
+  100% {
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translateY(10px)
+      scale(1.06);
+  }
+}
+
+/* ---------------------------------------------------------
+   Responsive design
+--------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .register-page {
+    padding: 20px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+
+@media (max-width: 650px) {
+  .register-page {
+    padding: 14px;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 22px;
+    border-radius: 18px;
+  }
+
+  .page-header h1 {
+    font-size: 27px;
+  }
+
+  .page-header button {
+    width: 100%;
+  }
+
+  .doctor-card {
+    border-radius: 19px;
+  }
+
+  .doctor-card mat-card-header {
+    padding: 22px 20px 12px;
+  }
+
+  .doctor-card mat-card-header::after {
+    left: 20px;
+  }
+
+  .doctor-card mat-card-content {
+    padding: 22px 20px 25px;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .form-actions button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 380px) {
+  .register-page {
+    padding: 9px;
+  }
+
+  .page-header {
+    padding: 19px 17px;
+  }
+
+  .doctor-card mat-card-header,
+  .doctor-card mat-card-content {
+    padding-left: 17px;
+    padding-right: 17px;
+  }
+}
+
+/* ---------------------------------------------------------
+   Reduced motion accessibility
+--------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration:
+      0.01ms !important;
+
+    animation-iteration-count:
+      1 !important;
+
+    transition-duration:
+      0.01ms !important;
+
+    scroll-behavior:
+      auto !important;
+  }
+}

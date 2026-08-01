@@ -1,0 +1,255 @@
+<div class="edit-patient-page">
+
+  <div class="page-header">
+    <div>
+      <h1>Edit Patient</h1>
+      <p>Update patient information</p>
+    </div>
+
+    <button
+      mat-stroked-button
+      type="button"
+      (click)="cancel()"
+    >
+      <mat-icon>arrow_back</mat-icon>
+      Back
+    </button>
+  </div>
+
+  <div
+    class="loading-container"
+    *ngIf="isLoading"
+  >
+    <mat-spinner diameter="45"></mat-spinner>
+    <p>Loading patient details...</p>
+  </div>
+
+  <mat-card
+    class="form-card"
+    *ngIf="!isLoading"
+  >
+    <mat-card-content>
+
+      <div
+        class="message success-message"
+        *ngIf="successMessage"
+      >
+        <mat-icon>check_circle</mat-icon>
+        {{ successMessage }}
+      </div>
+
+      <div
+        class="message error-message"
+        *ngIf="errorMessage"
+      >
+        <mat-icon>error_outline</mat-icon>
+        {{ errorMessage }}
+      </div>
+
+      <form
+        [formGroup]="editPatientForm"
+        (ngSubmit)="updatePatient()"
+      >
+
+        <div class="form-grid">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Patient Name</mat-label>
+
+            <mat-icon matPrefix>
+              person
+            </mat-icon>
+
+            <input
+              matInput
+              formControlName="name"
+              placeholder="Enter patient name"
+            >
+
+            <mat-error
+              *ngIf="name?.hasError('required')"
+            >
+              Patient name is required
+            </mat-error>
+
+            <mat-error
+              *ngIf="name?.hasError('minlength')"
+            >
+              Name must contain at least 2 characters
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Age</mat-label>
+
+            <mat-icon matPrefix>
+              cake
+            </mat-icon>
+
+            <input
+              matInput
+              type="number"
+              formControlName="age"
+              placeholder="Enter age"
+            >
+
+            <mat-error
+              *ngIf="age?.hasError('required')"
+            >
+              Age is required
+            </mat-error>
+
+            <mat-error
+              *ngIf="
+                age?.hasError('min') ||
+                age?.hasError('max')
+              "
+            >
+              Enter a valid age
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Gender</mat-label>
+
+            <mat-icon matPrefix>
+              wc
+            </mat-icon>
+
+            <mat-select formControlName="gender">
+              <mat-option value="Male">
+                Male
+              </mat-option>
+
+              <mat-option value="Female">
+                Female
+              </mat-option>
+
+              <mat-option value="Other">
+                Other
+              </mat-option>
+            </mat-select>
+
+            <mat-error
+              *ngIf="gender?.hasError('required')"
+            >
+              Gender is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+
+            <mat-icon matPrefix>
+              email
+            </mat-icon>
+
+            <input
+              matInput
+              type="email"
+              formControlName="email"
+              placeholder="Enter email"
+            >
+
+            <mat-error
+              *ngIf="email?.hasError('required')"
+            >
+              Email is required
+            </mat-error>
+
+            <mat-error
+              *ngIf="email?.hasError('email')"
+            >
+              Enter a valid email
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Phone</mat-label>
+
+            <mat-icon matPrefix>
+              phone
+            </mat-icon>
+
+            <input
+              matInput
+              formControlName="phone"
+              placeholder="Enter phone number"
+            >
+
+            <mat-error
+              *ngIf="phone?.hasError('required')"
+            >
+              Phone number is required
+            </mat-error>
+
+            <mat-error
+              *ngIf="phone?.hasError('pattern')"
+            >
+              Enter a valid phone number
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field
+            appearance="outline"
+            class="full-width"
+          >
+            <mat-label>Medical History</mat-label>
+
+            <mat-icon matPrefix>
+              clinical_notes
+            </mat-icon>
+
+            <textarea
+              matInput
+              rows="5"
+              formControlName="medicalHistory"
+              placeholder="Enter medical history"
+            ></textarea>
+          </mat-form-field>
+
+        </div>
+
+        <div class="form-actions">
+
+          <button
+            mat-stroked-button
+            type="button"
+            (click)="cancel()"
+            [disabled]="isSaving"
+          >
+            Cancel
+          </button>
+
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="isSaving"
+          >
+            <mat-spinner
+              *ngIf="isSaving"
+              diameter="20"
+            ></mat-spinner>
+
+            <mat-icon *ngIf="!isSaving">
+              save
+            </mat-icon>
+
+            <span>
+              {{
+                isSaving
+                  ? 'Updating...'
+                  : 'Update Patient'
+              }}
+            </span>
+          </button>
+
+        </div>
+
+      </form>
+
+    </mat-card-content>
+  </mat-card>
+
+</div>

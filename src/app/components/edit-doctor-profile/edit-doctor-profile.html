@@ -1,0 +1,361 @@
+<div class="edit-profile-container">
+
+  <div class="page-header">
+
+    <div>
+      <h1>Edit Doctor Profile</h1>
+
+      <p>
+        Update professional details and
+        consultation time slots
+      </p>
+    </div>
+
+    <button
+      mat-stroked-button
+      type="button"
+      (click)="cancel()"
+    >
+      <mat-icon>arrow_back</mat-icon>
+      Back
+    </button>
+
+  </div>
+
+
+  <div
+    class="loading-container"
+    *ngIf="isLoading"
+  >
+    <mat-spinner diameter="45"></mat-spinner>
+
+    <p>Loading profile...</p>
+  </div>
+
+
+  <div
+    class="error-container"
+    *ngIf="!isLoading && errorMessage"
+  >
+    <mat-icon>error_outline</mat-icon>
+
+    <h3>Unable to load profile</h3>
+
+    <p>{{ errorMessage }}</p>
+
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="loadDoctor()"
+    >
+      Try Again
+    </button>
+  </div>
+
+
+  <form
+    [formGroup]="doctorForm"
+    (ngSubmit)="updateProfile()"
+    *ngIf="
+      !isLoading &&
+      !errorMessage
+    "
+  >
+
+    <mat-card class="form-card">
+
+      <mat-card-header>
+
+        <mat-card-title>
+          Doctor Information
+        </mat-card-title>
+
+        <mat-card-subtitle>
+          Update your personal and
+          professional details
+        </mat-card-subtitle>
+
+      </mat-card-header>
+
+
+      <mat-card-content>
+
+        <div class="form-grid">
+
+          <mat-form-field appearance="outline">
+
+            <mat-label>Name</mat-label>
+
+            <input
+              matInput
+              formControlName="name"
+              placeholder="Enter doctor name"
+            >
+
+            <mat-icon matPrefix>
+              person
+            </mat-icon>
+
+            <mat-error
+              *ngIf="
+                hasError(
+                  'name',
+                  'required'
+                )
+              "
+            >
+              Name is required
+            </mat-error>
+
+            <mat-error
+              *ngIf="
+                hasError(
+                  'name',
+                  'minlength'
+                )
+              "
+            >
+              Name must contain at least
+              3 characters
+            </mat-error>
+
+          </mat-form-field>
+
+
+          <mat-form-field appearance="outline">
+
+            <mat-label>Email</mat-label>
+
+            <input
+              matInput
+              formControlName="email"
+            >
+
+            <mat-icon matPrefix>
+              email
+            </mat-icon>
+
+            <mat-hint>
+              Email cannot be changed
+            </mat-hint>
+
+          </mat-form-field>
+
+
+          <mat-form-field appearance="outline">
+
+            <mat-label>Phone</mat-label>
+
+            <input
+              matInput
+              formControlName="phone"
+              placeholder="0501234567"
+            >
+
+            <mat-icon matPrefix>
+              phone
+            </mat-icon>
+
+            <mat-error
+              *ngIf="
+                hasError(
+                  'phone',
+                  'required'
+                )
+              "
+            >
+              Phone number is required
+            </mat-error>
+
+            <mat-error
+              *ngIf="
+                hasError(
+                  'phone',
+                  'pattern'
+                )
+              "
+            >
+              Enter a valid phone number
+            </mat-error>
+
+          </mat-form-field>
+
+
+          <mat-form-field appearance="outline">
+
+            <mat-label>
+              Specialization
+            </mat-label>
+
+            <input
+              matInput
+              formControlName="specialization"
+              placeholder="Cardiology"
+            >
+
+            <mat-icon matPrefix>
+              medical_services
+            </mat-icon>
+
+            <mat-error
+              *ngIf="
+                hasError(
+                  'specialization',
+                  'required'
+                )
+              "
+            >
+              Specialization is required
+            </mat-error>
+
+            <mat-error
+              *ngIf="
+                hasError(
+                  'specialization',
+                  'minlength'
+                )
+              "
+            >
+              Enter at least 3 characters
+            </mat-error>
+
+          </mat-form-field>
+
+        </div>
+
+      </mat-card-content>
+
+    </mat-card>
+
+
+    <mat-card class="availability-card">
+
+      <mat-card-header>
+
+        <mat-card-title>
+          Availability
+        </mat-card-title>
+
+        <mat-card-subtitle>
+          Add available appointment time slots
+        </mat-card-subtitle>
+
+      </mat-card-header>
+
+
+      <mat-card-content>
+
+        <div
+          formArrayName="availability"
+          class="availability-list"
+        >
+
+          <div
+            class="slot-row"
+            *ngFor="
+              let slotControl of availability.controls;
+              let index = index
+            "
+          >
+
+            <mat-form-field appearance="outline">
+
+              <mat-label>
+                Time Slot {{ index + 1 }}
+              </mat-label>
+
+              <input
+                matInput
+                type="time"
+                [formControlName]="index"
+              >
+
+              <mat-icon matPrefix>
+                schedule
+              </mat-icon>
+
+              <mat-error
+                *ngIf="
+                  slotControl.touched &&
+                  slotControl.hasError(
+                    'required'
+                  )
+                "
+              >
+                Time slot is required
+              </mat-error>
+
+            </mat-form-field>
+
+
+            <button
+              mat-icon-button
+              color="warn"
+              type="button"
+              aria-label="Remove time slot"
+              (click)="removeSlot(index)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <button
+          mat-stroked-button
+          color="primary"
+          type="button"
+          (click)="addSlot()"
+        >
+          <mat-icon>add</mat-icon>
+          Add Time Slot
+        </button>
+
+      </mat-card-content>
+
+    </mat-card>
+
+
+    <div class="form-actions">
+
+      <button
+        mat-stroked-button
+        type="button"
+        (click)="cancel()"
+        [disabled]="isSaving"
+      >
+        Cancel
+      </button>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="
+          doctorForm.invalid ||
+          isSaving
+        "
+      >
+        <mat-icon>
+          {{
+            isSaving
+              ? 'hourglass_top'
+              : 'save'
+          }}
+        </mat-icon>
+
+        {{
+          isSaving
+            ? 'Saving...'
+            : 'Save Changes'
+        }}
+      </button>
+
+    </div>
+
+  </form>
+
+</div>

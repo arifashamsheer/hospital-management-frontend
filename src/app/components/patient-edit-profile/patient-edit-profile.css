@@ -1,0 +1,676 @@
+/* =========================================================
+   EDIT PATIENT PROFILE PAGE
+========================================================= */
+
+:host {
+  display: block;
+}
+
+.edit-profile-container {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 26px;
+  box-sizing: border-box;
+  animation: pageFadeIn 0.55s ease-out both;
+}
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.page-header {
+  position: relative;
+  margin-bottom: 24px;
+  padding: 26px 30px;
+  overflow: hidden;
+  border-radius: 22px;
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #0d47a1 0%,
+      #1976d2 52%,
+      #42a5f5 100%
+    );
+
+  box-shadow:
+    0 15px 35px
+    rgba(25, 118, 210, 0.24);
+
+  animation:
+    headerSlideDown
+    0.65s
+    ease-out
+    both;
+}
+
+.page-header::before,
+.page-header::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background:
+    rgba(255, 255, 255, 0.12);
+  pointer-events: none;
+}
+
+.page-header::before {
+  width: 180px;
+  height: 180px;
+  top: -110px;
+  right: 145px;
+
+  animation:
+    floatingCircle
+    6s
+    ease-in-out
+    infinite;
+}
+
+.page-header::after {
+  width: 115px;
+  height: 115px;
+  right: -35px;
+  bottom: -65px;
+
+  animation:
+    floatingCircle
+    5s
+    ease-in-out
+    0.8s
+    infinite reverse;
+}
+
+.page-header > * {
+  position: relative;
+  z-index: 1;
+}
+
+.page-header h1 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 31px;
+  line-height: 1.2;
+  font-weight: 720;
+  letter-spacing: -0.5px;
+}
+
+.page-header p {
+  margin: 7px 0 0;
+  color:
+    rgba(255, 255, 255, 0.84);
+  font-size: 14px;
+}
+
+/* =========================================================
+   EDIT CARD
+========================================================= */
+
+.edit-card {
+  overflow: hidden;
+  padding: 0;
+
+  border:
+    1px solid
+    rgba(15, 23, 42, 0.06);
+
+  border-radius: 24px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff 0%,
+      #f8fbff 100%
+    );
+
+  box-shadow:
+    0 14px 38px
+    rgba(15, 23, 42, 0.1);
+
+  animation:
+    cardSlideUp
+    0.72s
+    ease-out
+    0.12s
+    both;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.edit-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 20px 44px
+    rgba(15, 23, 42, 0.14);
+}
+
+.edit-card mat-card-header {
+  position: relative;
+  padding: 25px 28px 13px;
+}
+
+.edit-card mat-card-header::after {
+  content: "";
+  position: absolute;
+  left: 28px;
+  bottom: 0;
+  width: 62px;
+  height: 3px;
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #1976d2,
+      #42a5f5
+    );
+}
+
+.edit-card mat-card-title {
+  color: #1d2939;
+  font-size: 23px;
+  font-weight: 680;
+}
+
+.edit-card mat-card-subtitle {
+  margin-top: 5px;
+  color: #667085;
+  line-height: 1.5;
+}
+
+.edit-card mat-card-content {
+  padding: 26px 28px 30px;
+}
+
+/* =========================================================
+   FORM
+========================================================= */
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 5px 18px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+/* =========================================================
+   MATERIAL FORM FIELDS
+========================================================= */
+
+::ng-deep
+.edit-card
+.mat-mdc-text-field-wrapper {
+  border-radius: 14px;
+  background: #fbfcfe;
+}
+
+::ng-deep
+.edit-card
+.mdc-text-field--outlined:not(
+  .mdc-text-field--disabled
+)
+.mdc-notched-outline__leading,
+::ng-deep
+.edit-card
+.mdc-text-field--outlined:not(
+  .mdc-text-field--disabled
+)
+.mdc-notched-outline__notch,
+::ng-deep
+.edit-card
+.mdc-text-field--outlined:not(
+  .mdc-text-field--disabled
+)
+.mdc-notched-outline__trailing {
+  border-color:
+    rgba(15, 23, 42, 0.15);
+}
+
+::ng-deep
+.edit-card
+.mat-mdc-form-field.mat-focused
+.mdc-notched-outline__leading,
+::ng-deep
+.edit-card
+.mat-mdc-form-field.mat-focused
+.mdc-notched-outline__notch,
+::ng-deep
+.edit-card
+.mat-mdc-form-field.mat-focused
+.mdc-notched-outline__trailing {
+  border-color: #1976d2;
+  border-width: 2px;
+}
+
+::ng-deep
+.edit-card
+.mat-mdc-form-field-icon-prefix {
+  padding-right: 10px;
+  color: #667085;
+
+  transition:
+    color 0.22s ease,
+    transform 0.22s ease;
+}
+
+::ng-deep
+.edit-card
+.mat-mdc-form-field.mat-focused
+.mat-mdc-form-field-icon-prefix {
+  color: #1976d2;
+  transform: scale(1.06);
+}
+
+::ng-deep
+.edit-card
+.mat-mdc-form-field-subscript-wrapper {
+  min-height: 23px;
+}
+
+::ng-deep
+.edit-card
+textarea.mat-mdc-input-element {
+  resize: vertical;
+}
+
+/* =========================================================
+   FORM ACTIONS
+========================================================= */
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+
+  margin-top: 18px;
+  padding-top: 22px;
+
+  border-top:
+    1px solid
+    rgba(15, 23, 42, 0.08);
+}
+
+.form-actions button {
+  min-width: 145px;
+  min-height: 47px;
+
+  border-radius: 13px;
+
+  font-weight: 600;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    filter 0.25s ease,
+    background-color 0.25s ease;
+}
+
+.form-actions button:hover:not(:disabled) {
+  transform: translateY(-3px);
+}
+
+.form-actions button:active:not(:disabled) {
+  transform:
+    translateY(-1px)
+    scale(0.99);
+}
+
+.form-actions button[mat-stroked-button] {
+  color: #475467;
+  background: #ffffff;
+  border-color:
+    rgba(15, 23, 42, 0.16);
+}
+
+.form-actions button[mat-stroked-button]:hover:not(:disabled) {
+  background: #f8fafc;
+
+  box-shadow:
+    0 8px 18px
+    rgba(15, 23, 42, 0.09);
+}
+
+.form-actions button[mat-raised-button] {
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #1565c0,
+      #42a5f5
+    ) !important;
+
+  box-shadow:
+    0 10px 24px
+    rgba(25, 118, 210, 0.24);
+}
+
+.form-actions button[mat-raised-button]:hover:not(:disabled) {
+  filter: brightness(1.04);
+
+  box-shadow:
+    0 15px 30px
+    rgba(25, 118, 210, 0.32);
+}
+
+.form-actions button:disabled {
+  opacity: 0.68;
+}
+
+.form-actions mat-icon {
+  margin-right: 6px;
+}
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.loading-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 300px;
+  padding: 40px;
+
+  border:
+    1px solid
+    rgba(15, 23, 42, 0.06);
+
+  border-radius: 22px;
+
+  color: #667085;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #f8fbff
+    );
+
+  font-size: 16px;
+  font-weight: 500;
+
+  box-shadow:
+    0 12px 32px
+    rgba(15, 23, 42, 0.09);
+
+  animation:
+    loadingFadeIn
+    0.45s
+    ease-out
+    both;
+}
+
+/* =========================================================
+   OPTIONAL MESSAGE STYLES
+========================================================= */
+
+.error-message,
+.success-message {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin-bottom: 18px;
+  padding: 14px 15px;
+
+  border-radius: 14px;
+
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.error-message {
+  color: #b42318;
+  border: 1px solid #ffcdd2;
+  background: #fff1f0;
+
+  animation:
+    errorShake
+    0.42s
+    ease;
+}
+
+.success-message {
+  color: #16794b;
+  border: 1px solid #c8e6c9;
+  background: #ecfdf3;
+
+  animation:
+    successSlideDown
+    0.42s
+    ease;
+}
+
+.error-message mat-icon,
+.success-message mat-icon {
+  flex: 0 0 auto;
+}
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes headerSlideDown {
+  from {
+    opacity: 0;
+    transform:
+      translateY(-22px);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0);
+  }
+}
+
+@keyframes cardSlideUp {
+  from {
+    opacity: 0;
+    transform:
+      translateY(27px)
+      scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+@keyframes loadingFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes floatingCircle {
+  0%,
+  100% {
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translateY(11px)
+      scale(1.06);
+  }
+}
+
+@keyframes errorShake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-7px);
+  }
+
+  75% {
+    transform: translateX(7px);
+  }
+}
+
+@keyframes successSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-9px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================================
+   RESPONSIVE DESIGN
+========================================================= */
+
+@media (max-width: 768px) {
+  .edit-profile-container {
+    padding: 18px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .full-width {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .edit-profile-container {
+    padding: 13px;
+  }
+
+  .page-header {
+    padding: 22px;
+    border-radius: 18px;
+  }
+
+  .page-header h1 {
+    font-size: 27px;
+  }
+
+  .edit-card {
+    border-radius: 19px;
+  }
+
+  .edit-card mat-card-header {
+    padding:
+      22px
+      19px
+      12px;
+  }
+
+  .edit-card mat-card-header::after {
+    left: 19px;
+  }
+
+  .edit-card mat-card-content {
+    padding:
+      22px
+      19px
+      25px;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .form-actions button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 380px) {
+  .edit-profile-container {
+    padding: 8px;
+  }
+
+  .page-header {
+    padding: 19px 17px;
+  }
+
+  .edit-card mat-card-header,
+  .edit-card mat-card-content {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+button:focus-visible {
+  outline:
+    3px solid
+    rgba(25, 118, 210, 0.3);
+
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration:
+      0.01ms !important;
+
+    animation-iteration-count:
+      1 !important;
+
+    transition-duration:
+      0.01ms !important;
+
+    scroll-behavior:
+      auto !important;
+  }
+}

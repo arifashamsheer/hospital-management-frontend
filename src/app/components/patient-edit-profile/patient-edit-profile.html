@@ -1,0 +1,260 @@
+<div class="edit-profile-container">
+
+  <div class="page-header">
+    <div>
+      <h1>Edit Patient Profile</h1>
+
+      <p>
+        Update your personal and medical information
+      </p>
+    </div>
+  </div>
+
+
+  <mat-card class="edit-card">
+
+    <mat-card-content>
+
+      <div
+        class="loading-message"
+        *ngIf="isLoading"
+      >
+        Loading profile...
+      </div>
+
+
+      <form
+        *ngIf="!isLoading"
+        [formGroup]="profileForm"
+        (ngSubmit)="updateProfile()"
+      >
+
+        <div class="form-grid">
+
+          <!-- Name -->
+
+          <mat-form-field appearance="outline">
+
+            <mat-label>Name</mat-label>
+
+            <input
+              matInput
+              type="text"
+              formControlName="name"
+              placeholder="Enter your name"
+            >
+
+            <mat-icon matSuffix>
+              person
+            </mat-icon>
+
+            <mat-error
+              *ngIf="name?.hasError('required')"
+            >
+              Name is required
+            </mat-error>
+
+            <mat-error
+              *ngIf="name?.hasError('minlength')"
+            >
+              Name must contain at least 3 characters
+            </mat-error>
+
+          </mat-form-field>
+
+
+          <!-- Email -->
+
+          <mat-form-field appearance="outline">
+
+            <mat-label>Email</mat-label>
+
+            <input
+              matInput
+              type="email"
+              formControlName="email"
+            >
+
+            <mat-icon matSuffix>
+              email
+            </mat-icon>
+
+          </mat-form-field>
+
+
+          <!-- Age -->
+
+          <mat-form-field appearance="outline">
+
+            <mat-label>Age</mat-label>
+
+            <input
+              matInput
+              type="number"
+              formControlName="age"
+              placeholder="Enter your age"
+            >
+
+            <mat-icon matSuffix>
+              cake
+            </mat-icon>
+
+            <mat-error
+              *ngIf="age?.hasError('min')"
+            >
+              Age must be at least 1
+            </mat-error>
+
+            <mat-error
+              *ngIf="age?.hasError('max')"
+            >
+              Age cannot exceed 120
+            </mat-error>
+
+          </mat-form-field>
+
+
+          <!-- Gender -->
+
+          <mat-form-field appearance="outline">
+
+            <mat-label>Gender</mat-label>
+
+            <mat-select
+              formControlName="gender"
+            >
+
+              <mat-option value="Male">
+                Male
+              </mat-option>
+
+              <mat-option value="Female">
+                Female
+              </mat-option>
+
+              <mat-option value="Other">
+                Other
+              </mat-option>
+
+            </mat-select>
+
+            <mat-error
+              *ngIf="gender?.hasError('required')"
+            >
+              Gender is required
+            </mat-error>
+
+          </mat-form-field>
+
+
+          <!-- Phone -->
+
+          <mat-form-field
+            appearance="outline"
+            class="full-width"
+          >
+
+            <mat-label>Phone</mat-label>
+
+            <input
+              matInput
+              type="tel"
+              formControlName="phone"
+              placeholder="Enter phone number"
+            >
+
+            <mat-icon matSuffix>
+              phone
+            </mat-icon>
+
+            <mat-error
+              *ngIf="phone?.hasError('pattern')"
+            >
+              Enter a valid phone number
+            </mat-error>
+
+          </mat-form-field>
+
+
+          <!-- Medical History -->
+
+          <mat-form-field
+            appearance="outline"
+            class="full-width"
+          >
+
+            <mat-label>
+              Medical History
+            </mat-label>
+
+            <textarea
+              matInput
+              rows="5"
+              formControlName="medicalHistory"
+              placeholder="Enter medical history"
+            ></textarea>
+
+            <mat-hint align="end">
+              {{
+                medicalHistory?.value?.length || 0
+              }}/1000
+            </mat-hint>
+
+            <mat-error
+              *ngIf="
+                medicalHistory?.hasError('maxlength')
+              "
+            >
+              Medical history cannot exceed 1000 characters
+            </mat-error>
+
+          </mat-form-field>
+
+        </div>
+
+
+        <div class="form-actions">
+
+          <button
+            mat-stroked-button
+            type="button"
+            (click)="goBack()"
+            [disabled]="isSubmitting"
+          >
+            <mat-icon>
+              arrow_back
+            </mat-icon>
+
+            Cancel
+          </button>
+
+
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="
+              profileForm.invalid ||
+              isSubmitting
+            "
+          >
+            <mat-icon>
+              save
+            </mat-icon>
+
+            {{
+              isSubmitting
+                ? 'Saving...'
+                : 'Save Changes'
+            }}
+          </button>
+
+        </div>
+
+      </form>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>

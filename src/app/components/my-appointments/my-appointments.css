@@ -1,0 +1,819 @@
+/* =========================================================
+   MY APPOINTMENTS PAGE
+========================================================= */
+
+:host {
+  display: block;
+}
+
+.appointments-container {
+  width: 100%;
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 26px;
+  box-sizing: border-box;
+  animation: pageFadeIn 0.55s ease-out both;
+}
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.page-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+
+  margin-bottom: 24px;
+  padding: 26px 30px;
+
+  overflow: hidden;
+  border-radius: 22px;
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #0d47a1 0%,
+      #1976d2 52%,
+      #42a5f5 100%
+    );
+
+  box-shadow:
+    0 15px 35px
+    rgba(25, 118, 210, 0.24);
+
+  animation:
+    headerSlideDown
+    0.65s
+    ease-out
+    both;
+}
+
+.page-header::before,
+.page-header::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background:
+    rgba(255, 255, 255, 0.12);
+  pointer-events: none;
+}
+
+.page-header::before {
+  width: 185px;
+  height: 185px;
+  top: -110px;
+  right: 150px;
+
+  animation:
+    floatingCircle
+    6s
+    ease-in-out
+    infinite;
+}
+
+.page-header::after {
+  width: 115px;
+  height: 115px;
+  right: -35px;
+  bottom: -65px;
+
+  animation:
+    floatingCircle
+    5s
+    ease-in-out
+    0.8s
+    infinite reverse;
+}
+
+.page-header > * {
+  position: relative;
+  z-index: 1;
+}
+
+.page-header h1 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 31px;
+  line-height: 1.2;
+  font-weight: 720;
+  letter-spacing: -0.5px;
+}
+
+.page-header p {
+  margin: 7px 0 0;
+  color:
+    rgba(255, 255, 255, 0.84);
+  font-size: 14px;
+}
+
+.page-header button {
+  min-height: 44px;
+  padding-inline: 18px;
+
+  border-radius: 13px;
+
+  color: #1565c0;
+  background: #ffffff !important;
+
+  box-shadow:
+    0 9px 22px
+    rgba(0, 0, 0, 0.14);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    filter 0.25s ease;
+}
+
+.page-header button:hover:not(:disabled) {
+  transform: translateY(-3px);
+  filter: brightness(1.02);
+
+  box-shadow:
+    0 14px 28px
+    rgba(0, 0, 0, 0.18);
+}
+
+.page-header button:active:not(:disabled) {
+  transform:
+    translateY(-1px)
+    scale(0.98);
+}
+
+.page-header button mat-icon {
+  margin-right: 6px;
+}
+
+/* =========================================================
+   APPOINTMENTS CARD
+========================================================= */
+
+.appointments-card {
+  overflow: hidden;
+  padding: 0;
+
+  border:
+    1px solid
+    rgba(15, 23, 42, 0.06);
+
+  border-radius: 24px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff 0%,
+      #f8fbff 100%
+    );
+
+  box-shadow:
+    0 14px 38px
+    rgba(15, 23, 42, 0.1);
+
+  animation:
+    cardSlideUp
+    0.72s
+    ease-out
+    0.12s
+    both;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.appointments-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 20px 44px
+    rgba(15, 23, 42, 0.14);
+}
+
+.appointments-card mat-card-content {
+  padding: 25px;
+}
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+
+  border:
+    1px solid
+    rgba(15, 23, 42, 0.08);
+
+  border-radius: 18px;
+
+  background: #ffffff;
+
+  animation:
+    tableFadeIn
+    0.65s
+    ease-out
+    both;
+}
+
+.appointments-table {
+  width: 100%;
+  min-width: 950px;
+  background: #ffffff;
+}
+
+.appointments-table th {
+  height: 58px;
+
+  color: #344054;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f1f7ff,
+      #f8fbff
+    );
+
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+
+  border-bottom:
+    1px solid
+    rgba(15, 23, 42, 0.08);
+}
+
+.appointments-table td {
+  min-height: 68px;
+  padding-top: 13px;
+  padding-bottom: 13px;
+
+  color: #475467;
+  font-size: 14px;
+
+  border-bottom:
+    1px solid
+    rgba(15, 23, 42, 0.06);
+}
+
+.appointments-table tr.mat-mdc-row {
+  transition:
+    background-color 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+.appointments-table tr.mat-mdc-row:hover {
+  background: #f8fbff;
+
+  box-shadow:
+    inset 4px 0 0 #42a5f5;
+}
+
+.appointments-table tr.mat-mdc-row:last-child td {
+  border-bottom: 0;
+}
+
+/* =========================================================
+   STATUS BADGES
+========================================================= */
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 86px;
+  padding: 6px 12px;
+
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  text-transform: capitalize;
+}
+
+.status-badge::before {
+  content: "";
+
+  width: 7px;
+  height: 7px;
+  margin-right: 7px;
+
+  border-radius: 50%;
+}
+
+.status-badge.pending {
+  color: #9a6700;
+
+  border:
+    1px solid
+    rgba(245, 158, 11, 0.2);
+
+  background: #fff8e1;
+}
+
+.status-badge.pending::before {
+  background: #f59e0b;
+
+  box-shadow:
+    0 0 0 4px
+    rgba(245, 158, 11, 0.12);
+}
+
+.status-badge.approved {
+  color: #1565c0;
+
+  border:
+    1px solid
+    rgba(25, 118, 210, 0.18);
+
+  background: #eaf4ff;
+}
+
+.status-badge.approved::before {
+  background: #2196f3;
+
+  box-shadow:
+    0 0 0 4px
+    rgba(33, 150, 243, 0.12);
+}
+
+.status-badge.completed {
+  color: #16794b;
+
+  border:
+    1px solid
+    rgba(22, 121, 75, 0.16);
+
+  background: #ecfdf3;
+}
+
+.status-badge.completed::before {
+  background: #22c55e;
+
+  box-shadow:
+    0 0 0 4px
+    rgba(34, 197, 94, 0.12);
+}
+
+.status-badge.cancelled,
+.status-badge.canceled {
+  color: #b42318;
+
+  border:
+    1px solid
+    rgba(180, 35, 24, 0.15);
+
+  background: #fff1f0;
+}
+
+.status-badge.cancelled::before,
+.status-badge.canceled::before {
+  background: #ef4444;
+
+  box-shadow:
+    0 0 0 4px
+    rgba(239, 68, 68, 0.11);
+}
+
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.action-buttons button {
+  min-height: 42px;
+  border-radius: 11px;
+  font-weight: 600;
+
+  transition:
+    transform 0.22s ease,
+    background-color 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+.action-buttons button:hover:not(:disabled) {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 18px
+    rgba(15, 23, 42, 0.1);
+}
+
+.action-buttons button:active:not(:disabled) {
+  transform:
+    translateY(0)
+    scale(0.98);
+}
+
+.action-buttons button[mat-raised-button] {
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #1565c0,
+      #42a5f5
+    ) !important;
+
+  box-shadow:
+    0 8px 19px
+    rgba(25, 118, 210, 0.2);
+}
+
+.action-buttons button[mat-stroked-button][color="warn"] {
+  color: #d32f2f;
+  border-color:
+    rgba(211, 47, 47, 0.35);
+  background: #fffafa;
+}
+
+.action-buttons button:disabled {
+  opacity: 0.58;
+}
+
+/* =========================================================
+   LOADING STATE
+========================================================= */
+
+.loading-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 320px;
+  padding: 50px 20px;
+
+  border-radius: 18px;
+
+  color: #667085;
+
+  background:
+    linear-gradient(
+      145deg,
+      #f8fbff,
+      #ffffff
+    );
+
+  text-align: center;
+  font-size: 15px;
+  font-weight: 500;
+
+  animation:
+    stateFadeIn
+    0.45s
+    ease-out
+    both;
+}
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.empty-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 350px;
+  padding: 50px 20px;
+
+  border-radius: 18px;
+
+  text-align: center;
+
+  background:
+    linear-gradient(
+      145deg,
+      #f8fbff,
+      #ffffff
+    );
+
+  animation:
+    stateFadeIn
+    0.5s
+    ease-out
+    both;
+}
+
+.empty-message mat-icon {
+  width: 68px;
+  height: 68px;
+
+  color: #90caf9;
+
+  font-size: 68px;
+
+  animation:
+    emptyIconFloat
+    3s
+    ease-in-out
+    infinite;
+}
+
+.empty-message h2 {
+  margin: 16px 0 8px;
+
+  color: #1d2939;
+
+  font-size: 22px;
+  font-weight: 680;
+}
+
+.empty-message p {
+  max-width: 430px;
+  margin: 0 0 20px;
+
+  color: #667085;
+
+  line-height: 1.6;
+}
+
+.empty-message button {
+  min-height: 44px;
+  padding-inline: 20px;
+
+  border-radius: 12px;
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #1565c0,
+      #42a5f5
+    ) !important;
+
+  box-shadow:
+    0 10px 22px
+    rgba(25, 118, 210, 0.23);
+
+  transition:
+    transform 0.23s ease,
+    box-shadow 0.23s ease;
+}
+
+.empty-message button:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 14px 28px
+    rgba(25, 118, 210, 0.3);
+}
+
+/* =========================================================
+   OPTIONAL ERROR MESSAGE
+========================================================= */
+
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin-bottom: 18px;
+  padding: 14px 15px;
+
+  border:
+    1px solid
+    #ffcdd2;
+
+  border-radius: 14px;
+
+  color: #b42318;
+
+  background: #fff1f0;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  animation:
+    errorShake
+    0.42s
+    ease;
+}
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes headerSlideDown {
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(-22px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+}
+
+@keyframes cardSlideUp {
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(27px)
+      scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+@keyframes tableFadeIn {
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+}
+
+@keyframes stateFadeIn {
+  from {
+    opacity: 0;
+
+    transform:
+      scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      scale(1);
+  }
+}
+
+@keyframes floatingCircle {
+  0%,
+  100% {
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translateY(11px)
+      scale(1.06);
+  }
+}
+
+@keyframes emptyIconFloat {
+  0%,
+  100% {
+    transform:
+      translateY(0);
+  }
+
+  50% {
+    transform:
+      translateY(-8px);
+  }
+}
+
+@keyframes errorShake {
+  0%,
+  100% {
+    transform:
+      translateX(0);
+  }
+
+  25% {
+    transform:
+      translateX(-7px);
+  }
+
+  75% {
+    transform:
+      translateX(7px);
+  }
+}
+
+/* =========================================================
+   RESPONSIVE DESIGN
+========================================================= */
+
+@media (max-width: 768px) {
+  .appointments-container {
+    padding: 18px;
+  }
+
+  .page-header {
+    align-items: flex-start;
+    flex-direction: column;
+
+    padding: 22px;
+
+    border-radius: 18px;
+  }
+
+  .page-header h1 {
+    font-size: 27px;
+  }
+
+  .page-header button {
+    width: 100%;
+  }
+
+  .appointments-card {
+    border-radius: 19px;
+  }
+
+  .appointments-card mat-card-content {
+    padding: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .appointments-container {
+    padding: 9px;
+  }
+
+  .page-header {
+    padding: 19px 17px;
+  }
+
+  .appointments-card mat-card-content {
+    padding: 14px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .action-buttons button {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+button:focus-visible {
+  outline:
+    3px solid
+    rgba(25, 118, 210, 0.3);
+
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration:
+      0.01ms !important;
+
+    animation-iteration-count:
+      1 !important;
+
+    transition-duration:
+      0.01ms !important;
+
+    scroll-behavior:
+      auto !important;
+  }
+}

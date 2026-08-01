@@ -1,0 +1,158 @@
+:host {
+  display: block;
+}
+
+.details-page {
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 28px;
+  animation: pageEnter 0.55s ease both;
+}
+
+.details-page > mat-card {
+  overflow: hidden;
+  border-radius: 24px;
+  background: linear-gradient(145deg, #fff, #f8fbff);
+  box-shadow: 0 16px 42px rgba(15, 23, 42, 0.12);
+}
+
+.details-page mat-card-header {
+  padding: 27px 30px 20px;
+  color: #fff;
+  background: linear-gradient(135deg, #0d47a1, #1976d2, #42a5f5);
+}
+
+.details-page mat-card-title {
+  font-size: 26px;
+  font-weight: 720;
+}
+
+.details-page mat-card-content {
+  padding: 27px 30px 32px;
+}
+
+.details-page h3 {
+  margin: 24px 0 15px;
+  color: #1565c0;
+  font-size: 19px;
+}
+
+.details-page h3:first-child {
+  margin-top: 0;
+}
+
+.details-page p {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin: 0;
+  padding: 11px 0;
+  color: #475467;
+}
+
+.details-page p strong {
+  color: #1d2939;
+}
+
+.details-page mat-divider {
+  margin: 18px 0;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 13px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.pending {
+  color: #9a6700;
+  background: #fff8e1;
+}
+
+.approved {
+  color: #1565c0;
+  background: #eaf4ff;
+}
+
+.completed {
+  color: #16794b;
+  background: #ecfdf3;
+}
+
+.cancelled,
+.canceled {
+  color: #b42318;
+  background: #fff1f0;
+}
+
+.button-row {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 11px;
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.button-row button {
+  min-width: 115px;
+  min-height: 44px;
+  border-radius: 12px;
+  transition: 0.23s ease;
+}
+
+.button-row button:hover {
+  transform: translateY(-2px);
+}
+
+.button-row button:not([color])[mat-raised-button] {
+  color: #fff;
+  background: linear-gradient(135deg, #15803d, #22c55e);
+}
+
+.loading {
+  min-height: 380px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 550px) {
+  .details-page {
+    padding: 13px;
+  }
+
+  .details-page mat-card-header,
+  .details-page mat-card-content {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .details-page p {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .button-row {
+    flex-direction: column;
+  }
+
+  .button-row button {
+    width: 100%;
+  }
+}

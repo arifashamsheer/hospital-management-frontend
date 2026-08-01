@@ -1,6 +1,10 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { Apiservice } from '../../services/apiservice';
+
 import { Login } from '../../models/login'
+import { AuthService } from '../../services/auth-service';
+import { Apiservice } from '../../services/apiservice';
+import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -10,37 +14,130 @@ import { Login } from '../../models/login'
 })
 export class LoginComponents {
 
-  user:Login = {
-     email:'',
-   password:''
+  loginForm: FormGroup;
+
+  isLoading = false;
+  hidePassword = true;
+
+  errorMessage = '';
+
+  constructor(
+    private fb: FormBuilder,
+    private apiService: Apiservice,
+    private authService: AuthService,
+    private router: Router
+  ) {
+    this.loginForm = this.fb.group({
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.email
+        ]
+      ],
+
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(6)
+        ]
+      ]
+    });
   }
 
-  constructor(private apiService:Apiservice,private cd: ChangeDetectorRef)
-      {
-    
-      }
+  loginhere(): void {
 
-       loginhere()
-      {
-    this.apiService.loginApi(this.user).subscribe(result=>{
-      localStorage.setItem(
-      'token',
-      result.token
-    );
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
+      return;
+    }
 
+    this.isLoading = true;
+    this.errorMessage = '';
 
-    localStorage.setItem(
-      'user',
-      JSON.stringify(result.user)
-    );
-    console.log(localStorage.getItem('token'));
-  console.log(JSON.parse(localStorage.getItem('user')!));
+    const loginData = {
+      email:
+        this.loginForm.value.email
+          .trim()
+          .toLowerCase(),
 
+      password:
+        this.loginForm.value.password
+    };
 
-    alert("Login Successful");
-       this.cd.detectChanges();
+    this.apiService
+      .loginApi(loginData)
+      .subscribe({
+        next: (result) => {
+
+          this.isLoading = false;
+
+          this.authService.saveToken(
+            result.token
+          );
+
+          localStorage.setItem(
+            'user',
+            JSON.stringify(result.user)
+          );
+
+          const role = result.user.role;
+
+          if (role === 'patient') {
+            this.router.navigate([
+              '/patient-dashboard'
+            ]);
+          }
+
+          else if (role === 'doctor') {
+            this.router.navigate([
+              '/doctor-dashboard'
+            ]);
+          }
+
+          else if (role === 'admin') {
+            this.router.navigate([
+              '/admin-dashboard'
+            ]);
+          }
+
+          else {
+            this.errorMessage =
+              'Invalid user role.';
+          }
+        },
+
+        error: (err) => {
+
+          console.error(err);
+
+          this.isLoading = false;
+
+          this.errorMessage =
+            err.error?.message ||
+            'Invalid email or password.';
+        }
       });
-      }
+  }
+
+  goToRegister(): void {
+    this.router.navigate(['/register']);
+  }
+
+  hasError(
+    controlName: string,
+    errorName: string
+  ): boolean {
+
+    const control =
+      this.loginForm.get(controlName);
+
+    return Boolean(
+      control?.touched &&
+      control.hasError(errorName)
+    );
+  }
 
 
 }

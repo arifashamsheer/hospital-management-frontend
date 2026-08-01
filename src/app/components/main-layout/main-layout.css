@@ -1,0 +1,728 @@
+/* =========================================================
+   MAIN LAYOUT
+   Hospital Management System
+========================================================= */
+
+:host {
+  display: block;
+  min-height: 100vh;
+  background:
+    linear-gradient(
+      135deg,
+      #f7faff 0%,
+      #f7f7fb 50%,
+      #faf8ff 100%
+    );
+}
+
+/* ---------------------------------------------------------
+   Top toolbar
+--------------------------------------------------------- */
+
+mat-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+
+  min-height: 72px;
+  padding: 0 24px;
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #0d47a1 0%,
+      #1976d2 52%,
+      #42a5f5 100%
+    ) !important;
+
+  box-shadow:
+    0 6px 24px rgba(25, 118, 210, 0.25);
+
+  overflow: hidden;
+
+  animation:
+    toolbarSlideDown
+    0.65s
+    ease-out
+    both;
+}
+
+mat-toolbar::before,
+mat-toolbar::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background:
+    rgba(255, 255, 255, 0.12);
+  pointer-events: none;
+}
+
+mat-toolbar::before {
+  width: 170px;
+  height: 170px;
+  top: -105px;
+  right: 190px;
+
+  animation:
+    floatingBubble
+    6s
+    ease-in-out
+    infinite;
+}
+
+mat-toolbar::after {
+  width: 110px;
+  height: 110px;
+  right: -30px;
+  bottom: -65px;
+
+  animation:
+    floatingBubble
+    5s
+    ease-in-out
+    0.8s
+    infinite reverse;
+}
+
+mat-toolbar > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------------------------------------------------------
+   Logo
+--------------------------------------------------------- */
+
+.logo {
+  display: flex;
+  align-items: center;
+
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+
+  animation:
+    logoFadeIn
+    0.8s
+    ease-out
+    both;
+}
+
+.logo::before {
+  content: "local_hospital";
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 42px;
+  height: 42px;
+  margin-right: 12px;
+
+  border-radius: 14px;
+
+  color: #1565c0;
+  background: #ffffff;
+
+  font-family: "Material Icons";
+  font-size: 25px;
+  font-weight: normal;
+
+  box-shadow:
+    0 7px 18px rgba(0, 0, 0, 0.15);
+
+  animation:
+    hospitalIconPulse
+    3s
+    ease-in-out
+    infinite;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+/* ---------------------------------------------------------
+   User name and logout
+--------------------------------------------------------- */
+
+.user-name {
+  margin-right: 14px;
+
+  font-size: 16px;
+  font-weight: 500;
+
+  color:
+    rgba(255, 255, 255, 0.95);
+
+  animation:
+    userFadeIn
+    0.8s
+    ease-out
+    0.12s
+    both;
+}
+
+mat-toolbar button {
+  min-height: 40px;
+  padding: 0 16px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.48);
+
+  border-radius: 999px;
+
+  color: #ffffff;
+
+  background:
+    rgba(255, 255, 255, 0.12);
+
+  backdrop-filter: blur(8px);
+
+  transition:
+    transform 0.25s ease,
+    background-color 0.25s ease,
+    box-shadow 0.25s ease;
+
+  animation:
+    userFadeIn
+    0.8s
+    ease-out
+    0.22s
+    both;
+}
+
+mat-toolbar button:hover {
+  transform: translateY(-3px);
+
+  background:
+    rgba(255, 255, 255, 0.22);
+
+  box-shadow:
+    0 9px 20px rgba(0, 0, 0, 0.15);
+}
+
+mat-toolbar button:active {
+  transform:
+    translateY(-1px)
+    scale(0.98);
+}
+
+/* ---------------------------------------------------------
+   Layout
+--------------------------------------------------------- */
+
+.layout-container {
+  min-height: 100vh;
+  padding-top: 72px;
+}
+
+.sidenav-container {
+  min-height:
+    calc(100vh - 72px);
+
+  background: transparent;
+}
+
+/* ---------------------------------------------------------
+   Sidebar
+--------------------------------------------------------- */
+
+mat-sidenav {
+  width: 255px;
+
+  padding: 18px 12px;
+
+  border-right:
+    1px solid
+    rgba(15, 23, 42, 0.07);
+
+  background:
+    rgba(255, 255, 255, 0.94);
+
+  box-shadow:
+    7px 0 26px
+    rgba(15, 23, 42, 0.06);
+
+  backdrop-filter: blur(12px);
+
+  animation:
+    sidebarSlideIn
+    0.7s
+    ease-out
+    both;
+}
+
+mat-nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+
+  padding-top: 5px;
+}
+
+/* ---------------------------------------------------------
+   Menu links
+--------------------------------------------------------- */
+
+mat-nav-list a[mat-list-item] {
+  position: relative;
+
+  min-height: 48px;
+  margin-bottom: 4px;
+  padding: 0 14px;
+
+  overflow: hidden;
+
+  border-radius: 14px;
+
+  color: #344054;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  transition:
+    color 0.25s ease,
+    background-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+
+  animation:
+    menuItemSlideIn
+    0.55s
+    ease
+    both;
+}
+
+mat-nav-list a[mat-list-item]:nth-child(1) {
+  animation-delay: 0.06s;
+}
+
+mat-nav-list a[mat-list-item]:nth-child(2) {
+  animation-delay: 0.11s;
+}
+
+mat-nav-list a[mat-list-item]:nth-child(3) {
+  animation-delay: 0.16s;
+}
+
+mat-nav-list a[mat-list-item]:nth-child(4) {
+  animation-delay: 0.21s;
+}
+
+mat-nav-list a[mat-list-item]:nth-child(5) {
+  animation-delay: 0.26s;
+}
+
+mat-nav-list a[mat-list-item]:nth-child(6) {
+  animation-delay: 0.31s;
+}
+
+mat-nav-list a[mat-list-item]:nth-child(7) {
+  animation-delay: 0.36s;
+}
+
+mat-nav-list a[mat-list-item]:nth-child(8) {
+  animation-delay: 0.41s;
+}
+
+mat-nav-list a[mat-list-item]::before {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  top: 50%;
+
+  width: 4px;
+  height: 0;
+
+  border-radius: 0 5px 5px 0;
+
+  background:
+    linear-gradient(
+      to bottom,
+      #1976d2,
+      #42a5f5
+    );
+
+  transform:
+    translateY(-50%);
+
+  transition:
+    height 0.3s ease;
+}
+
+mat-nav-list a[mat-list-item]:hover {
+  color: #1565c0;
+
+  background:
+    linear-gradient(
+      90deg,
+      #eaf4ff,
+      #f6fbff
+    );
+
+  transform:
+    translateX(5px);
+
+  box-shadow:
+    0 8px 20px
+    rgba(25, 118, 210, 0.09);
+}
+
+mat-nav-list a[mat-list-item]:hover::before {
+  height: 58%;
+}
+
+/* Icons inside menu */
+
+mat-nav-list a mat-icon {
+  margin-right: 10px;
+
+  color: inherit;
+
+  transition:
+    transform 0.28s ease;
+}
+
+mat-nav-list a:hover mat-icon {
+  transform:
+    scale(1.13)
+    rotate(-5deg);
+}
+
+/* ---------------------------------------------------------
+   Active menu item
+--------------------------------------------------------- */
+
+mat-nav-list a.active-link {
+  color: #ffffff !important;
+
+  background:
+    linear-gradient(
+      135deg,
+      #1565c0,
+      #42a5f5
+    ) !important;
+
+  box-shadow:
+    0 10px 24px
+    rgba(25, 118, 210, 0.26);
+
+  transform:
+    translateX(4px);
+}
+
+mat-nav-list a.active-link::before {
+  height: 66%;
+  background: #ffffff;
+}
+
+mat-nav-list a.active-link mat-icon {
+  color: #ffffff;
+
+  animation:
+    activeIconPulse
+    2.2s
+    ease-in-out
+    infinite;
+}
+
+/* ---------------------------------------------------------
+   Main content
+--------------------------------------------------------- */
+
+mat-sidenav-content {
+  min-height:
+    calc(100vh - 72px);
+
+  background:
+    linear-gradient(
+      135deg,
+      #f8fbff 0%,
+      #f7f7fb 55%,
+      #faf8ff 100%
+    );
+}
+
+.content {
+  min-height:
+    calc(100vh - 72px);
+
+  animation:
+    contentEnter
+    0.65s
+    ease-out
+    both;
+}
+
+/* ---------------------------------------------------------
+   Material list internal alignment
+--------------------------------------------------------- */
+
+::ng-deep .mat-mdc-list-item-unscoped-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+::ng-deep .mat-mdc-list-item {
+  --mdc-list-list-item-label-text-color: inherit;
+}
+
+::ng-deep .mat-drawer-inner-container {
+  overflow-x: hidden;
+}
+
+/* ---------------------------------------------------------
+   Animations
+--------------------------------------------------------- */
+
+@keyframes toolbarSlideDown {
+  from {
+    opacity: 0;
+    transform:
+      translateY(-24px);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0);
+  }
+}
+
+@keyframes logoFadeIn {
+  from {
+    opacity: 0;
+    transform:
+      translateX(-18px);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateX(0);
+  }
+}
+
+@keyframes userFadeIn {
+  from {
+    opacity: 0;
+    transform:
+      translateX(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateX(0);
+  }
+}
+
+@keyframes sidebarSlideIn {
+  from {
+    opacity: 0;
+    transform:
+      translateX(-40px);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateX(0);
+  }
+}
+
+@keyframes menuItemSlideIn {
+  from {
+    opacity: 0;
+    transform:
+      translateX(-18px);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateX(0);
+  }
+}
+
+@keyframes contentEnter {
+  from {
+    opacity: 0;
+    transform:
+      translateY(15px)
+      scale(0.995);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+@keyframes floatingBubble {
+  0%,
+  100% {
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translateY(10px)
+      scale(1.06);
+  }
+}
+
+@keyframes hospitalIconPulse {
+  0%,
+  100% {
+    transform:
+      scale(1);
+  }
+
+  50% {
+    transform:
+      scale(1.06);
+  }
+}
+
+@keyframes activeIconPulse {
+  0%,
+  100% {
+    transform:
+      scale(1);
+  }
+
+  50% {
+    transform:
+      scale(1.13);
+  }
+}
+
+/* ---------------------------------------------------------
+   Responsive design
+--------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  mat-toolbar {
+    min-height: 66px;
+    padding: 0 15px;
+  }
+
+  .layout-container {
+    padding-top: 66px;
+  }
+
+  .sidenav-container {
+    min-height:
+      calc(100vh - 66px);
+  }
+
+  mat-sidenav {
+    width: 230px;
+  }
+
+  .logo {
+    font-size: 17px;
+  }
+
+  .logo::before {
+    width: 38px;
+    height: 38px;
+    margin-right: 9px;
+
+    font-size: 23px;
+  }
+
+  .user-name {
+    display: none;
+  }
+
+  mat-toolbar button {
+    min-width: 44px;
+    padding: 0 11px;
+  }
+}
+
+@media (max-width: 680px) {
+  mat-sidenav {
+    width: 210px;
+  }
+
+  .logo {
+    max-width: 230px;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  mat-nav-list a[mat-list-item] {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  mat-toolbar {
+    padding: 0 10px;
+  }
+
+  .logo {
+    max-width: 190px;
+    font-size: 15px;
+  }
+
+  .logo::before {
+    width: 35px;
+    height: 35px;
+    font-size: 21px;
+  }
+
+  mat-toolbar button {
+    min-width: 40px;
+    padding: 0 8px;
+    font-size: 13px;
+  }
+}
+
+/* ---------------------------------------------------------
+   Accessibility
+--------------------------------------------------------- */
+
+mat-nav-list a:focus-visible,
+mat-toolbar button:focus-visible {
+  outline:
+    3px solid
+    rgba(25, 118, 210, 0.35);
+
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration:
+      0.01ms !important;
+
+    animation-iteration-count:
+      1 !important;
+
+    transition-duration:
+      0.01ms !important;
+
+    scroll-behavior:
+      auto !important;
+  }
+}

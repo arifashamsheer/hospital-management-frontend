@@ -1,0 +1,706 @@
+<div class="doctors-page">
+
+  <div class="page-header">
+
+    <div>
+      <h1>Manage Doctors</h1>
+
+      <p>
+        View and manage registered doctors
+      </p>
+    </div>
+
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="addDoctor()"
+    >
+      <mat-icon>person_add</mat-icon>
+      Add Doctor
+    </button>
+
+  </div>
+
+
+  <mat-card class="doctors-card">
+
+    <mat-card-content>
+
+      <div class="toolbar-row">
+
+        <mat-form-field
+          appearance="outline"
+          class="search-field"
+        >
+
+          <mat-label>
+            Search doctors
+          </mat-label>
+
+          <mat-icon matPrefix>
+            search
+          </mat-icon>
+
+          <input
+            matInput
+            type="text"
+            [value]="searchValue"
+            (input)="applyFilter($event)"
+            placeholder="Search by name, email or specialization"
+          >
+
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            *ngIf="searchValue"
+            (click)="clearSearch()"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+
+        </mat-form-field>
+
+
+        <button
+          mat-stroked-button
+          type="button"
+          (click)="loadDoctors()"
+          [disabled]="isLoading"
+        >
+          <mat-icon>refresh</mat-icon>
+          Refresh
+        </button>
+
+      </div>
+
+
+      <div
+        class="loading-container"
+        *ngIf="isLoading"
+      >
+        <mat-spinner
+          diameter="45"
+        ></mat-spinner>
+
+        <p>Loading doctors...</p>
+      </div>
+
+
+      <div
+        class="error-container"
+        *ngIf="
+          !isLoading &&
+          errorMessage
+        "
+      >
+        <mat-icon>
+          error_outline
+        </mat-icon>
+
+        <h3>
+          Unable to load doctors
+        </h3>
+
+        <p>
+          {{ errorMessage }}
+        </p>
+
+        <button
+          mat-raised-button
+          color="primary"
+          type="button"
+          (click)="loadDoctors()"
+        >
+          Try Again
+        </button>
+      </div>
+
+
+      <ng-container
+        *ngIf="
+          !isLoading &&
+          !errorMessage
+        "
+      >
+
+        <div
+          class="empty-state"
+          *ngIf="
+            dataSource.filteredData.length === 0
+          "
+        >
+          <mat-icon>
+            medical_services
+          </mat-icon>
+
+          <h3>
+            {{
+              searchValue
+                ? 'No matching doctors'
+                : 'No doctors found'
+            }}
+          </h3>
+
+          <p>
+            {{
+              searchValue
+                ? 'Try another search term.'
+                : 'Register your first doctor.'
+            }}
+          </p>
+
+          <button
+            mat-raised-button
+            color="primary"
+            type="button"
+            *ngIf="!searchValue"
+            (click)="addDoctor()"
+          >
+            Add Doctor
+          </button>
+        </div>
+
+
+        <!-- Desktop table -->
+
+        <div
+          class="desktop-table-wrapper"
+          *ngIf="
+            dataSource.filteredData.length > 0
+          "
+        >
+
+          <table
+            mat-table
+            [dataSource]="dataSource"
+            class="doctors-table"
+          >
+
+            <!-- Doctor name -->
+
+            <ng-container matColumnDef="name">
+
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+              >
+                Doctor
+              </th>
+
+              <td
+                mat-cell
+                *matCellDef="let doctor"
+              >
+
+                <div class="doctor-cell">
+
+                  <div class="doctor-avatar">
+                    {{
+                      getInitials(doctor.name)
+                    }}
+                  </div>
+
+                  <div>
+                    <strong>
+                      {{ doctor.name }}
+                    </strong>
+
+                    <span>
+                      Doctor
+                    </span>
+                  </div>
+
+                </div>
+
+              </td>
+
+            </ng-container>
+
+
+            <!-- Email -->
+
+            <ng-container matColumnDef="email">
+
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+              >
+                Email
+              </th>
+
+              <td
+                mat-cell
+                *matCellDef="let doctor"
+              >
+                {{
+                  doctor.email ||
+                  'Not provided'
+                }}
+              </td>
+
+            </ng-container>
+
+
+            <!-- Specialization -->
+
+            <ng-container matColumnDef="specialization">
+
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+              >
+                Specialization
+              </th>
+
+              <td
+                mat-cell
+                *matCellDef="let doctor"
+              >
+                {{
+                  doctor.specialization ||
+                  'Not provided'
+                }}
+              </td>
+
+            </ng-container>
+
+
+            <!-- Phone -->
+
+            <ng-container matColumnDef="phone">
+
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+              >
+                Phone
+              </th>
+
+              <td
+                mat-cell
+                *matCellDef="let doctor"
+              >
+                {{
+                  doctor.phone ||
+                  'Not provided'
+                }}
+              </td>
+
+            </ng-container>
+
+
+            <!-- Availability -->
+
+            <ng-container matColumnDef="availability">
+
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+              >
+                Availability
+              </th>
+
+              <td
+                mat-cell
+                *matCellDef="let doctor"
+              >
+
+                <span
+                  class="availability-text"
+                  [matTooltip]="
+                    getAvailability(
+                      doctor.availability
+                    )
+                  "
+                >
+                  {{
+                    getAvailability(
+                      doctor.availability
+                    )
+                  }}
+                </span>
+
+              </td>
+
+            </ng-container>
+
+
+            <!-- Status -->
+
+            <ng-container matColumnDef="status">
+
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+              >
+                Status
+              </th>
+
+              <td
+                mat-cell
+                *matCellDef="let doctor"
+              >
+
+                <span
+                  class="status-badge"
+                  [class.active-status]="
+                    doctor.isActive
+                  "
+                  [class.inactive-status]="
+                    !doctor.isActive
+                  "
+                >
+                  {{
+                    doctor.isActive
+                      ? 'Active'
+                      : 'Inactive'
+                  }}
+                </span>
+
+              </td>
+
+            </ng-container>
+
+
+            <!-- Actions -->
+
+            <ng-container matColumnDef="actions">
+
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+              >
+                Actions
+              </th>
+
+              <td
+                mat-cell
+                *matCellDef="let doctor"
+              >
+
+                <div class="action-buttons">
+
+                  <!-- View -->
+
+                  <button
+                    mat-icon-button
+                    color="primary"
+                    type="button"
+                    matTooltip="View doctor"
+                    (click)="viewDoctor(doctor._id)"
+                  >
+                    <mat-icon>
+                      visibility
+                    </mat-icon>
+                  </button>
+
+
+                  <!-- Edit -->
+
+                  <button
+                    mat-icon-button
+                    type="button"
+                    matTooltip="Edit doctor"
+                    (click)="editDoctor(doctor._id)"
+                  >
+                    <mat-icon>
+                      edit
+                    </mat-icon>
+                  </button>
+
+
+                  <!-- Activate or deactivate -->
+
+                  <button
+                    mat-icon-button
+                    type="button"
+                    [disabled]="
+                      updatingDoctorId ===
+                      doctor._id
+                    "
+                    [matTooltip]="
+                      doctor.isActive
+                        ? 'Deactivate doctor'
+                        : 'Activate doctor'
+                    "
+                    (click)="changeStatus(doctor)"
+                  >
+
+                    <mat-spinner
+                      *ngIf="
+                        updatingDoctorId ===
+                        doctor._id
+                      "
+                      diameter="22"
+                    ></mat-spinner>
+
+                    <mat-icon
+                      *ngIf="
+                        updatingDoctorId !==
+                        doctor._id
+                      "
+                      [class.deactivate-icon]="
+                        doctor.isActive
+                      "
+                      [class.activate-icon]="
+                        !doctor.isActive
+                      "
+                    >
+                      {{
+                        doctor.isActive
+                          ? 'person_off'
+                          : 'person_add'
+                      }}
+                    </mat-icon>
+
+                  </button>
+
+                </div>
+
+              </td>
+
+            </ng-container>
+
+
+            <tr
+              mat-header-row
+              *matHeaderRowDef="
+                displayedColumns
+              "
+            ></tr>
+
+            <tr
+              mat-row
+              *matRowDef="
+                let row;
+                columns: displayedColumns
+              "
+            ></tr>
+
+          </table>
+
+
+          <mat-paginator
+            [pageSize]="5"
+            [pageSizeOptions]="[
+              5,
+              10,
+              20
+            ]"
+            showFirstLastButtons
+          >
+          </mat-paginator>
+
+        </div>
+
+
+        <!-- Mobile cards -->
+
+        <div
+          class="mobile-doctor-list"
+          *ngIf="
+            dataSource.filteredData.length > 0
+          "
+        >
+
+          <mat-card
+            class="mobile-doctor-card"
+            *ngFor="
+              let doctor of
+                dataSource.filteredData
+            "
+          >
+
+            <div class="mobile-card-header">
+
+              <div class="doctor-cell">
+
+                <div class="doctor-avatar">
+                  {{
+                    getInitials(doctor.name)
+                  }}
+                </div>
+
+                <div>
+                  <h3>
+                    {{ doctor.name }}
+                  </h3>
+
+                  <p>
+                    {{
+                      doctor.specialization ||
+                      'No specialization'
+                    }}
+                  </p>
+                </div>
+
+              </div>
+
+
+              <span
+                class="status-badge"
+                [class.active-status]="
+                  doctor.isActive
+                "
+                [class.inactive-status]="
+                  !doctor.isActive
+                "
+              >
+                {{
+                  doctor.isActive
+                    ? 'Active'
+                    : 'Inactive'
+                }}
+              </span>
+
+            </div>
+
+
+            <mat-divider></mat-divider>
+
+
+            <div class="mobile-detail-row">
+
+              <span>
+                <mat-icon>email</mat-icon>
+                Email
+              </span>
+
+              <strong>
+                {{
+                  doctor.email ||
+                  'Not provided'
+                }}
+              </strong>
+
+            </div>
+
+
+            <div class="mobile-detail-row">
+
+              <span>
+                <mat-icon>phone</mat-icon>
+                Phone
+              </span>
+
+              <strong>
+                {{
+                  doctor.phone ||
+                  'Not provided'
+                }}
+              </strong>
+
+            </div>
+
+
+            <div class="mobile-availability">
+
+              <span>
+                <mat-icon>
+                  schedule
+                </mat-icon>
+
+                Availability
+              </span>
+
+              <p>
+                {{
+                  getAvailability(
+                    doctor.availability
+                  )
+                }}
+              </p>
+
+            </div>
+
+
+            <div class="mobile-actions">
+
+              <button
+                mat-stroked-button
+                color="primary"
+                type="button"
+                (click)="viewDoctor(doctor._id)"
+              >
+                <mat-icon>
+                  visibility
+                </mat-icon>
+
+                View
+              </button>
+
+
+              <button
+                mat-stroked-button
+                type="button"
+                (click)="editDoctor(doctor._id)"
+              >
+                <mat-icon>
+                  edit
+                </mat-icon>
+
+                Edit
+              </button>
+
+
+              <button
+                mat-raised-button
+                type="button"
+                [disabled]="
+                  updatingDoctorId ===
+                  doctor._id
+                "
+                (click)="changeStatus(doctor)"
+              >
+
+                <mat-spinner
+                  *ngIf="
+                    updatingDoctorId ===
+                    doctor._id
+                  "
+                  diameter="20"
+                ></mat-spinner>
+
+                <mat-icon
+                  *ngIf="
+                    updatingDoctorId !==
+                    doctor._id
+                  "
+                >
+                  {{
+                    doctor.isActive
+                      ? 'person_off'
+                      : 'person_add'
+                  }}
+                </mat-icon>
+
+                <span
+                  *ngIf="
+                    updatingDoctorId !==
+                    doctor._id
+                  "
+                >
+                  {{
+                    doctor.isActive
+                      ? 'Deactivate'
+                      : 'Activate'
+                  }}
+                </span>
+
+              </button>
+
+            </div>
+
+          </mat-card>
+
+        </div>
+
+      </ng-container>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>

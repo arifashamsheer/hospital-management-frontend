@@ -1,0 +1,561 @@
+<div class="patient-details-page">
+
+  <div class="page-header">
+
+    <div>
+      <h1>Patient Details</h1>
+
+      <p>
+        View patient information and
+        appointment history
+      </p>
+    </div>
+
+    <button
+      mat-stroked-button
+      type="button"
+      (click)="goBack()"
+    >
+      <mat-icon>arrow_back</mat-icon>
+      Back to Patients
+    </button>
+
+  </div>
+
+
+  <div
+    class="loading-container"
+    *ngIf="isLoadingPatient"
+  >
+    <mat-spinner diameter="42"></mat-spinner>
+
+    <p>Loading patient details...</p>
+  </div>
+
+
+  <div
+    class="error-box"
+    *ngIf="
+      !isLoadingPatient &&
+      patientError
+    "
+  >
+    <mat-icon>error_outline</mat-icon>
+
+    <div>
+      <h3>Unable to load patient</h3>
+
+      <p>{{ patientError }}</p>
+    </div>
+  </div>
+
+
+  <mat-card
+    class="patient-card"
+    *ngIf="
+      !isLoadingPatient &&
+      !patientError &&
+      patient as p
+    "
+  >
+
+    <mat-card-header>
+
+      <div
+        mat-card-avatar
+        class="patient-avatar"
+      >
+        <mat-icon>person</mat-icon>
+      </div>
+
+      <mat-card-title>
+        {{ p.name }}
+      </mat-card-title>
+
+      <mat-card-subtitle>
+        Patient profile information
+      </mat-card-subtitle>
+
+    </mat-card-header>
+
+
+    <mat-card-content>
+
+      <div class="details-grid">
+
+        <div class="detail-item">
+
+          <div class="detail-icon">
+            <mat-icon>email</mat-icon>
+          </div>
+
+          <div>
+            <span class="detail-label">
+              Email
+            </span>
+
+            <p>
+              {{ p.email || 'Not provided' }}
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="detail-item">
+
+          <div class="detail-icon">
+            <mat-icon>cake</mat-icon>
+          </div>
+
+          <div>
+            <span class="detail-label">
+              Age
+            </span>
+
+            <p>
+              {{ p.age || 'Not provided' }}
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="detail-item">
+
+          <div class="detail-icon">
+            <mat-icon>wc</mat-icon>
+          </div>
+
+          <div>
+            <span class="detail-label">
+              Gender
+            </span>
+
+            <p>
+              {{ p.gender || 'Not provided' }}
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="detail-item">
+
+          <div class="detail-icon">
+            <mat-icon>phone</mat-icon>
+          </div>
+
+          <div>
+            <span class="detail-label">
+              Phone
+            </span>
+
+            <p>
+              {{ p.phone || 'Not provided' }}
+            </p>
+          </div>
+
+        </div>
+
+
+        <div
+          class="detail-item full-width-item"
+        >
+
+          <div class="detail-icon">
+            <mat-icon>
+              clinical_notes
+            </mat-icon>
+          </div>
+
+          <div>
+            <span class="detail-label">
+              Medical History
+            </span>
+
+            <p class="medical-history">
+              {{
+                p.medicalHistory ||
+                'No medical history provided'
+              }}
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+
+  <mat-card class="appointments-card">
+
+    <mat-card-header>
+
+      <mat-card-title>
+        Appointment History
+      </mat-card-title>
+
+      <mat-card-subtitle>
+        Previous and upcoming appointments
+        for this patient
+      </mat-card-subtitle>
+
+    </mat-card-header>
+
+
+    <mat-card-content>
+
+      <div
+        class="loading-container"
+        *ngIf="isLoadingAppointments"
+      >
+        <mat-spinner diameter="38"></mat-spinner>
+
+        <p>Loading appointments...</p>
+      </div>
+
+
+      <div
+        class="error-box compact-error"
+        *ngIf="
+          !isLoadingAppointments &&
+          appointmentError
+        "
+      >
+        <mat-icon>error_outline</mat-icon>
+
+        <div>
+          <h3>
+            Unable to load appointments
+          </h3>
+
+          <p>
+            {{ appointmentError }}
+          </p>
+        </div>
+      </div>
+
+
+      <div
+        class="empty-state"
+        *ngIf="
+          !isLoadingAppointments &&
+          !appointmentError &&
+          appointments.length === 0
+        "
+      >
+        <mat-icon>
+          event_busy
+        </mat-icon>
+
+        <h3>No appointments found</h3>
+
+        <p>
+          This patient does not have any
+          appointment history yet.
+        </p>
+      </div>
+
+
+      <div
+        class="table-wrapper"
+        *ngIf="
+          !isLoadingAppointments &&
+          !appointmentError &&
+          appointments.length > 0
+        "
+      >
+
+        <table
+          mat-table
+          [dataSource]="appointments"
+          class="appointments-table"
+        >
+
+          <ng-container matColumnDef="doctor">
+
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+            >
+              Doctor
+            </th>
+
+            <td
+              mat-cell
+              *matCellDef="let appointment"
+            >
+              <div class="doctor-cell">
+
+                <mat-icon>
+                  medical_services
+                </mat-icon>
+
+                <span>
+                  {{
+                    getDoctorName(
+                      appointment
+                    )
+                  }}
+                </span>
+
+              </div>
+            </td>
+
+          </ng-container>
+
+
+          <ng-container
+            matColumnDef="specialization"
+          >
+
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+            >
+              Specialization
+            </th>
+
+            <td
+              mat-cell
+              *matCellDef="let appointment"
+            >
+              {{
+                getSpecialization(
+                  appointment
+                )
+              }}
+            </td>
+
+          </ng-container>
+
+
+          <ng-container matColumnDef="date">
+
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+            >
+              Date
+            </th>
+
+            <td
+              mat-cell
+              *matCellDef="let appointment"
+            >
+              {{
+                appointment.date
+                  | date:'mediumDate'
+              }}
+            </td>
+
+          </ng-container>
+
+
+          <ng-container matColumnDef="time">
+
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+            >
+              Time
+            </th>
+
+            <td
+              mat-cell
+              *matCellDef="let appointment"
+            >
+              {{ appointment.time }}
+            </td>
+
+          </ng-container>
+
+
+          <ng-container matColumnDef="reason">
+
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+            >
+              Reason
+            </th>
+
+            <td
+              mat-cell
+              *matCellDef="let appointment"
+            >
+              {{
+                appointment.reason ||
+                'Not provided'
+              }}
+            </td>
+
+          </ng-container>
+
+
+          <ng-container matColumnDef="status">
+
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+            >
+              Status
+            </th>
+
+            <td
+              mat-cell
+              *matCellDef="let appointment"
+            >
+              <span
+                class="status-badge"
+                [ngClass]="
+                  getStatusClass(
+                    appointment.status
+                  )
+                "
+              >
+                {{ appointment.status }}
+              </span>
+            </td>
+
+          </ng-container>
+
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="
+              displayedColumns
+            "
+          ></tr>
+
+          <tr
+            mat-row
+            *matRowDef="
+              let row;
+              columns: displayedColumns
+            "
+          ></tr>
+
+        </table>
+
+      </div>
+
+
+      <div
+        class="mobile-appointments"
+        *ngIf="
+          !isLoadingAppointments &&
+          !appointmentError &&
+          appointments.length > 0
+        "
+      >
+
+        <mat-card
+          class="mobile-appointment-card"
+          *ngFor="
+            let appointment of appointments
+          "
+        >
+
+          <div class="mobile-card-header">
+
+            <div>
+              <h3>
+                {{
+                  getDoctorName(
+                    appointment
+                  )
+                }}
+              </h3>
+
+              <p>
+                {{
+                  getSpecialization(
+                    appointment
+                  )
+                }}
+              </p>
+            </div>
+
+            <span
+              class="status-badge"
+              [ngClass]="
+                getStatusClass(
+                  appointment.status
+                )
+              "
+            >
+              {{ appointment.status }}
+            </span>
+
+          </div>
+
+
+          <mat-divider></mat-divider>
+
+
+          <div class="mobile-detail-row">
+
+            <span>
+              <mat-icon>
+                calendar_today
+              </mat-icon>
+
+              Date
+            </span>
+
+            <strong>
+              {{
+                appointment.date
+                  | date:'mediumDate'
+              }}
+            </strong>
+
+          </div>
+
+
+          <div class="mobile-detail-row">
+
+            <span>
+              <mat-icon>schedule</mat-icon>
+
+              Time
+            </span>
+
+            <strong>
+              {{ appointment.time }}
+            </strong>
+
+          </div>
+
+
+          <div class="mobile-detail-row">
+
+            <span>
+              <mat-icon>notes</mat-icon>
+
+              Reason
+            </span>
+
+            <strong>
+              {{
+                appointment.reason ||
+                'Not provided'
+              }}
+            </strong>
+
+          </div>
+
+        </mat-card>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>

@@ -1,43 +1,215 @@
-<h2>My Profile</h2>
+<div class="profile-container" *ngIf="patient">
+
+  <!-- Page Header -->
+
+  <div class="profile-header">
+
+    <div>
+
+      <h1>My Profile</h1>
+
+      <p>
+        View and manage your personal information
+      </p>
+
+    </div>
+
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="editProfile()">
+
+      <mat-icon>
+        edit
+      </mat-icon>
+
+      Edit Profile
+
+    </button>
+
+  </div>
 
 
-<div *ngIf="patient">
+  <!-- Profile Card -->
+
+  <mat-card class="profile-card">
+
+    <mat-card-header>
+
+      <div
+        mat-card-avatar
+        class="profile-avatar">
+
+        <mat-icon>
+          person
+        </mat-icon>
+
+      </div>
+
+      <mat-card-title>
+
+        {{ patient.name }}
+
+      </mat-card-title>
+
+      <mat-card-subtitle>
+
+        Patient Profile
+
+      </mat-card-subtitle>
+
+    </mat-card-header>
 
 
-<p>
-Name:
-{{patient.name}}
-</p>
+    <mat-divider></mat-divider>
 
 
-<p>
-Email:
-{{patient.email}}
-</p>
+    <mat-card-content>
+
+      <div class="profile-grid">
 
 
-<p>
-Age:
-{{patient.age}}
-</p>
+        <!-- Email -->
+
+        <div class="profile-item">
+
+          <mat-icon>
+            email
+          </mat-icon>
+
+          <div>
+
+            <span class="label">
+              Email
+            </span>
+
+            <p>
+              {{ patient.email }}
+            </p>
+
+          </div>
+
+        </div>
 
 
-<p>
-Gender:
-{{patient.gender}}
-</p>
+        <!-- Age -->
+
+        <div class="profile-item">
+
+          <mat-icon>
+            cake
+          </mat-icon>
+
+          <div>
+
+            <span class="label">
+              Age
+            </span>
+
+            <p>
+              {{ patient.age || 'Not provided' }}
+            </p>
+
+          </div>
+
+        </div>
 
 
-<p>
-Phone:
-{{patient.phone}}
-</p>
+        <!-- Gender -->
+
+        <div class="profile-item">
+
+          <mat-icon>
+            wc
+          </mat-icon>
+
+          <div>
+
+            <span class="label">
+              Gender
+            </span>
+
+            <p>
+              {{ patient.gender || 'Not provided' }}
+            </p>
+
+          </div>
+
+        </div>
 
 
-<p>
-Medical History:
-{{patient.medicalHistory}}
-</p>
+        <!-- Phone -->
 
+        <div class="profile-item">
+
+          <mat-icon>
+            phone
+          </mat-icon>
+
+          <div>
+
+            <span class="label">
+              Phone
+            </span>
+
+            <p>
+              {{ patient.phone || 'Not provided' }}
+            </p>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+
+      <!-- Medical History -->
+
+      <div class="medical-history">
+
+        <div class="history-title">
+
+          <mat-icon>
+            medical_information
+          </mat-icon>
+
+          <h3>
+            Medical History
+          </h3>
+
+        </div>
+
+
+        <p>
+
+          {{ patient.medicalHistory || 'No medical history provided.' }}
+
+        </p>
+
+      </div>
+
+
+    </mat-card-content>
+
+
+    <mat-card-actions>
+
+      <button
+        mat-stroked-button
+        color="primary"
+        (click)="editProfile()">
+
+        <mat-icon>
+          edit
+        </mat-icon>
+
+        Update Profile
+
+      </button>
+
+    </mat-card-actions>
+
+  </mat-card>
 
 </div>

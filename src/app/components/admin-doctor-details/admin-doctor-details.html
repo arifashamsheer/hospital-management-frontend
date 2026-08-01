@@ -1,0 +1,395 @@
+<div class="doctor-details-page">
+
+  <div class="page-header">
+
+    <button
+      mat-icon-button
+      type="button"
+      matTooltip="Back to doctors"
+      (click)="backToDoctors()"
+    >
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+
+    <div>
+      <h1>Doctor Details</h1>
+
+      <p>
+        View complete doctor information
+      </p>
+    </div>
+
+  </div>
+
+
+  <div
+    class="loading-container"
+    *ngIf="isLoading"
+  >
+    <mat-spinner
+      diameter="48"
+    ></mat-spinner>
+
+    <p>Loading doctor details...</p>
+  </div>
+
+
+  <div
+    class="error-container"
+    *ngIf="
+      !isLoading &&
+      errorMessage
+    "
+  >
+    <mat-icon>
+      error_outline
+    </mat-icon>
+
+    <h3>
+      Unable to load doctor
+    </h3>
+
+    <p>
+      {{ errorMessage }}
+    </p>
+
+    <div class="error-actions">
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="loadDoctor()"
+      >
+        Try Again
+      </button>
+
+      <button
+        mat-stroked-button
+        type="button"
+        (click)="backToDoctors()"
+      >
+        Back
+      </button>
+
+    </div>
+  </div>
+
+
+  <ng-container
+    *ngIf="
+      !isLoading &&
+      !errorMessage &&
+      doctor
+    "
+  >
+
+    <mat-card class="profile-card">
+
+      <mat-card-content>
+
+        <div class="profile-header">
+
+          <div class="profile-main">
+
+            <div class="doctor-avatar">
+              {{
+                getInitials(
+                  doctor.name
+                )
+              }}
+            </div>
+
+            <div>
+              <h2>
+                {{ doctor.name }}
+              </h2>
+
+              <p>
+                {{
+                  doctor.specialization ||
+                  'No specialization provided'
+                }}
+              </p>
+
+              <span
+                class="status-badge"
+                [class.active-status]="
+                  doctor.isActive
+                "
+                [class.inactive-status]="
+                  !doctor.isActive
+                "
+              >
+                {{
+                  doctor.isActive
+                    ? 'Active'
+                    : 'Inactive'
+                }}
+              </span>
+            </div>
+
+          </div>
+
+
+          <div class="profile-actions">
+
+            <button
+              mat-stroked-button
+              type="button"
+              (click)="editDoctor()"
+            >
+              <mat-icon>edit</mat-icon>
+              Edit
+            </button>
+
+            <button
+              mat-raised-button
+              type="button"
+              [disabled]="isUpdatingStatus"
+              [class.deactivate-button]="
+                doctor.isActive
+              "
+              [class.activate-button]="
+                !doctor.isActive
+              "
+              (click)="changeStatus()"
+            >
+
+              <mat-spinner
+                *ngIf="isUpdatingStatus"
+                diameter="20"
+              ></mat-spinner>
+
+              <mat-icon
+                *ngIf="!isUpdatingStatus"
+              >
+                {{
+                  doctor.isActive
+                    ? 'person_off'
+                    : 'person_add'
+                }}
+              </mat-icon>
+
+              <span *ngIf="!isUpdatingStatus">
+                {{
+                  doctor.isActive
+                    ? 'Deactivate'
+                    : 'Activate'
+                }}
+              </span>
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </mat-card-content>
+
+    </mat-card>
+
+
+    <div class="details-grid">
+
+      <mat-card class="details-card">
+
+        <mat-card-header>
+          <mat-icon mat-card-avatar>
+            person
+          </mat-icon>
+
+          <mat-card-title>
+            Personal Information
+          </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+
+          <div class="detail-row">
+            <span>Name</span>
+
+            <strong>
+              {{ doctor.name }}
+            </strong>
+          </div>
+
+          <mat-divider></mat-divider>
+
+          <div class="detail-row">
+            <span>Email</span>
+
+            <strong>
+              {{
+                doctor.email ||
+                'Not provided'
+              }}
+            </strong>
+          </div>
+
+          <mat-divider></mat-divider>
+
+          <div class="detail-row">
+            <span>Phone</span>
+
+            <strong>
+              {{
+                doctor.phone ||
+                'Not provided'
+              }}
+            </strong>
+          </div>
+
+          <mat-divider></mat-divider>
+
+          <div class="detail-row">
+            <span>Role</span>
+
+            <strong>
+              {{
+                doctor.role ||
+                'Doctor'
+              }}
+            </strong>
+          </div>
+
+        </mat-card-content>
+
+      </mat-card>
+
+
+      <mat-card class="details-card">
+
+        <mat-card-header>
+          <mat-icon mat-card-avatar>
+            medical_services
+          </mat-icon>
+
+          <mat-card-title>
+            Professional Information
+          </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+
+          <div class="detail-row">
+            <span>Specialization</span>
+
+            <strong>
+              {{
+                doctor.specialization ||
+                'Not provided'
+              }}
+            </strong>
+          </div>
+
+          <mat-divider></mat-divider>
+
+          <div class="detail-row availability-row">
+            <span>Availability</span>
+
+            <strong>
+              {{ getAvailability() }}
+            </strong>
+          </div>
+
+          <mat-divider></mat-divider>
+
+          <div class="detail-row">
+            <span>Status</span>
+
+            <strong>
+              {{
+                doctor.isActive
+                  ? 'Active'
+                  : 'Inactive'
+              }}
+            </strong>
+          </div>
+
+        </mat-card-content>
+
+      </mat-card>
+
+
+      <mat-card class="details-card account-card">
+
+        <mat-card-header>
+          <mat-icon mat-card-avatar>
+            manage_accounts
+          </mat-icon>
+
+          <mat-card-title>
+            Account Information
+          </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+
+          <div class="detail-row">
+            <span>Doctor ID</span>
+
+            <strong class="id-value">
+              {{
+                doctor._id ||
+                'Not available'
+              }}
+            </strong>
+          </div>
+
+          <mat-divider></mat-divider>
+
+          <div class="detail-row">
+            <span>User ID</span>
+
+            <strong class="id-value">
+              {{
+                doctor.userId ||
+                'Not linked'
+              }}
+            </strong>
+          </div>
+
+          <mat-divider></mat-divider>
+
+          <div class="detail-row">
+            <span>Created</span>
+
+            <strong>
+              {{
+                doctor.createdAt
+                  ? (
+                      doctor.createdAt |
+                      date:'medium'
+                    )
+                  : 'Not available'
+              }}
+            </strong>
+          </div>
+
+          <mat-divider></mat-divider>
+
+          <div class="detail-row">
+            <span>Last Updated</span>
+
+            <strong>
+              {{
+                doctor.updatedAt
+                  ? (
+                      doctor.updatedAt |
+                      date:'medium'
+                    )
+                  : 'Not available'
+              }}
+            </strong>
+          </div>
+
+        </mat-card-content>
+
+      </mat-card>
+
+    </div>
+
+  </ng-container>
+
+</div>

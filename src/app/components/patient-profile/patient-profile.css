@@ -1,0 +1,673 @@
+/* =========================================================
+   PATIENT PROFILE PAGE
+========================================================= */
+
+:host {
+  display: block;
+}
+
+.profile-container {
+  width: 100%;
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 26px;
+  box-sizing: border-box;
+  animation: pageFadeIn 0.55s ease-out both;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.profile-header {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+
+  margin-bottom: 24px;
+  padding: 26px 30px;
+
+  overflow: hidden;
+  border-radius: 22px;
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #0d47a1 0%,
+      #1976d2 52%,
+      #42a5f5 100%
+    );
+
+  box-shadow:
+    0 15px 35px
+    rgba(25, 118, 210, 0.24);
+
+  animation:
+    headerSlideDown
+    0.65s
+    ease-out
+    both;
+}
+
+.profile-header::before,
+.profile-header::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background:
+    rgba(255, 255, 255, 0.12);
+  pointer-events: none;
+}
+
+.profile-header::before {
+  width: 180px;
+  height: 180px;
+  top: -110px;
+  right: 150px;
+
+  animation:
+    floatingCircle
+    6s
+    ease-in-out
+    infinite;
+}
+
+.profile-header::after {
+  width: 115px;
+  height: 115px;
+  right: -35px;
+  bottom: -65px;
+
+  animation:
+    floatingCircle
+    5s
+    ease-in-out
+    0.8s
+    infinite reverse;
+}
+
+.profile-header > * {
+  position: relative;
+  z-index: 1;
+}
+
+.profile-header h1 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 31px;
+  line-height: 1.2;
+  font-weight: 720;
+  letter-spacing: -0.5px;
+}
+
+.profile-header p {
+  margin: 7px 0 0;
+  color:
+    rgba(255, 255, 255, 0.84);
+  font-size: 14px;
+}
+
+/* Header button */
+
+.profile-header button {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  min-height: 44px;
+  padding-inline: 18px;
+
+  border-radius: 13px;
+
+  color: #1565c0;
+  background: #ffffff !important;
+
+  box-shadow:
+    0 9px 22px
+    rgba(0, 0, 0, 0.14);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.profile-header button:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 14px 28px
+    rgba(0, 0, 0, 0.18);
+}
+
+.profile-header button:active {
+  transform:
+    translateY(-1px)
+    scale(0.98);
+}
+
+/* =========================================================
+   PROFILE CARD
+========================================================= */
+
+.profile-card {
+  width: 100%;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(15, 23, 42, 0.06);
+
+  border-radius: 24px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff 0%,
+      #f8fbff 100%
+    );
+
+  box-shadow:
+    0 14px 38px
+    rgba(15, 23, 42, 0.1);
+
+  animation:
+    cardSlideUp
+    0.72s
+    ease-out
+    0.12s
+    both;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.profile-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 20px 44px
+    rgba(15, 23, 42, 0.14);
+}
+
+/* =========================================================
+   AVATAR
+========================================================= */
+
+.profile-avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 58px;
+  height: 58px;
+
+  border-radius: 18px;
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #1565c0,
+      #42a5f5
+    );
+
+  box-shadow:
+    0 9px 22px
+    rgba(25, 118, 210, 0.24);
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+
+  animation:
+    avatarPulse
+    3s
+    ease-in-out
+    infinite;
+}
+
+.profile-avatar:hover {
+  transform:
+    rotate(-6deg)
+    scale(1.1);
+
+  box-shadow:
+    0 13px 28px
+    rgba(25, 118, 210, 0.32);
+}
+
+.profile-avatar mat-icon {
+  width: 31px;
+  height: 31px;
+  color: #ffffff;
+  font-size: 31px;
+}
+
+/* =========================================================
+   PROFILE GRID
+========================================================= */
+
+.profile-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 18px;
+
+  padding: 28px 0;
+}
+
+/* =========================================================
+   PROFILE ITEM
+========================================================= */
+
+.profile-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  padding: 18px;
+
+  border:
+    1px solid
+    rgba(15, 23, 42, 0.07);
+
+  border-radius: 16px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #fbfcfe,
+      #ffffff
+    );
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+
+  animation:
+    itemSlideUp
+    0.58s
+    ease
+    both;
+}
+
+.profile-item:nth-child(1) {
+  animation-delay: 0.15s;
+}
+
+.profile-item:nth-child(2) {
+  animation-delay: 0.22s;
+}
+
+.profile-item:nth-child(3) {
+  animation-delay: 0.29s;
+}
+
+.profile-item:nth-child(4) {
+  animation-delay: 0.36s;
+}
+
+.profile-item:hover {
+  transform: translateY(-4px);
+
+  border-color:
+    rgba(25, 118, 210, 0.15);
+
+  box-shadow:
+    0 11px 25px
+    rgba(15, 23, 42, 0.1);
+}
+
+.profile-item > mat-icon {
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  flex: 0 0 auto;
+
+  border-radius: 14px;
+
+  color: #1976d2;
+
+  background: #eaf4ff;
+
+  font-size: 25px;
+
+  transition:
+    transform 0.25s ease,
+    background-color 0.25s ease;
+}
+
+.profile-item:hover > mat-icon {
+  transform:
+    rotate(-5deg)
+    scale(1.1);
+
+  background: #dceeff;
+}
+
+.label {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #667085;
+
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.profile-item p {
+  margin: 0;
+
+  color: #1d2939;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  word-break: break-word;
+}
+
+/* =========================================================
+   MEDICAL HISTORY
+========================================================= */
+
+.medical-history {
+  margin-top: 8px;
+  padding: 21px;
+
+  border:
+    1px solid
+    rgba(15, 23, 42, 0.07);
+
+  border-radius: 17px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #f4f8fd,
+      #fbfdff
+    );
+
+  animation:
+    itemSlideUp
+    0.62s
+    ease
+    0.4s
+    both;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.medical-history:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 10px 23px
+    rgba(15, 23, 42, 0.09);
+}
+
+.history-title {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.history-title mat-icon {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 13px;
+
+  color: #7b1fa2;
+
+  background: #f3e5f5;
+
+  font-size: 24px;
+}
+
+.history-title h3 {
+  margin: 0;
+
+  color: #1d2939;
+
+  font-size: 18px;
+  font-weight: 680;
+}
+
+.medical-history p {
+  margin: 15px 0 0;
+
+  color: #475467;
+
+  line-height: 1.7;
+  white-space: pre-line;
+}
+
+/* =========================================================
+   CARD ACTIONS
+========================================================= */
+
+mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+
+  padding: 20px 24px 25px !important;
+
+  border-top:
+    1px solid
+    rgba(15, 23, 42, 0.07);
+}
+
+mat-card-actions button {
+  min-width: 135px;
+  min-height: 44px;
+
+  border-radius: 12px;
+
+  font-weight: 600;
+
+  transition:
+    transform 0.23s ease,
+    box-shadow 0.23s ease;
+}
+
+mat-card-actions button:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 18px
+    rgba(25, 118, 210, 0.12);
+}
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes headerSlideDown {
+  from {
+    opacity: 0;
+    transform:
+      translateY(-22px);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0);
+  }
+}
+
+@keyframes cardSlideUp {
+  from {
+    opacity: 0;
+    transform:
+      translateY(26px)
+      scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+@keyframes itemSlideUp {
+  from {
+    opacity: 0;
+    transform:
+      translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0);
+  }
+}
+
+@keyframes floatingCircle {
+  0%,
+  100% {
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translateY(11px)
+      scale(1.06);
+  }
+}
+
+@keyframes avatarPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* =========================================================
+   RESPONSIVE DESIGN
+========================================================= */
+
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 18px;
+  }
+
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .profile-container {
+    padding: 13px;
+  }
+
+  .profile-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 22px;
+    border-radius: 18px;
+  }
+
+  .profile-header h1 {
+    font-size: 27px;
+  }
+
+  .profile-header button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .profile-card {
+    margin-bottom: 20px;
+    border-radius: 19px;
+  }
+
+  .profile-grid {
+    gap: 14px;
+    padding: 22px 0;
+  }
+
+  .profile-item {
+    padding: 15px;
+  }
+
+  mat-card-actions {
+    flex-direction: column;
+  }
+
+  mat-card-actions button {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+button:focus-visible {
+  outline:
+    3px solid
+    rgba(25, 118, 210, 0.3);
+
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration:
+      0.01ms !important;
+
+    animation-iteration-count:
+      1 !important;
+
+    transition-duration:
+      0.01ms !important;
+
+    scroll-behavior:
+      auto !important;
+  }
+}

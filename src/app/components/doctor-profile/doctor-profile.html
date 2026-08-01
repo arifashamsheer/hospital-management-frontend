@@ -1,0 +1,296 @@
+<div class="profile-container">
+
+  <div class="page-header">
+
+    <div>
+      <h1>Doctor Profile</h1>
+
+      <p>
+        View your professional and account details
+      </p>
+    </div>
+
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="editProfile()"
+    >
+      <mat-icon>edit</mat-icon>
+      Edit Profile
+    </button>
+
+  </div>
+
+
+  <div
+    class="loading-container"
+    *ngIf="isLoading"
+  >
+    <mat-spinner diameter="45"></mat-spinner>
+
+    <p>Loading profile...</p>
+  </div>
+
+
+  <div
+    class="error-container"
+    *ngIf="!isLoading && errorMessage"
+  >
+    <mat-icon>error_outline</mat-icon>
+
+    <h3>Unable to load profile</h3>
+
+    <p>{{ errorMessage }}</p>
+
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="loadProfile()"
+    >
+      Try Again
+    </button>
+  </div>
+
+
+  <ng-container
+    *ngIf="
+      !isLoading &&
+      !errorMessage &&
+      doctor
+    "
+  >
+
+    <div class="profile-grid">
+
+      <mat-card class="main-profile-card">
+
+        <mat-card-content>
+
+          <div class="profile-header">
+
+            <div class="avatar">
+              <mat-icon>medical_services</mat-icon>
+            </div>
+
+            <div class="profile-title">
+
+              <h2>
+                Dr. {{ doctor.name }}
+              </h2>
+
+              <p>
+                {{
+                  doctor.specialization ||
+                  'Specialization not provided'
+                }}
+              </p>
+
+              <span
+                class="active-badge"
+                *ngIf="doctor.isActive !== false"
+              >
+                Active
+              </span>
+
+              <span
+                class="inactive-badge"
+                *ngIf="doctor.isActive === false"
+              >
+                Inactive
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <mat-divider></mat-divider>
+
+
+          <div class="details-grid">
+
+            <div class="detail-item">
+
+              <div class="detail-icon">
+                <mat-icon>email</mat-icon>
+              </div>
+
+              <div>
+                <span>Email</span>
+
+                <strong>
+                  {{
+                    doctor.email ||
+                    'Not provided'
+                  }}
+                </strong>
+              </div>
+
+            </div>
+
+
+            <div class="detail-item">
+
+              <div class="detail-icon">
+                <mat-icon>phone</mat-icon>
+              </div>
+
+              <div>
+                <span>Phone</span>
+
+                <strong>
+                  {{
+                    doctor.phone ||
+                    'Not provided'
+                  }}
+                </strong>
+              </div>
+
+            </div>
+
+
+            <div class="detail-item">
+
+              <div class="detail-icon">
+                <mat-icon>workspace_premium</mat-icon>
+              </div>
+
+              <div>
+                <span>Specialization</span>
+
+                <strong>
+                  {{
+                    doctor.specialization ||
+                    'Not provided'
+                  }}
+                </strong>
+              </div>
+
+            </div>
+
+
+            <div class="detail-item">
+
+              <div class="detail-icon">
+                <mat-icon>badge</mat-icon>
+              </div>
+
+              <div>
+                <span>Account Role</span>
+
+                <strong>
+                  {{
+                    doctor.role ||
+                    'Doctor'
+                  }}
+                </strong>
+              </div>
+
+            </div>
+
+          </div>
+
+        </mat-card-content>
+
+      </mat-card>
+
+
+      <mat-card class="availability-card">
+
+        <mat-card-header>
+
+          <mat-card-title>
+            Availability
+          </mat-card-title>
+
+          <mat-card-subtitle>
+            Your available consultation times
+          </mat-card-subtitle>
+
+        </mat-card-header>
+
+
+        <mat-card-content>
+
+          <div
+            class="availability-list"
+            *ngIf="
+              getAvailability().length > 0
+            "
+          >
+            <span
+              class="availability-chip"
+              *ngFor="
+                let time of getAvailability()
+              "
+            >
+              <mat-icon>schedule</mat-icon>
+              {{ time }}
+            </span>
+          </div>
+
+
+          <div
+            class="empty-availability"
+            *ngIf="
+              getAvailability().length === 0
+            "
+          >
+            <mat-icon>schedule</mat-icon>
+
+            <p>
+              No availability has been added.
+            </p>
+          </div>
+
+        </mat-card-content>
+
+      </mat-card>
+
+    </div>
+
+
+    <mat-card class="quick-actions-card">
+
+      <mat-card-header>
+
+        <mat-card-title>
+          Quick Actions
+        </mat-card-title>
+
+      </mat-card-header>
+
+      <mat-card-content>
+
+        <div class="quick-actions">
+
+          <button
+            mat-stroked-button
+            color="primary"
+            type="button"
+            (click)="goToAppointments()"
+          >
+            <mat-icon>calendar_month</mat-icon>
+            View Appointments
+          </button>
+
+          <button
+            mat-stroked-button
+            type="button"
+            (click)="editProfile()"
+          >
+            <mat-icon>manage_accounts</mat-icon>
+            Update Profile
+          </button>
+
+        </div>
+
+      </mat-card-content>
+
+    </mat-card>
+
+  </ng-container>
+
+</div>

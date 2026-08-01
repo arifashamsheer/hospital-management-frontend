@@ -1,0 +1,242 @@
+<div class="payments-container">
+
+  <div class="page-header">
+
+    <div>
+      <h1>My Payments</h1>
+
+      <p>
+        View your appointment payment history
+      </p>
+    </div>
+
+    <button
+      mat-stroked-button
+      type="button"
+      (click)="loadPayments()"
+    >
+      <mat-icon>refresh</mat-icon>
+      Refresh
+    </button>
+
+  </div>
+
+
+  <mat-card class="payments-card">
+
+    <mat-card-content>
+
+      <div
+        class="loading-container"
+        *ngIf="isLoading"
+      >
+        <mat-spinner diameter="45">
+        </mat-spinner>
+
+        <p>Loading payments...</p>
+      </div>
+
+
+      <div
+        class="error-message"
+        *ngIf="!isLoading && errorMessage"
+      >
+        <mat-icon>error_outline</mat-icon>
+
+        <span>
+          {{ errorMessage }}
+        </span>
+      </div>
+
+
+      <div
+        class="empty-message"
+        *ngIf="
+          !isLoading &&
+          !errorMessage &&
+          payments.length === 0
+        "
+      >
+        <mat-icon>payments</mat-icon>
+
+        <h2>No payments found</h2>
+
+        <p>
+          You have not made any appointment
+          payments yet.
+        </p>
+      </div>
+
+
+      <div
+        class="table-wrapper"
+        *ngIf="
+          !isLoading &&
+          !errorMessage &&
+          payments.length > 0
+        "
+      >
+
+        <table
+          mat-table
+          [dataSource]="payments"
+          class="payments-table"
+        >
+
+          <ng-container matColumnDef="doctor">
+
+            <th mat-header-cell *matHeaderCellDef>
+              Doctor
+            </th>
+
+            <td mat-cell *matCellDef="let payment">
+              Dr. {{ payment.doctorId?.name }}
+            </td>
+
+          </ng-container>
+
+
+          <ng-container matColumnDef="appointmentDate">
+
+            <th mat-header-cell *matHeaderCellDef>
+              Appointment
+            </th>
+
+            <td mat-cell *matCellDef="let payment">
+              {{
+                payment.appointmentId?.date
+                  | date:'dd MMM yyyy'
+              }}
+
+              <div class="small-text">
+                {{ payment.appointmentId?.time }}
+              </div>
+            </td>
+
+          </ng-container>
+
+
+          <ng-container matColumnDef="amount">
+
+            <th mat-header-cell *matHeaderCellDef>
+              Amount
+            </th>
+
+            <td mat-cell *matCellDef="let payment">
+              {{
+                payment.currency
+                  | uppercase
+              }}
+              {{
+                payment.amount
+                  | number:'1.2-2'
+              }}
+            </td>
+
+          </ng-container>
+
+
+          <ng-container matColumnDef="status">
+
+            <th mat-header-cell *matHeaderCellDef>
+              Status
+            </th>
+
+            <td mat-cell *matCellDef="let payment">
+
+              <span
+                class="status-badge"
+                [ngClass]="
+                  getStatusClass(
+                    payment.paymentStatus
+                  )
+                "
+              >
+                {{ payment.paymentStatus }}
+              </span>
+
+            </td>
+
+          </ng-container>
+
+
+          <ng-container matColumnDef="paidAt">
+
+            <th mat-header-cell *matHeaderCellDef>
+              Paid At
+            </th>
+
+            <td mat-cell *matCellDef="let payment">
+              {{
+                payment.paidAt
+                  ? (
+                      payment.paidAt
+                        | date:'dd MMM yyyy, h:mm a'
+                    )
+                  : '-'
+              }}
+            </td>
+
+          </ng-container>
+
+
+          <ng-container matColumnDef="actions">
+
+            <th mat-header-cell *matHeaderCellDef>
+              Actions
+            </th>
+
+            <td mat-cell *matCellDef="let payment">
+
+              <button
+                mat-stroked-button
+                color="primary"
+                type="button"
+                (click)="viewPayment(payment)"
+                [disabled]="
+                  payment.paymentStatus !== 'Paid'
+                "
+              >
+                <mat-icon>visibility</mat-icon>
+                View
+              </button>
+              <button
+    mat-icon-button
+    color="primary"
+    type="button"
+    matTooltip="Download receipt"
+    (click)="downloadReceipt(payment)"
+    [disabled]="
+      payment.paymentStatus !== 'Paid'
+    "
+  >
+    <mat-icon>download</mat-icon>
+  </button>
+
+            </td>
+
+          </ng-container>
+
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns"
+          ></tr>
+
+          <tr
+            mat-row
+            *matRowDef="
+              let row;
+              columns: displayedColumns
+            "
+          ></tr>
+
+        </table>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>

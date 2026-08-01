@@ -1,0 +1,252 @@
+<div class="appointment-container">
+
+  <div class="page-header">
+    <div>
+      <h1>Book Appointment</h1>
+
+      <p>
+        Choose a doctor, date and available time
+      </p>
+    </div>
+  </div>
+
+  <mat-card class="appointment-card">
+
+    <mat-card-content>
+
+      <div
+        class="loading-message"
+        *ngIf="isLoadingDoctors"
+      >
+        Loading available doctors...
+      </div>
+
+      <form
+        *ngIf="!isLoadingDoctors"
+        [formGroup]="appointmentForm"
+        (ngSubmit)="bookAppointment()"
+      >
+
+        <div class="form-grid">
+
+          <mat-form-field
+            appearance="outline"
+            class="full-width"
+          >
+            <mat-label>Select Doctor</mat-label>
+
+            <mat-select
+              formControlName="doctorId"
+              (selectionChange)="
+                onDoctorChange($event.value)
+              "
+            >
+              <mat-option
+                *ngFor="let doctor of doctors"
+                [value]="doctor._id"
+              >
+                Dr. {{ doctor.name }}
+                -
+                {{ doctor.specialization }}
+              </mat-option>
+            </mat-select>
+
+            <mat-icon matSuffix>
+              medical_services
+            </mat-icon>
+
+            <mat-error
+              *ngIf="
+                doctorId?.hasError('required')
+              "
+            >
+              Please select a doctor
+            </mat-error>
+          </mat-form-field>
+
+
+          <mat-form-field appearance="outline">
+            <mat-label>Appointment Date</mat-label>
+
+            <input
+              matInput
+              type="date"
+              formControlName="appointmentDate"
+            >
+
+            <mat-icon matSuffix>
+              calendar_today
+            </mat-icon>
+
+            <mat-error
+              *ngIf="
+                appointmentDate?.hasError(
+                  'required'
+                )
+              "
+            >
+              Appointment date is required
+            </mat-error>
+          </mat-form-field>
+
+
+          <mat-form-field appearance="outline">
+            <mat-label>Available Time</mat-label>
+
+            <mat-select
+              formControlName="appointmentTime"
+            >
+              <mat-option
+                *ngFor="
+                  let time of availableTimes
+                "
+                [value]="time"
+              >
+                {{ time }}
+              </mat-option>
+            </mat-select>
+
+            <mat-icon matSuffix>
+              schedule
+            </mat-icon>
+
+            <mat-hint
+              *ngIf="
+                selectedDoctor &&
+                availableTimes.length === 0
+              "
+            >
+              This doctor has no available times
+            </mat-hint>
+
+            <mat-error
+              *ngIf="
+                appointmentTime?.hasError(
+                  'required'
+                )
+              "
+            >
+              Please select an appointment time
+            </mat-error>
+          </mat-form-field>
+
+
+          <mat-form-field
+            appearance="outline"
+            class="full-width"
+          >
+            <mat-label>
+              Reason for Appointment
+            </mat-label>
+
+            <textarea
+              matInput
+              rows="5"
+              formControlName="reason"
+              placeholder="Describe the reason for your appointment"
+            ></textarea>
+
+            <mat-hint align="end">
+              {{ reason?.value?.length || 0 }}/500
+            </mat-hint>
+
+            <mat-error
+              *ngIf="
+                reason?.hasError('required')
+              "
+            >
+              Reason is required
+            </mat-error>
+
+            <mat-error
+              *ngIf="
+                reason?.hasError('minlength')
+              "
+            >
+              Enter at least 5 characters
+            </mat-error>
+
+            <mat-error
+              *ngIf="
+                reason?.hasError('maxlength')
+              "
+            >
+              Reason cannot exceed 500 characters
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+
+
+        <div
+          class="doctor-info"
+          *ngIf="selectedDoctor"
+        >
+          <div class="doctor-info-title">
+            <mat-icon>
+              medical_information
+            </mat-icon>
+
+            <h3>Selected Doctor</h3>
+          </div>
+
+          <p>
+            <strong>Name:</strong>
+            Dr. {{ selectedDoctor.name }}
+          </p>
+
+          <p>
+            <strong>Specialization:</strong>
+            {{ selectedDoctor.specialization }}
+          </p>
+
+          <p>
+            <strong>Availability:</strong>
+            {{
+              availableTimes.length
+                ? availableTimes.join(', ')
+                : 'Not available'
+            }}
+          </p>
+        </div>
+
+
+        <div class="form-actions">
+
+          <button
+            mat-stroked-button
+            type="button"
+            (click)="goBack()"
+            [disabled]="isSubmitting"
+          >
+            <mat-icon>arrow_back</mat-icon>
+            Cancel
+          </button>
+
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="
+              appointmentForm.invalid ||
+              isSubmitting
+            "
+          >
+            <mat-icon>event_available</mat-icon>
+
+            {{
+              isSubmitting
+                ? 'Booking...'
+                : 'Book Appointment'
+            }}
+          </button>
+
+        </div>
+
+      </form>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>

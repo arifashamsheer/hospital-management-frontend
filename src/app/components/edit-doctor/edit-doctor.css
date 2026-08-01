@@ -1,0 +1,1054 @@
+/* =========================================================
+   ADMIN EDIT DOCTOR PAGE
+========================================================= */
+
+:host {
+  display: block;
+}
+
+.edit-doctor-page {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 26px;
+  box-sizing: border-box;
+  animation: pageFadeIn 0.55s ease-out both;
+}
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.page-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  margin-bottom: 24px;
+  padding: 25px 29px;
+
+  overflow: hidden;
+  border-radius: 23px;
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #0d47a1 0%,
+      #1976d2 52%,
+      #42a5f5 100%
+    );
+
+  box-shadow:
+    0 15px 35px
+    rgba(25, 118, 210, 0.24);
+
+  animation:
+    headerSlideDown
+    0.65s
+    ease-out
+    both;
+}
+
+.page-header::before,
+.page-header::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  pointer-events: none;
+}
+
+.page-header::before {
+  width: 180px;
+  height: 180px;
+  top: -110px;
+  right: 145px;
+
+  animation:
+    floatingCircle
+    6s
+    ease-in-out
+    infinite;
+}
+
+.page-header::after {
+  width: 115px;
+  height: 115px;
+  right: -35px;
+  bottom: -65px;
+
+  animation:
+    floatingCircle
+    5s
+    ease-in-out
+    0.8s
+    infinite reverse;
+}
+
+.page-header > * {
+  position: relative;
+  z-index: 1;
+}
+
+.page-header button {
+  flex: 0 0 auto;
+
+  color: #ffffff;
+
+  background:
+    rgba(255, 255, 255, 0.14);
+
+  transition:
+    transform 0.24s ease,
+    background-color 0.24s ease,
+    box-shadow 0.24s ease;
+}
+
+.page-header button:hover {
+  transform: translateX(-3px);
+
+  background:
+    rgba(255, 255, 255, 0.24);
+
+  box-shadow:
+    0 8px 18px
+    rgba(0, 0, 0, 0.12);
+}
+
+.page-header h1 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 31px;
+  line-height: 1.2;
+  font-weight: 720;
+  letter-spacing: -0.5px;
+}
+
+.page-header p {
+  margin: 6px 0 0;
+
+  color:
+    rgba(255, 255, 255, 0.84);
+
+  font-size: 14px;
+}
+
+/* =========================================================
+   FORM CARD
+========================================================= */
+
+.form-card {
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(15, 23, 42, 0.06);
+
+  border-radius: 24px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff 0%,
+      #f8fbff 100%
+    );
+
+  box-shadow:
+    0 14px 38px
+    rgba(15, 23, 42, 0.1);
+
+  animation:
+    cardSlideUp
+    0.72s
+    ease-out
+    0.12s
+    both;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.form-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 20px 44px
+    rgba(15, 23, 42, 0.14);
+}
+
+.form-card mat-card-header {
+  position: relative;
+  padding: 25px 28px 14px;
+}
+
+.form-card mat-card-header::after {
+  content: "";
+
+  position: absolute;
+  left: 28px;
+  bottom: 0;
+
+  width: 62px;
+  height: 3px;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #1976d2,
+      #42a5f5
+    );
+}
+
+.form-card mat-card-title {
+  color: #1d2939;
+
+  font-size: 22px;
+  font-weight: 680;
+}
+
+.form-card mat-card-subtitle {
+  margin-top: 5px;
+
+  color: #667085;
+
+  line-height: 1.5;
+}
+
+.form-card mat-card-content {
+  padding: 25px 28px 30px;
+}
+
+/* =========================================================
+   LOADING AND ERROR STATES
+========================================================= */
+
+.loading-container,
+.error-container {
+  display: flex;
+  min-height: 340px;
+
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 15px;
+  padding: 45px 22px;
+
+  border:
+    1px solid
+    rgba(15, 23, 42, 0.06);
+
+  border-radius: 22px;
+
+  text-align: center;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #f8fbff
+    );
+
+  box-shadow:
+    0 13px 34px
+    rgba(15, 23, 42, 0.1);
+
+  animation:
+    stateFadeIn
+    0.5s
+    ease-out
+    both;
+}
+
+.loading-container p {
+  margin: 0;
+
+  color: #667085;
+
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.error-container {
+  border-color:
+    rgba(217, 45, 32, 0.13);
+}
+
+.error-container > mat-icon {
+  width: 64px;
+  height: 64px;
+
+  color: #d92d20;
+
+  font-size: 64px;
+
+  animation:
+    errorIconPulse
+    2.4s
+    ease-in-out
+    infinite;
+}
+
+.error-container h3 {
+  margin: 0;
+
+  color: #7f1d1d;
+
+  font-size: 22px;
+}
+
+.error-container p {
+  max-width: 440px;
+  margin: 0;
+
+  color: #667085;
+
+  line-height: 1.6;
+}
+
+.error-container button {
+  min-height: 44px;
+  padding-inline: 20px;
+
+  border-radius: 12px;
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #1565c0,
+      #42a5f5
+    ) !important;
+}
+
+/* =========================================================
+   FORM GRID
+========================================================= */
+
+.form-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 5px 18px;
+}
+
+.form-grid mat-form-field {
+  width: 100%;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+/* =========================================================
+   MATERIAL FORM FIELDS
+========================================================= */
+
+::ng-deep
+.form-card
+.mat-mdc-text-field-wrapper {
+  border-radius: 14px;
+  background: #fbfcfe;
+}
+
+::ng-deep
+.form-card
+.mdc-text-field--outlined:not(.mdc-text-field--disabled)
+.mdc-notched-outline__leading,
+::ng-deep
+.form-card
+.mdc-text-field--outlined:not(.mdc-text-field--disabled)
+.mdc-notched-outline__notch,
+::ng-deep
+.form-card
+.mdc-text-field--outlined:not(.mdc-text-field--disabled)
+.mdc-notched-outline__trailing {
+  border-color:
+    rgba(15, 23, 42, 0.15);
+}
+
+::ng-deep
+.form-card
+.mat-mdc-form-field.mat-focused
+.mdc-notched-outline__leading,
+::ng-deep
+.form-card
+.mat-mdc-form-field.mat-focused
+.mdc-notched-outline__notch,
+::ng-deep
+.form-card
+.mat-mdc-form-field.mat-focused
+.mdc-notched-outline__trailing {
+  border-color: #1976d2;
+  border-width: 2px;
+}
+
+::ng-deep
+.form-card
+.mat-mdc-form-field-icon-prefix {
+  padding-right: 10px;
+
+  color: #667085;
+
+  transition:
+    color 0.22s ease,
+    transform 0.22s ease;
+}
+
+::ng-deep
+.form-card
+.mat-mdc-form-field.mat-focused
+.mat-mdc-form-field-icon-prefix {
+  color: #1976d2;
+
+  transform: scale(1.06);
+}
+
+::ng-deep
+.form-card
+.mat-mdc-form-field-subscript-wrapper {
+  min-height: 23px;
+}
+
+/* =========================================================
+   MESSAGES
+========================================================= */
+
+.message {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin-bottom: 18px;
+  padding: 14px 15px;
+
+  border-radius: 14px;
+
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.message mat-icon {
+  flex: 0 0 auto;
+}
+
+.success-message {
+  color: #067647;
+
+  border:
+    1px solid
+    rgba(6, 118, 71, 0.15);
+
+  background:
+    linear-gradient(
+      135deg,
+      #ecfdf3,
+      #f8fff9
+    );
+
+  animation:
+    successSlideDown
+    0.42s
+    ease;
+}
+
+.error-message {
+  color: #b42318;
+
+  border:
+    1px solid
+    rgba(180, 35, 24, 0.14);
+
+  background:
+    linear-gradient(
+      135deg,
+      #fef3f2,
+      #fffafa
+    );
+
+  animation:
+    errorShake
+    0.42s
+    ease;
+}
+
+/* =========================================================
+   AVAILABILITY SECTION
+========================================================= */
+
+.availability-section {
+  margin-top: 10px;
+  padding: 23px;
+
+  border:
+    1px solid
+    rgba(25, 118, 210, 0.09);
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #f3f8ff,
+      #fbfdff
+    );
+
+  animation:
+    sectionEnter
+    0.58s
+    ease-out
+    0.18s
+    both;
+}
+
+/* =========================================================
+   SECTION HEADER
+========================================================= */
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+  margin-bottom: 17px;
+}
+
+.section-header h3 {
+  margin: 0;
+
+  color: #344054;
+
+  font-size: 18px;
+  font-weight: 680;
+}
+
+.section-header p {
+  margin: 5px 0 0;
+
+  color: #667085;
+
+  font-size: 13px;
+}
+
+.section-header button {
+  min-height: 42px;
+  padding-inline: 16px;
+
+  border-radius: 12px;
+
+  color: #1565c0;
+
+  background: #ffffff;
+
+  transition:
+    transform 0.23s ease,
+    box-shadow 0.23s ease,
+    background-color 0.23s ease;
+}
+
+.section-header button:hover:not(:disabled) {
+  transform: translateY(-2px);
+
+  background: #eef7ff;
+
+  box-shadow:
+    0 8px 18px
+    rgba(25, 118, 210, 0.12);
+}
+
+/* =========================================================
+   AVAILABILITY ITEM
+========================================================= */
+
+.availability-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  margin-bottom: 12px;
+  padding: 13px;
+
+  border:
+    1px solid
+    rgba(15, 23, 42, 0.07);
+
+  border-radius: 15px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 7px 18px
+    rgba(15, 23, 42, 0.05);
+
+  animation:
+    slotEnter
+    0.5s
+    ease
+    both;
+
+  transition:
+    transform 0.24s ease,
+    box-shadow 0.24s ease,
+    border-color 0.24s ease;
+}
+
+.availability-item:hover {
+  transform: translateY(-3px);
+
+  border-color:
+    rgba(25, 118, 210, 0.16);
+
+  box-shadow:
+    0 11px 24px
+    rgba(15, 23, 42, 0.09);
+}
+
+.availability-item mat-form-field {
+  width: 100%;
+  margin: 0;
+}
+
+.availability-item button {
+  flex: 0 0 auto;
+
+  color: #d92d20;
+
+  transition:
+    transform 0.22s ease,
+    background-color 0.22s ease;
+}
+
+.availability-item button:hover:not(:disabled) {
+  transform:
+    rotate(5deg)
+    scale(1.05);
+
+  background:
+    rgba(217, 45, 32, 0.08);
+}
+
+/* =========================================================
+   STATUS SECTION
+========================================================= */
+
+.status-section {
+  margin-top: 18px;
+  padding: 22px;
+
+  border:
+    1px solid
+    rgba(15, 23, 42, 0.07);
+
+  border-radius: 17px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #fbfcfe,
+      #ffffff
+    );
+
+  animation:
+    sectionEnter
+    0.58s
+    ease-out
+    0.26s
+    both;
+}
+
+.status-section h3 {
+  margin: 0 0 12px;
+
+  color: #344054;
+
+  font-size: 18px;
+  font-weight: 680;
+}
+
+.status-section p {
+  margin: 0;
+
+  color: #667085;
+
+  line-height: 1.6;
+}
+
+/* =========================================================
+   FORM ACTIONS
+========================================================= */
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+
+  margin-top: 24px;
+  padding-top: 22px;
+
+  border-top:
+    1px solid
+    rgba(15, 23, 42, 0.08);
+}
+
+.form-actions button {
+  min-width: 145px;
+  min-height: 47px;
+
+  border-radius: 13px;
+
+  font-weight: 600;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    filter 0.25s ease,
+    background-color 0.25s ease;
+}
+
+.form-actions button:hover:not(:disabled) {
+  transform: translateY(-3px);
+}
+
+.form-actions button:active:not(:disabled) {
+  transform:
+    translateY(-1px)
+    scale(0.99);
+}
+
+.form-actions button[mat-stroked-button] {
+  color: #475467;
+
+  border-color:
+    rgba(15, 23, 42, 0.16);
+
+  background: #ffffff;
+}
+
+.form-actions button[mat-stroked-button]:hover:not(:disabled) {
+  background: #f8fafc;
+
+  box-shadow:
+    0 8px 18px
+    rgba(15, 23, 42, 0.09);
+}
+
+.form-actions button[mat-raised-button] {
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #1565c0,
+      #42a5f5
+    ) !important;
+
+  box-shadow:
+    0 10px 24px
+    rgba(25, 118, 210, 0.24);
+}
+
+.form-actions button[mat-raised-button]:hover:not(:disabled) {
+  filter: brightness(1.04);
+
+  box-shadow:
+    0 15px 30px
+    rgba(25, 118, 210, 0.32);
+}
+
+.form-actions button:disabled {
+  opacity: 0.68;
+}
+
+.form-actions mat-spinner {
+  display: inline-block;
+  margin-right: 7px;
+  vertical-align: middle;
+}
+
+.form-actions mat-icon {
+  margin-right: 6px;
+}
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes headerSlideDown {
+  from {
+    opacity: 0;
+    transform:
+      translateY(-22px);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0);
+  }
+}
+
+@keyframes cardSlideUp {
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(27px)
+      scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+@keyframes sectionEnter {
+  from {
+    opacity: 0;
+    transform:
+      translateY(17px);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0);
+  }
+}
+
+@keyframes slotEnter {
+  from {
+    opacity: 0;
+    transform:
+      translateY(13px)
+      scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+@keyframes stateFadeIn {
+  from {
+    opacity: 0;
+    transform:
+      scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      scale(1);
+  }
+}
+
+@keyframes floatingCircle {
+  0%,
+  100% {
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translateY(11px)
+      scale(1.06);
+  }
+}
+
+@keyframes errorIconPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.07);
+  }
+}
+
+@keyframes errorShake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-7px);
+  }
+
+  75% {
+    transform: translateX(7px);
+  }
+}
+
+@keyframes successSlideDown {
+  from {
+    opacity: 0;
+    transform:
+      translateY(-9px);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0);
+  }
+}
+
+/* =========================================================
+   RESPONSIVE DESIGN
+========================================================= */
+
+@media (max-width: 700px) {
+  .edit-doctor-page {
+    padding: 14px;
+  }
+
+  .page-header {
+    padding: 22px;
+
+    border-radius: 18px;
+  }
+
+  .page-header h1 {
+    font-size: 27px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .full-width {
+    grid-column: auto;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .section-header button {
+    width: 100%;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .form-actions button {
+    width: 100%;
+  }
+
+  .form-card {
+    border-radius: 19px;
+  }
+
+  .form-card mat-card-header {
+    padding:
+      22px
+      19px
+      12px;
+  }
+
+  .form-card mat-card-header::after {
+    left: 19px;
+  }
+
+  .form-card mat-card-content {
+    padding:
+      22px
+      19px
+      25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .edit-doctor-page {
+    padding: 9px;
+  }
+
+  .page-header {
+    padding: 19px 17px;
+  }
+
+  .availability-section,
+  .status-section {
+    padding: 16px;
+  }
+
+  .availability-item {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .availability-item button {
+    width: 100%;
+  }
+
+  .form-card mat-card-header,
+  .form-card mat-card-content {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+button:focus-visible {
+  outline:
+    3px solid
+    rgba(25, 118, 210, 0.3);
+
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration:
+      0.01ms !important;
+
+    animation-iteration-count:
+      1 !important;
+
+    transition-duration:
+      0.01ms !important;
+
+    scroll-behavior:
+      auto !important;
+  }
+}

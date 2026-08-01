@@ -1,0 +1,1043 @@
+/* =========================================================
+   PATIENT REGISTRATION PAGE
+   Hospital Management System
+========================================================= */
+
+:host {
+  display: block;
+}
+
+/* ---------------------------------------------------------
+   Main page
+--------------------------------------------------------- */
+
+.register-page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  background:
+    radial-gradient(
+      circle at 12% 18%,
+      rgba(66, 165, 245, 0.2),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 88% 82%,
+      rgba(126, 87, 194, 0.16),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #eef6ff 0%,
+      #f7f8fc 48%,
+      #f7f0ff 100%
+    );
+
+  animation: pageFadeIn 0.55s ease-out both;
+}
+
+.register-page::before,
+.register-page::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.register-page::before {
+  width: 320px;
+  height: 320px;
+  top: -130px;
+  left: -100px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(25, 118, 210, 0.2),
+      rgba(66, 165, 245, 0.06)
+    );
+
+  animation:
+    floatBubbleOne
+    8s
+    ease-in-out
+    infinite;
+}
+
+.register-page::after {
+  width: 260px;
+  height: 260px;
+  right: -95px;
+  bottom: -115px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(123, 31, 162, 0.14),
+      rgba(66, 165, 245, 0.08)
+    );
+
+  animation:
+    floatBubbleTwo
+    7s
+    ease-in-out
+    infinite;
+}
+
+/* ---------------------------------------------------------
+   Main container
+--------------------------------------------------------- */
+
+.register-container {
+  position: relative;
+  z-index: 1;
+
+  display: grid;
+  grid-template-columns:
+    minmax(0, 0.9fr)
+    minmax(520px, 1.1fr);
+
+  width: 100%;
+  max-width: 1220px;
+  min-height: 730px;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.72);
+
+  border-radius: 30px;
+
+  background:
+    rgba(255, 255, 255, 0.62);
+
+  box-shadow:
+    0 30px 75px
+    rgba(15, 23, 42, 0.16);
+
+  backdrop-filter: blur(18px);
+
+  animation:
+    containerScaleIn
+    0.75s
+    cubic-bezier(0.2, 0.8, 0.2, 1)
+    both;
+}
+
+/* ---------------------------------------------------------
+   Information panel
+--------------------------------------------------------- */
+
+.register-info {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 58px;
+
+  overflow: hidden;
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      145deg,
+      #0d47a1 0%,
+      #1565c0 42%,
+      #42a5f5 100%
+    );
+
+  animation:
+    infoSlideIn
+    0.8s
+    ease-out
+    both;
+}
+
+.register-info::before,
+.register-info::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background:
+    rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+}
+
+.register-info::before {
+  width: 270px;
+  height: 270px;
+  top: -120px;
+  right: -100px;
+
+  animation:
+    panelCircleFloat
+    7s
+    ease-in-out
+    infinite;
+}
+
+.register-info::after {
+  width: 170px;
+  height: 170px;
+  left: -65px;
+  bottom: -72px;
+
+  animation:
+    panelCircleFloat
+    6s
+    ease-in-out
+    0.8s
+    infinite reverse;
+}
+
+.register-info > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------------------------------------------------------
+   Logo
+--------------------------------------------------------- */
+
+.logo-box,
+.mobile-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 20px;
+
+  box-shadow:
+    0 12px 28px
+    rgba(0, 0, 0, 0.16);
+}
+
+.logo-box {
+  width: 74px;
+  height: 74px;
+  margin-bottom: 27px;
+
+  color: #1565c0;
+  background: #ffffff;
+
+  animation:
+    logoPulse
+    3s
+    ease-in-out
+    infinite;
+}
+
+.logo-box mat-icon {
+  width: 42px;
+  height: 42px;
+  font-size: 42px;
+}
+
+.mobile-logo {
+  display: none;
+
+  width: 62px;
+  height: 62px;
+  margin: 0 auto 18px;
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #1565c0,
+      #42a5f5
+    );
+}
+
+.mobile-logo mat-icon {
+  width: 34px;
+  height: 34px;
+  font-size: 34px;
+}
+
+/* ---------------------------------------------------------
+   Information text
+--------------------------------------------------------- */
+
+.register-info h1 {
+  max-width: 430px;
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size:
+    clamp(34px, 4vw, 46px);
+
+  line-height: 1.14;
+  font-weight: 750;
+  letter-spacing: -1.1px;
+
+  animation:
+    textSlideUp
+    0.7s
+    ease-out
+    0.12s
+    both;
+}
+
+.register-info > p {
+  max-width: 460px;
+  margin: 18px 0 28px;
+
+  color:
+    rgba(255, 255, 255, 0.83);
+
+  font-size: 16px;
+  line-height: 1.75;
+
+  animation:
+    textSlideUp
+    0.7s
+    ease-out
+    0.2s
+    both;
+}
+
+/* ---------------------------------------------------------
+   Information items
+--------------------------------------------------------- */
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+
+  margin-top: 14px;
+  padding: 14px 16px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.16);
+
+  border-radius: 15px;
+
+  background:
+    rgba(255, 255, 255, 0.1);
+
+  backdrop-filter: blur(7px);
+
+  transition:
+    transform 0.28s ease,
+    background-color 0.28s ease,
+    box-shadow 0.28s ease;
+
+  animation:
+    itemSlideIn
+    0.65s
+    ease
+    both;
+}
+
+.info-item:nth-of-type(1) {
+  animation-delay: 0.26s;
+}
+
+.info-item:nth-of-type(2) {
+  animation-delay: 0.36s;
+}
+
+.info-item:nth-of-type(3) {
+  animation-delay: 0.46s;
+}
+
+.info-item:hover {
+  transform:
+    translateX(7px);
+
+  background:
+    rgba(255, 255, 255, 0.17);
+
+  box-shadow:
+    0 10px 24px
+    rgba(0, 0, 0, 0.11);
+}
+
+.info-item mat-icon {
+  width: 26px;
+  height: 26px;
+  font-size: 26px;
+
+  transition:
+    transform 0.28s ease;
+}
+
+.info-item:hover mat-icon {
+  transform:
+    rotate(-6deg)
+    scale(1.12);
+}
+
+.info-item span {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* ---------------------------------------------------------
+   Registration card
+--------------------------------------------------------- */
+
+.register-card {
+  align-self: center;
+
+  width:
+    calc(100% - 56px);
+
+  max-width: 650px;
+
+  margin: 28px;
+
+  border:
+    1px solid
+    rgba(15, 23, 42, 0.06);
+
+  border-radius: 24px;
+
+  background:
+    rgba(255, 255, 255, 0.94);
+
+  box-shadow:
+    0 16px 42px
+    rgba(15, 23, 42, 0.12);
+
+  animation:
+    cardSlideIn
+    0.8s
+    ease-out
+    0.12s
+    both;
+}
+
+.register-card mat-card-content {
+  padding: 36px;
+}
+
+/* ---------------------------------------------------------
+   Form heading
+--------------------------------------------------------- */
+
+.form-header {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.form-header h2 {
+  margin: 0;
+
+  color: #172033;
+
+  font-size: 30px;
+  line-height: 1.2;
+  font-weight: 720;
+  letter-spacing: -0.5px;
+}
+
+.form-header p {
+  margin: 8px 0 0;
+
+  color: #667085;
+
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+/* ---------------------------------------------------------
+   Messages
+--------------------------------------------------------- */
+
+.message {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin-bottom: 18px;
+  padding: 13px 14px;
+
+  border-radius: 13px;
+
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.message mat-icon {
+  flex: 0 0 auto;
+
+  width: 22px;
+  height: 22px;
+  font-size: 22px;
+}
+
+.success-message {
+  color: #1b5e20;
+  border: 1px solid #c8e6c9;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f0fff2,
+      #f8fff9
+    );
+
+  animation:
+    messageSlideDown
+    0.4s
+    ease;
+}
+
+.error-message {
+  color: #b42318;
+  border: 1px solid #ffcdd2;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fff4f4,
+      #fffafa
+    );
+
+  animation:
+    errorShake
+    0.42s
+    ease;
+}
+
+/* ---------------------------------------------------------
+   Form layout
+--------------------------------------------------------- */
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+  gap: 4px 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* ---------------------------------------------------------
+   Material form fields
+--------------------------------------------------------- */
+
+::ng-deep
+.register-card
+.mat-mdc-text-field-wrapper {
+  border-radius: 13px;
+  background: #fbfcfe;
+}
+
+::ng-deep
+.register-card
+.mdc-text-field--outlined:not(
+  .mdc-text-field--disabled
+)
+.mdc-notched-outline__leading,
+::ng-deep
+.register-card
+.mdc-text-field--outlined:not(
+  .mdc-text-field--disabled
+)
+.mdc-notched-outline__notch,
+::ng-deep
+.register-card
+.mdc-text-field--outlined:not(
+  .mdc-text-field--disabled
+)
+.mdc-notched-outline__trailing {
+  border-color:
+    rgba(15, 23, 42, 0.15);
+}
+
+::ng-deep
+.register-card
+.mat-mdc-form-field.mat-focused
+.mdc-notched-outline__leading,
+::ng-deep
+.register-card
+.mat-mdc-form-field.mat-focused
+.mdc-notched-outline__notch,
+::ng-deep
+.register-card
+.mat-mdc-form-field.mat-focused
+.mdc-notched-outline__trailing {
+  border-color: #1976d2;
+  border-width: 2px;
+}
+
+::ng-deep
+.register-card
+.mat-mdc-form-field-icon-prefix {
+  padding-right: 10px;
+  color: #667085;
+}
+
+::ng-deep
+.register-card
+.mat-mdc-form-field.mat-focused
+.mat-mdc-form-field-icon-prefix {
+  color: #1976d2;
+}
+
+::ng-deep
+.register-card
+.mat-mdc-form-field-subscript-wrapper {
+  min-height: 22px;
+}
+
+::ng-deep
+.register-card
+textarea.mat-mdc-input-element {
+  resize: vertical;
+}
+
+/* ---------------------------------------------------------
+   Submit button
+--------------------------------------------------------- */
+
+.submit-button {
+  width: 100%;
+  min-height: 50px;
+  margin-top: 12px;
+
+  border: 0;
+  border-radius: 14px;
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #1565c0,
+      #42a5f5
+    ) !important;
+
+  font-size: 15px;
+  font-weight: 650;
+  letter-spacing: 0.2px;
+
+  box-shadow:
+    0 10px 24px
+    rgba(25, 118, 210, 0.24);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    filter 0.25s ease;
+}
+
+.submit-button:hover:not(:disabled) {
+  transform:
+    translateY(-3px);
+
+  filter:
+    brightness(1.04);
+
+  box-shadow:
+    0 15px 30px
+    rgba(25, 118, 210, 0.32);
+}
+
+.submit-button:active:not(:disabled) {
+  transform:
+    translateY(-1px)
+    scale(0.99);
+}
+
+.submit-button:disabled {
+  opacity: 0.72;
+}
+
+.submit-button mat-icon {
+  margin-right: 7px;
+}
+
+.submit-button mat-spinner {
+  display: inline-block;
+  margin-right: 9px;
+}
+
+::ng-deep
+.submit-button
+.mat-mdc-progress-spinner
+circle {
+  stroke: #ffffff;
+}
+
+/* ---------------------------------------------------------
+   Login link
+--------------------------------------------------------- */
+
+.auth-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  margin-top: 22px;
+
+  color: #667085;
+
+  font-size: 14px;
+}
+
+.auth-link button {
+  border-radius: 10px;
+  font-weight: 650;
+
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.auth-link button:hover {
+  transform:
+    translateY(-1px);
+
+  background:
+    rgba(25, 118, 210, 0.07);
+}
+
+/* ---------------------------------------------------------
+   Accessibility
+--------------------------------------------------------- */
+
+.submit-button:focus-visible,
+.auth-link button:focus-visible,
+button[mat-icon-button]:focus-visible {
+  outline:
+    3px solid
+    rgba(25, 118, 210, 0.27);
+
+  outline-offset: 3px;
+}
+
+/* ---------------------------------------------------------
+   Animations
+--------------------------------------------------------- */
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes containerScaleIn {
+  from {
+    opacity: 0;
+    transform:
+      translateY(22px)
+      scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+@keyframes infoSlideIn {
+  from {
+    opacity: 0;
+    transform:
+      translateX(-35px);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateX(0);
+  }
+}
+
+@keyframes cardSlideIn {
+  from {
+    opacity: 0;
+    transform:
+      translateX(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateX(0);
+  }
+}
+
+@keyframes textSlideUp {
+  from {
+    opacity: 0;
+    transform:
+      translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0);
+  }
+}
+
+@keyframes itemSlideIn {
+  from {
+    opacity: 0;
+    transform:
+      translateX(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateX(0);
+  }
+}
+
+@keyframes messageSlideDown {
+  from {
+    opacity: 0;
+    transform:
+      translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0);
+  }
+}
+
+@keyframes logoPulse {
+  0%,
+  100% {
+    transform:
+      scale(1);
+  }
+
+  50% {
+    transform:
+      scale(1.07);
+  }
+}
+
+@keyframes panelCircleFloat {
+  0%,
+  100% {
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translateY(12px)
+      scale(1.07);
+  }
+}
+
+@keyframes floatBubbleOne {
+  0%,
+  100% {
+    transform:
+      translate(0, 0)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translate(20px, 16px)
+      scale(1.05);
+  }
+}
+
+@keyframes floatBubbleTwo {
+  0%,
+  100% {
+    transform:
+      translate(0, 0)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translate(-18px, -14px)
+      scale(1.06);
+  }
+}
+
+@keyframes errorShake {
+  0%,
+  100% {
+    transform:
+      translateX(0);
+  }
+
+  25% {
+    transform:
+      translateX(-7px);
+  }
+
+  75% {
+    transform:
+      translateX(7px);
+  }
+}
+
+/* ---------------------------------------------------------
+   Responsive design
+--------------------------------------------------------- */
+
+@media (max-width: 1050px) {
+  .register-container {
+    grid-template-columns:
+      minmax(0, 0.85fr)
+      minmax(480px, 1.15fr);
+  }
+
+  .register-info {
+    padding: 44px;
+  }
+}
+
+@media (max-width: 900px) {
+  .register-page {
+    align-items: flex-start;
+    padding: 24px;
+  }
+
+  .register-container {
+    grid-template-columns: 1fr;
+    max-width: 680px;
+    min-height: auto;
+  }
+
+  .register-info {
+    display: none;
+  }
+
+  .mobile-logo {
+    display: flex;
+  }
+
+  .register-card {
+    width:
+      calc(100% - 48px);
+
+    max-width: none;
+
+    margin: 24px;
+  }
+}
+
+@media (max-width: 650px) {
+  .register-page {
+    padding: 14px;
+  }
+
+  .register-container {
+    border-radius: 22px;
+  }
+
+  .register-card {
+    width:
+      calc(100% - 24px);
+
+    margin: 12px;
+
+    border-radius: 19px;
+  }
+
+  .register-card mat-card-content {
+    padding: 27px 22px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .form-header h2 {
+    font-size: 26px;
+  }
+
+  .mobile-logo {
+    width: 56px;
+    height: 56px;
+    border-radius: 17px;
+  }
+
+  .mobile-logo mat-icon {
+    width: 31px;
+    height: 31px;
+    font-size: 31px;
+  }
+}
+
+@media (max-width: 380px) {
+  .register-page {
+    padding: 8px;
+  }
+
+  .register-card {
+    width:
+      calc(100% - 16px);
+
+    margin: 8px;
+  }
+
+  .register-card mat-card-content {
+    padding: 24px 17px;
+  }
+
+  .auth-link {
+    flex-direction: column;
+    gap: 2px;
+  }
+}
+
+/* ---------------------------------------------------------
+   Reduced motion accessibility
+--------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration:
+      0.01ms !important;
+
+    animation-iteration-count:
+      1 !important;
+
+    transition-duration:
+      0.01ms !important;
+
+    scroll-behavior:
+      auto !important;
+  }
+}

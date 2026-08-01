@@ -1,0 +1,322 @@
+<div class="register-page">
+
+  <div class="page-header">
+
+    <div>
+      <h1>Register Doctor</h1>
+
+      <p>
+        Add a new doctor to the hospital system
+      </p>
+    </div>
+
+    <button
+      mat-stroked-button
+      type="button"
+      (click)="cancel()"
+    >
+      <mat-icon>arrow_back</mat-icon>
+      Back
+    </button>
+
+  </div>
+
+
+  <mat-card class="doctor-card">
+
+    <mat-card-header>
+
+      <mat-card-title>
+        Doctor Information
+      </mat-card-title>
+
+      <mat-card-subtitle>
+        Enter the doctor’s personal and
+        professional details
+      </mat-card-subtitle>
+
+    </mat-card-header>
+
+
+    <mat-card-content>
+
+      <div
+        class="message success-message"
+        *ngIf="successMessage"
+      >
+        <mat-icon>check_circle</mat-icon>
+
+        <span>
+          {{ successMessage }}
+        </span>
+      </div>
+
+
+      <div
+        class="message error-message"
+        *ngIf="errorMessage"
+      >
+        <mat-icon>error_outline</mat-icon>
+
+        <span>
+          {{ errorMessage }}
+        </span>
+      </div>
+
+
+      <form
+        [formGroup]="doctorForm"
+        (ngSubmit)="registerDoctor()"
+      >
+
+        <div class="form-grid">
+
+          <mat-form-field appearance="outline">
+
+            <mat-label>
+              Doctor Name
+            </mat-label>
+
+            <input
+              matInput
+              type="text"
+              formControlName="name"
+              placeholder="Enter doctor name"
+            >
+
+            <mat-icon matPrefix>
+              person
+            </mat-icon>
+
+            <mat-error
+              *ngIf="hasError('name', 'required')"
+            >
+              Doctor name is required
+            </mat-error>
+
+            <mat-error
+              *ngIf="hasError('name', 'minlength')"
+            >
+              Name must contain at least
+              3 characters
+            </mat-error>
+
+          </mat-form-field>
+
+
+          <mat-form-field appearance="outline">
+
+            <mat-label>
+              Email Address
+            </mat-label>
+
+            <input
+              matInput
+              type="email"
+              formControlName="email"
+              placeholder="doctor@example.com"
+            >
+
+            <mat-icon matPrefix>
+              email
+            </mat-icon>
+
+            <mat-error
+              *ngIf="hasError('email', 'required')"
+            >
+              Email is required
+            </mat-error>
+
+            <mat-error
+              *ngIf="hasError('email', 'email')"
+            >
+              Enter a valid email address
+            </mat-error>
+
+          </mat-form-field>
+
+
+          <mat-form-field appearance="outline">
+
+            <mat-label>
+              Password
+            </mat-label>
+
+            <input
+              matInput
+              type="password"
+              formControlName="password"
+              placeholder="Enter password"
+            >
+
+            <mat-icon matPrefix>
+              lock
+            </mat-icon>
+
+            <mat-error
+              *ngIf="
+                hasError(
+                  'password',
+                  'required'
+                )
+              "
+            >
+              Password is required
+            </mat-error>
+
+            <mat-error
+              *ngIf="
+                hasError(
+                  'password',
+                  'minlength'
+                )
+              "
+            >
+              Password must contain at least
+              6 characters
+            </mat-error>
+
+          </mat-form-field>
+
+
+          <mat-form-field appearance="outline">
+
+            <mat-label>
+              Specialization
+            </mat-label>
+
+            <input
+              matInput
+              type="text"
+              formControlName="specialization"
+              placeholder="Example: Cardiology"
+            >
+
+            <mat-icon matPrefix>
+              medical_services
+            </mat-icon>
+
+            <mat-error
+              *ngIf="
+                hasError(
+                  'specialization',
+                  'required'
+                )
+              "
+            >
+              Specialization is required
+            </mat-error>
+
+          </mat-form-field>
+
+
+          <mat-form-field appearance="outline">
+
+            <mat-label>
+              Phone Number
+            </mat-label>
+
+            <input
+              matInput
+              type="tel"
+              formControlName="phone"
+              placeholder="Example: +971501234567"
+            >
+
+            <mat-icon matPrefix>
+              phone
+            </mat-icon>
+
+            <mat-error
+              *ngIf="hasError('phone', 'required')"
+            >
+              Phone number is required
+            </mat-error>
+
+            <mat-error
+              *ngIf="hasError('phone', 'pattern')"
+            >
+              Enter a valid phone number
+            </mat-error>
+
+          </mat-form-field>
+
+
+          <mat-form-field appearance="outline">
+
+            <mat-label>
+              Availability
+            </mat-label>
+
+            <input
+              matInput
+              type="text"
+              formControlName="availability"
+              placeholder="10:00, 11:00, 14:00"
+            >
+
+            <mat-icon matPrefix>
+              schedule
+            </mat-icon>
+
+            <mat-hint>
+              Separate each time using a comma
+            </mat-hint>
+
+            <mat-error
+              *ngIf="
+                hasError(
+                  'availability',
+                  'required'
+                )
+              "
+            >
+              Availability is required
+            </mat-error>
+
+          </mat-form-field>
+
+        </div>
+
+
+        <div class="form-actions">
+
+          <button
+            mat-stroked-button
+            type="button"
+            (click)="cancel()"
+            [disabled]="isSubmitting"
+          >
+            Cancel
+          </button>
+
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="isSubmitting"
+          >
+            <mat-icon>
+              {{
+                isSubmitting
+                  ? 'hourglass_top'
+                  : 'person_add'
+              }}
+            </mat-icon>
+
+            {{
+              isSubmitting
+                ? 'Registering...'
+                : 'Register Doctor'
+            }}
+          </button>
+
+        </div>
+
+      </form>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>

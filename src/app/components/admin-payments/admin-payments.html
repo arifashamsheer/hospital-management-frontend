@@ -1,0 +1,289 @@
+<div class="payments-page">
+
+  <div class="page-header">
+
+    <div>
+      <h1>Manage Payments</h1>
+
+      <p>
+        View hospital payment transactions
+        and revenue
+      </p>
+    </div>
+
+    <button
+      mat-stroked-button
+      type="button"
+      (click)="loadPayments()"
+    >
+      <mat-icon>refresh</mat-icon>
+      Refresh
+    </button>
+
+  </div>
+
+
+  <div class="stats-grid">
+
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <span>Total Revenue</span>
+
+        <strong>
+          AED
+          {{
+            totalRevenue
+              | number:'1.2-2'
+          }}
+        </strong>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <span>Paid Payments</span>
+        <strong>{{ paidCount }}</strong>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <span>Pending</span>
+        <strong>{{ pendingCount }}</strong>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <span>Failed / Cancelled</span>
+        <strong>{{ failedCount }}</strong>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+
+
+  <mat-card class="table-card">
+
+    <mat-card-content>
+
+      <mat-form-field
+        appearance="outline"
+        class="search-field"
+      >
+        <mat-label>
+          Search payments
+        </mat-label>
+
+        <input
+          matInput
+          type="text"
+          (keyup)="applyFilter($event)"
+          placeholder="
+            Search patient, doctor,
+            status or transaction
+          "
+        >
+
+        <mat-icon matPrefix>
+          search
+        </mat-icon>
+      </mat-form-field>
+
+
+      <div
+        class="loading-container"
+        *ngIf="isLoading"
+      >
+        <mat-spinner diameter="45">
+        </mat-spinner>
+
+        <p>Loading payments...</p>
+      </div>
+
+
+      <div
+        class="error-message"
+        *ngIf="!isLoading && errorMessage"
+      >
+        <mat-icon>error_outline</mat-icon>
+        {{ errorMessage }}
+      </div>
+
+
+      <div
+        class="table-wrapper"
+        *ngIf="
+          !isLoading &&
+          !errorMessage
+        "
+      >
+
+        <table
+          mat-table
+          [dataSource]="dataSource"
+        >
+
+          <ng-container matColumnDef="patient">
+
+            <th mat-header-cell *matHeaderCellDef>
+              Patient
+            </th>
+
+            <td mat-cell *matCellDef="let payment">
+              {{ payment.patientId?.name }}
+            </td>
+
+          </ng-container>
+
+
+          <ng-container matColumnDef="doctor">
+
+            <th mat-header-cell *matHeaderCellDef>
+              Doctor
+            </th>
+
+            <td mat-cell *matCellDef="let payment">
+              Dr. {{ payment.doctorId?.name }}
+            </td>
+
+          </ng-container>
+
+
+          <ng-container matColumnDef="appointment">
+
+            <th mat-header-cell *matHeaderCellDef>
+              Appointment
+            </th>
+
+            <td mat-cell *matCellDef="let payment">
+
+              {{
+                payment.appointmentId?.date
+                  | date:'dd MMM yyyy'
+              }}
+
+              <div class="small-text">
+                {{ payment.appointmentId?.time }}
+              </div>
+
+            </td>
+
+          </ng-container>
+
+
+          <ng-container matColumnDef="amount">
+
+            <th mat-header-cell *matHeaderCellDef>
+              Amount
+            </th>
+
+            <td mat-cell *matCellDef="let payment">
+              {{
+                payment.currency
+                  | uppercase
+              }}
+              {{
+                payment.amount
+                  | number:'1.2-2'
+              }}
+            </td>
+
+          </ng-container>
+
+
+          <ng-container matColumnDef="status">
+
+            <th mat-header-cell *matHeaderCellDef>
+              Status
+            </th>
+
+            <td mat-cell *matCellDef="let payment">
+
+              <span
+                class="status-badge"
+                [ngClass]="
+                  getStatusClass(
+                    payment.paymentStatus
+                  )
+                "
+              >
+                {{ payment.paymentStatus }}
+              </span>
+
+            </td>
+
+          </ng-container>
+
+
+          <ng-container matColumnDef="paidAt">
+
+            <th mat-header-cell *matHeaderCellDef>
+              Paid At
+            </th>
+
+            <td mat-cell *matCellDef="let payment">
+              {{
+                payment.paidAt
+                  ? (
+                      payment.paidAt
+                        | date:
+                          'dd MMM yyyy, h:mm a'
+                    )
+                  : '-'
+              }}
+            </td>
+
+          </ng-container>
+
+
+          <ng-container matColumnDef="transactionId">
+
+            <th mat-header-cell *matHeaderCellDef>
+              Transaction ID
+            </th>
+
+            <td mat-cell *matCellDef="let payment">
+              <span class="transaction-id">
+                {{
+                  payment.transactionId || '-'
+                }}
+              </span>
+            </td>
+
+          </ng-container>
+
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns"
+          ></tr>
+
+          <tr
+            mat-row
+            *matRowDef="
+              let row;
+              columns: displayedColumns
+            "
+          ></tr>
+
+        </table>
+
+        <mat-paginator
+          [pageSize]="5"
+          [pageSizeOptions]="[
+            5,
+            10,
+            20
+          ]"
+          showFirstLastButtons
+        >
+        </mat-paginator>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>

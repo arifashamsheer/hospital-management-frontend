@@ -1,22 +1,271 @@
-<h1>Patient Dashboard</h1>
+<div class="dashboard-container">
+
+  <!-- Header -->
+
+  <div class="dashboard-header">
+
+    <div>
+
+      <h1>Patient Dashboard</h1>
+
+      <p>
+        Welcome to your hospital management portal
+      </p>
+
+    </div>
+
+  </div>
 
 
-<div class="menu">
+  <!-- Quick Action Cards -->
+
+  <div class="dashboard-grid">
 
 
-<button (click)="goToProfile()">
-My Profile
-</button>
+    <!-- My Profile -->
+
+    <mat-card class="dashboard-card">
+
+      <mat-card-header>
+
+        <div
+          mat-card-avatar
+          class="card-icon profile-icon">
+
+          <mat-icon>
+            person
+          </mat-icon>
+
+        </div>
+
+        <mat-card-title>
+          My Profile
+        </mat-card-title>
+
+        <mat-card-subtitle>
+          View and update your personal information
+        </mat-card-subtitle>
+
+      </mat-card-header>
 
 
-<button (click)="bookAppointment()">
-Book Appointment
-</button>
+      <mat-card-content>
+
+        <p>
+          Manage your profile details, contact information
+          and medical history.
+        </p>
+
+      </mat-card-content>
 
 
-<button (click)="viewAppointments()">
-My Appointments
-</button>
+      <mat-card-actions>
 
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="goToProfile()">
+
+          View Profile
+
+        </button>
+
+      </mat-card-actions>
+
+    </mat-card>
+
+
+
+    <!-- Book Appointment -->
+
+    <mat-card class="dashboard-card">
+
+      <mat-card-header>
+
+        <div
+          mat-card-avatar
+          class="card-icon appointment-icon">
+
+          <mat-icon>
+            event
+          </mat-icon>
+
+        </div>
+
+        <mat-card-title>
+          Book Appointment
+        </mat-card-title>
+
+        <mat-card-subtitle>
+          Schedule an appointment with a doctor
+        </mat-card-subtitle>
+
+      </mat-card-header>
+
+
+      <mat-card-content>
+
+        <p>
+          Select an available doctor and book your
+          preferred appointment time.
+        </p>
+
+      </mat-card-content>
+
+
+      <mat-card-actions>
+
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="bookAppointment()">
+
+          Book Now
+
+        </button>
+
+      </mat-card-actions>
+
+    </mat-card>
+
+
+
+    <!-- My Appointments -->
+
+    <mat-card class="dashboard-card">
+
+      <mat-card-header>
+
+        <div
+          mat-card-avatar
+          class="card-icon history-icon">
+
+          <mat-icon>
+            calendar_month
+          </mat-icon>
+
+        </div>
+
+        <mat-card-title>
+          My Appointments
+        </mat-card-title>
+
+        <mat-card-subtitle>
+          View your appointment history
+        </mat-card-subtitle>
+
+      </mat-card-header>
+
+
+      <mat-card-content>
+
+        <p>
+          Check your upcoming appointments and
+          appointment status.
+        </p>
+
+      </mat-card-content>
+
+
+      <mat-card-actions>
+
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="viewAppointments()">
+
+          View Appointments
+
+        </button>
+
+      </mat-card-actions>
+
+    </mat-card>
+
+
+  </div>
+
+
+  <!-- Information Section -->
+
+  <mat-card class="info-card">
+
+    <mat-card-header>
+
+      <mat-icon mat-card-avatar>
+        medical_services
+      </mat-icon>
+
+      <mat-card-title>
+        Hospital Services
+      </mat-card-title>
+
+      <mat-card-subtitle>
+        Manage your healthcare easily
+      </mat-card-subtitle>
+
+    </mat-card-header>
+
+
+    <mat-card-content>
+
+      <div class="service-list">
+
+        <div class="service-item">
+
+          <mat-icon>
+            check_circle
+          </mat-icon>
+
+          <span>
+            Book appointments with available doctors
+          </span>
+
+        </div>
+
+
+        <div class="service-item">
+
+          <mat-icon>
+            check_circle
+          </mat-icon>
+
+          <span>
+            View your appointment status
+          </span>
+
+        </div>
+
+
+        <div class="service-item">
+
+          <mat-icon>
+            check_circle
+          </mat-icon>
+
+          <span>
+            Manage your personal profile
+          </span>
+
+        </div>
+
+
+        <div class="service-item">
+
+          <mat-icon>
+            check_circle
+          </mat-icon>
+
+          <span>
+            Access your medical information
+          </span>
+
+        </div>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
 
 </div>
