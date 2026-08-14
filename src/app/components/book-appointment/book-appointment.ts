@@ -3,6 +3,8 @@ import { Doctor } from '../../models/doctor';
 import { Apiservice } from '../../services/apiservice';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+  import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialog } from '../confirm-dialog/confirm-dialog';
 
 @Component({
   selector: 'app-book-appointment',
@@ -24,7 +26,8 @@ export class BookAppointment implements OnInit {
   constructor(
     private fb: FormBuilder,
     private api: Apiservice,
-    private router: Router,private cd:ChangeDetectorRef
+    private router: Router,private cd:ChangeDetectorRef,
+  private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -86,11 +89,33 @@ export class BookAppointment implements OnInit {
         );
 
         this.isLoadingDoctors = false;
+        this.cd.detectChanges();
 
-        alert(
-          error.error?.message ||
-          'Unable to load doctors'
-        );
+        this.dialog.open(
+  ConfirmDialog,
+  {
+    width: '360px',
+    maxWidth: '90vw',
+
+    data: {
+      title:
+        'Unable to load doctors',
+
+      message:
+        error.error?.message ||
+        'Doctor information could not be loaded.',
+
+      confirmText:
+        'Close',
+
+      cancelText:
+        '',
+
+      icon:
+        'error_outline'
+    }
+  }
+);
       }
     });
   }
@@ -119,10 +144,62 @@ export class BookAppointment implements OnInit {
   }
 
   bookAppointment(): void {
+
   if (this.appointmentForm.invalid) {
     this.appointmentForm.markAllAsTouched();
     return;
   }
+
+  const formValue =
+    this.appointmentForm.getRawValue();
+
+  const selectedDoctor =
+    this.doctors.find(
+      doctor =>
+        doctor._id === formValue.doctorId
+    );
+
+  const doctorName =
+    selectedDoctor?.name ||
+    'the selected doctor';
+
+  const dialogRef =
+    this.dialog.open(
+      ConfirmDialog,
+      {
+        width: '360px',
+        maxWidth: '90vw',
+        disableClose: true,
+
+        data: {
+          title: 'Book appointment?',
+
+          message:
+            `Do you want to book an appointment with Dr. ${doctorName} on ${this.formatDate(formValue.appointmentDate)} at ${formValue.appointmentTime}?`,
+
+          confirmText: 'Book',
+
+          cancelText: 'Cancel',
+
+          icon: 'event_available'
+        }
+      }
+    );
+
+  dialogRef
+    .afterClosed()
+    .subscribe(
+      confirmed => {
+
+        if (!confirmed) {
+          return;
+        }
+
+        this.submitAppointment();
+      }
+    );
+}
+submitAppointment(): void {
 
   this.isSubmitting = true;
 
@@ -130,46 +207,125 @@ export class BookAppointment implements OnInit {
     this.appointmentForm.getRawValue();
 
   const appointmentData = {
-    doctorId: formValue.doctorId,
-    date: formValue.appointmentDate,
-    time: formValue.appointmentTime,
-    reason: formValue.reason
+    doctorId:
+      formValue.doctorId,
+
+    date:
+      formValue.appointmentDate,
+
+    time:
+      formValue.appointmentTime,
+
+    reason:
+      formValue.reason
   };
 
-  console.log(
-    'Appointment data:',
-    appointmentData
-  );
+  this.api
+    .bookAppointment(
+      appointmentData
+    )
+    .subscribe({
 
-  this.api.bookAppointment(
-    appointmentData
-  ).subscribe({
-    next: () => {
-      this.isSubmitting = false;
+      next: () => {
 
-      alert(
-        'Appointment booked successfully'
-      );
+        this.isSubmitting = false;
 
-      this.router.navigate([
-        '/my-appointments'
-      ]);
-    },
+        const successDialog =
+          this.dialog.open(
+            ConfirmDialog,
+            {
+              width: '360px',
+              maxWidth: '90vw',
+              disableClose: true,
 
-    error: (error) => {
-      console.error(
-        'Appointment booking error:',
-        error
-      );
+              data: {
+                title:
+                  'Appointment booked',
 
-      this.isSubmitting = false;
+                message:
+                  'Your appointment was booked successfully.',
 
-      alert(
-        error.error?.message ||
-        'Appointment booking failed'
-      );
+                confirmText:
+                  'View Appointments',
+
+                cancelText:
+                  '',
+
+                icon:
+                  'check_circle'
+              }
+            }
+          );
+
+        successDialog
+          .afterClosed()
+          .subscribe(() => {
+
+            this.router.navigate([
+              '/my-appointments'
+            ]);
+
+          });
+      },
+
+      error: (error) => {
+
+        console.error(
+          'Appointment booking error:',
+          error
+        );
+
+        this.isSubmitting = false;
+
+        this.dialog.open(
+          ConfirmDialog,
+          {
+            width: '360px',
+            maxWidth: '90vw',
+
+            data: {
+              title:
+                'Booking failed',
+
+              message:
+                error.error?.message ||
+                'Unable to book the appointment.',
+
+              confirmText:
+                'Close',
+
+              cancelText:
+                '',
+
+              icon:
+                'error_outline'
+            }
+          }
+        );
+
+        this.cd.detectChanges();
+      }
+    });
+}
+formatDate(
+  dateValue: string | Date
+): string {
+
+  if (!dateValue) {
+    return '';
+  }
+
+  const date =
+    new Date(dateValue);
+
+  return date.toLocaleDateString(
+    'en-GB',
+    {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
     }
-  });
+  );
 }
   goBack(): void {
     this.router.navigate([

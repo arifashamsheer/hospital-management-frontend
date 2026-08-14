@@ -30,12 +30,11 @@ export class MainLayout implements OnInit {
   }
 
   logout(): void {
+this.authService.logout();
 
-    this.authService.logout();
+  this.user = null;
 
-    localStorage.removeItem('user');
-
-    this.router.navigate(['/login']);
+  this.router.navigate(['/']);
 
   }
 

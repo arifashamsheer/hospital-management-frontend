@@ -292,6 +292,14 @@ getAppointmentById(
     `${this.baseUrl}/appointments/${id}`
   );
 }
+getPublicDoctors() {
+
+  return this.http.get<any>(
+    `${this.baseUrl}/doctors/public/list`
+  );
 
 }
+
+}
+
 

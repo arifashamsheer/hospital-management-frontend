@@ -1,8 +1,32 @@
 <div class="home-page">
 
-  <!-- ===================================================
-       NAVIGATION
-  ==================================================== -->
+  <!-- =====================================================
+       TOP BAR
+  ====================================================== -->
+
+  <div class="top-bar">
+
+    <div class="top-item">
+      <mat-icon>schedule</mat-icon>
+      <span>Open 24 Hours - All Days</span>
+    </div>
+
+    <div class="top-item">
+      <mat-icon>location_on</mat-icon>
+      <span>Sharjah, UAE</span>
+    </div>
+
+    <div class="top-item">
+      <mat-icon>call</mat-icon>
+      <span>+971 50 123 4567</span>
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       NAVBAR
+  ====================================================== -->
 
   <header class="navbar">
 
@@ -10,16 +34,18 @@
       class="brand"
       routerLink="/"
     >
-      <span class="brand-icon">
+
+      <div class="brand-icon">
         <mat-icon>
           local_hospital
         </mat-icon>
-      </span>
+      </div>
 
-      <span class="brand-text">
+      <div class="brand-name">
         <strong>CarePlus</strong>
-        <small>Hospital Management</small>
-      </span>
+        <span>Hospital</span>
+      </div>
+
     </a>
 
 
@@ -29,12 +55,16 @@
         Home
       </a>
 
+      <a href="#about">
+        About
+      </a>
+
       <a href="#services">
         Services
       </a>
 
-      <a href="#about">
-        About
+      <a href="#doctors">
+        Doctors
       </a>
 
       <a href="#contact">
@@ -46,265 +76,371 @@
 
     <div class="nav-actions">
 
-      <button
-        mat-stroked-button
-        type="button"
-        (click)="goToLogin()"
-      >
-        <mat-icon>login</mat-icon>
-        Login
-      </button>
+      <!-- NOT LOGGED IN -->
 
-      <button
-        mat-raised-button
-        color="primary"
-        type="button"
-        (click)="goToRegister()"
-      >
-        <mat-icon>person_add</mat-icon>
-        Register
-      </button>
+      <ng-container *ngIf="!isLoggedIn">
+
+        <button
+          class="login-btn"
+          type="button"
+          (click)="goToLogin()"
+        >
+          <mat-icon>login</mat-icon>
+          Login
+        </button>
+
+
+        <button
+          class="appointment-btn"
+          type="button"
+          (click)="goToRegister()"
+        >
+          <mat-icon>person_add</mat-icon>
+          Register
+        </button>
+
+      </ng-container>
+
+
+      <!-- LOGGED IN -->
+
+      <ng-container *ngIf="isLoggedIn">
+
+        <button
+          class="appointment-btn"
+          type="button"
+          (click)="goToDashboard()"
+        >
+          <mat-icon>dashboard</mat-icon>
+          Dashboard
+        </button>
+
+
+        <button
+          class="login-btn"
+          type="button"
+          (click)="logout()"
+        >
+          <mat-icon>logout</mat-icon>
+          Logout
+        </button>
+
+      </ng-container>
 
     </div>
 
   </header>
 
 
-  <!-- ===================================================
-       HERO SECTION
-  ==================================================== -->
+  <!-- =====================================================
+       HERO
+  ====================================================== -->
 
-  <main
+  <section
+    class="hero"
     id="home"
-    class="hero-section"
   >
 
     <div class="hero-content">
 
-      <div class="hero-badge">
-        <mat-icon>verified</mat-icon>
-        Safe and convenient healthcare
-      </div>
+      <span class="hero-small-title">
+        WELCOME TO CAREPLUS HOSPITAL
+      </span>
 
 
       <h1>
-        Better healthcare with
-        <span>smart hospital management</span>
+        Your Health
+
+        <span>
+          Our First Priority
+        </span>
       </h1>
 
 
-      <p class="hero-description">
-        Book appointments, connect with doctors,
-        manage medical information and complete
-        secure online payments from one simple
-        hospital portal.
+      <p>
+        Quality healthcare made simple.
+        Find experienced doctors,
+        book appointments and manage
+        your healthcare securely through
+        one convenient hospital portal.
       </p>
 
 
-      <div class="hero-actions">
+      <div class="hero-buttons">
 
         <button
-          mat-raised-button
-          color="primary"
+          class="book-button"
           type="button"
-          class="primary-button"
-          (click)="goToLogin()"
+          (click)="
+            isLoggedIn
+              ? goToDashboard()
+              : goToRegister()
+          "
         >
-          <mat-icon>login</mat-icon>
-          Login to Portal
-        </button>
 
-
-        <button
-          mat-stroked-button
-          type="button"
-          class="secondary-button"
-          (click)="scrollToServices()"
-        >
-          <mat-icon>medical_services</mat-icon>
-          Explore Services
-        </button>
-
-      </div>
-
-
-      <div class="trust-items">
-
-        <span>
-          <mat-icon>check_circle</mat-icon>
-          Secure login
-        </span>
-
-        <span>
-          <mat-icon>check_circle</mat-icon>
-          Online appointments
-        </span>
-
-        <span>
-          <mat-icon>check_circle</mat-icon>
-          Stripe payments
-        </span>
-
-      </div>
-
-    </div>
-
-
-    <!-- Hero visual -->
-
-    <div class="hero-visual">
-
-      <div class="visual-circle"></div>
-
-
-      <div class="portal-card">
-
-        <div class="portal-header">
-
-          <div class="hospital-icon">
-            <mat-icon>local_hospital</mat-icon>
-          </div>
-
-          <div>
-            <strong>CarePlus Hospital</strong>
-            <span>Digital Healthcare Portal</span>
-          </div>
-
-        </div>
-
-
-        <div class="portal-doctor">
-
-          <div class="doctor-icon">
-            <mat-icon>medical_services</mat-icon>
-          </div>
-
-          <div>
-            <strong>Qualified Doctors</strong>
-            <span>Consult experienced specialists</span>
-          </div>
-
-          <mat-icon class="verified-icon">
-            verified
+          <mat-icon>
+            event_available
           </mat-icon>
 
-        </div>
+          {{
+            isLoggedIn
+              ? 'Go to Dashboard'
+              : 'Book Appointment'
+          }}
+
+        </button>
 
 
-        <div class="appointment-preview">
+        <button
+          class="services-button"
+          type="button"
+          (click)="scrollToServices()"
+        >
 
-          <div>
-            <span>Upcoming Appointment</span>
-            <strong>Cardiology Consultation</strong>
-          </div>
+          Our Services
 
-          <div class="date-box">
-            <strong>15</strong>
-            <span>AUG</span>
-          </div>
+          <mat-icon>
+            arrow_forward
+          </mat-icon>
 
-        </div>
-
-
-        <div class="portal-stats">
-
-          <div>
-            <strong>50+</strong>
-            <span>Doctors</span>
-          </div>
-
-          <div>
-            <strong>5K+</strong>
-            <span>Patients</span>
-          </div>
-
-          <div>
-            <strong>24/7</strong>
-            <span>Support</span>
-          </div>
-
-        </div>
+        </button>
 
       </div>
 
-
-      <div class="floating-card card-one">
-
-        <mat-icon>event_available</mat-icon>
-
-        <div>
-          <strong>Easy Booking</strong>
-          <span>Choose your preferred time</span>
-        </div>
-
-      </div>
-
-
-      <div class="floating-card card-two">
-
-        <mat-icon>payments</mat-icon>
-
-        <div>
-          <strong>Secure Payments</strong>
-          <span>Powered by Stripe</span>
-        </div>
-
-      </div>
-
-    </div>
-
-  </main>
-
-
-  <!-- ===================================================
-       STATISTICS
-  ==================================================== -->
-
-  <section class="statistics-section">
-
-    <div>
-      <strong>50+</strong>
-      <span>Qualified Doctors</span>
-    </div>
-
-    <div>
-      <strong>5,000+</strong>
-      <span>Registered Patients</span>
-    </div>
-
-    <div>
-      <strong>12,000+</strong>
-      <span>Appointments</span>
-    </div>
-
-    <div>
-      <strong>98%</strong>
-      <span>Patient Satisfaction</span>
     </div>
 
   </section>
 
 
-  <!-- ===================================================
-       SERVICES
-  ==================================================== -->
+  <!-- =====================================================
+       QUICK INFORMATION
+  ====================================================== -->
+
+  <section class="quick-info">
+
+    <div class="info-card">
+
+      <div class="info-icon">
+        <mat-icon>schedule</mat-icon>
+      </div>
+
+      <div>
+
+        <span>
+          OPENING HOURS
+        </span>
+
+        <h3>
+          24 Hours - All Days
+        </h3>
+
+        <p>
+          We're here whenever you need us.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="info-card">
+
+      <div class="info-icon">
+        <mat-icon>location_on</mat-icon>
+      </div>
+
+      <div>
+
+        <span>
+          OUR LOCATION
+        </span>
+
+        <h3>
+          Sharjah, UAE
+        </h3>
+
+        <p>
+          Convenient healthcare close to you.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="info-card">
+
+      <div class="info-icon">
+        <mat-icon>call</mat-icon>
+      </div>
+
+      <div>
+
+        <span>
+          CONTACT US
+        </span>
+
+        <h3>
+          +971 50 123 4567
+        </h3>
+
+        <p>
+          Contact our hospital support team.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       ABOUT
+  ====================================================== -->
 
   <section
+    class="about-section"
+    id="about"
+  >
+
+    <div class="about-image">
+
+      <div class="experience-box">
+
+        <strong>
+          Quality
+        </strong>
+
+        <span>
+          Healthcare Services
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <div class="about-content">
+
+      <span class="section-label">
+        ABOUT CAREPLUS
+      </span>
+
+
+      <h2>
+        Healthcare you can
+        <span>
+          trust every day
+        </span>
+      </h2>
+
+
+      <p>
+        CarePlus Hospital provides a modern
+        digital healthcare experience connecting
+        patients, doctors and administrators
+        through one secure system.
+      </p>
+
+
+      <div class="about-feature">
+
+        <mat-icon>
+          verified_user
+        </mat-icon>
+
+        <div>
+
+          <h3>
+            Trusted Healthcare
+          </h3>
+
+          <p>
+            Secure patient information and
+            role-based access.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="about-feature">
+
+        <mat-icon>
+          medical_services
+        </mat-icon>
+
+        <div>
+
+          <h3>
+            Experienced Doctors
+          </h3>
+
+          <p>
+            Find doctors by specialization
+            and available consultation times.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="about-feature">
+
+        <mat-icon>
+          event_available
+        </mat-icon>
+
+        <div>
+
+          <h3>
+            Easy Appointments
+          </h3>
+
+          <p>
+            Book and manage your hospital
+            appointments online.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       SERVICES
+  ====================================================== -->
+
+  <section
+    class="services-section"
     id="services"
-    class="content-section services-section"
   >
 
     <div class="section-heading">
 
-      <span>Our Services</span>
+      <span>
+        OUR SERVICES
+      </span>
+
 
       <h2>
-        Everything you need in one hospital portal
+        Complete Healthcare
+        <strong>
+          At Your Fingertips
+        </strong>
       </h2>
 
+
       <p>
-        Simple healthcare management for patients,
-        doctors and hospital administrators.
+        Everything you need to manage your
+        healthcare in one secure platform.
       </p>
 
     </div>
@@ -312,332 +448,760 @@
 
     <div class="services-grid">
 
-      <article class="service-card">
+      <!-- APPOINTMENT -->
 
-        <div class="service-icon blue">
-          <mat-icon>event_available</mat-icon>
+      <div class="service-card">
+
+        <div class="service-icon">
+
+          <mat-icon>
+            event_available
+          </mat-icon>
+
         </div>
 
-        <h3>Online Appointments</h3>
+
+        <h3>
+          Online Appointment
+        </h3>
+
 
         <p>
-          Select an available doctor and reserve
-          your preferred appointment time.
+          Find available doctors and
+          book your preferred consultation time.
         </p>
 
-      </article>
+
+        <button
+          type="button"
+          (click)="
+            isLoggedIn
+              ? goToDashboard()
+              : goToLogin()
+          "
+        >
+
+          Book Now
+
+          <mat-icon>
+            arrow_forward
+          </mat-icon>
+
+        </button>
+
+      </div>
 
 
-      <article class="service-card">
+      <!-- DOCTORS -->
 
-        <div class="service-icon purple">
-          <mat-icon>medical_services</mat-icon>
+      <div class="service-card">
+
+        <div class="service-icon">
+
+          <mat-icon>
+            medical_services
+          </mat-icon>
+
         </div>
 
-        <h3>Qualified Doctors</h3>
+
+        <h3>
+          Qualified Doctors
+        </h3>
+
 
         <p>
-          View doctor profiles, specializations
-          and available consultation schedules.
+          Access experienced doctors from
+          different medical specializations.
         </p>
 
-      </article>
+
+        <button
+  type="button"
+  (click)="scrollToDoctors()"
+>
+  Find Doctors
+
+  <mat-icon>
+    arrow_forward
+  </mat-icon>
+</button>
+
+      </div>
 
 
-      <article class="service-card">
+      <!-- PATIENT RECORDS -->
 
-        <div class="service-icon green">
-          <mat-icon>health_and_safety</mat-icon>
+      <div class="service-card">
+
+        <div class="service-icon">
+
+          <mat-icon>
+            health_and_safety
+          </mat-icon>
+
         </div>
 
-        <h3>Patient Records</h3>
+
+        <h3>
+          Patient Records
+        </h3>
+
 
         <p>
-          Keep personal information and medical
-          history organized and securely available.
+          Keep patient information and medical
+          history organized securely.
         </p>
 
-      </article>
+
+        <button
+          type="button"
+          (click)="goToLogin()"
+        >
+
+          Learn More
+
+          <mat-icon>
+            arrow_forward
+          </mat-icon>
+
+        </button>
+
+      </div>
 
 
-      <article class="service-card">
+      <!-- PAYMENTS -->
 
-        <div class="service-icon orange">
-          <mat-icon>payments</mat-icon>
+      <div class="service-card">
+
+        <div class="service-icon">
+
+          <mat-icon>
+            payments
+          </mat-icon>
+
         </div>
 
-        <h3>Secure Payments</h3>
+
+        <h3>
+          Secure Payments
+        </h3>
+
 
         <p>
-          Complete consultation payments securely
-          through Stripe.
+          Complete appointment payments
+          safely using Stripe.
         </p>
 
-      </article>
+
+        <button
+          type="button"
+          (click)="goToLogin()"
+        >
+
+          Learn More
+
+          <mat-icon>
+            arrow_forward
+          </mat-icon>
+
+        </button>
+
+      </div>
 
     </div>
 
   </section>
 
 
-  <!-- ===================================================
-       ABOUT
-  ==================================================== -->
+  <!-- =====================================================
+       OUR DOCTORS
+  ====================================================== -->
 
   <section
-    id="about"
-    class="content-section about-section"
+    class="doctors-section"
+    id="doctors"
   >
 
-    <div class="about-content">
+    <div class="section-heading">
 
-      <span class="section-label">
-        About Our System
+      <span>
+        OUR DOCTORS
       </span>
 
+
       <h2>
-        One organized platform for every hospital role
+        Meet Our
+        <strong>
+          Specialists
+        </strong>
       </h2>
 
+
       <p>
-        CarePlus connects patients, doctors and
-        administrators through a protected role-based
-        hospital management application.
+        Consult experienced doctors from
+        different medical specializations.
+      </p>
+
+    </div>
+
+
+    <!-- LOADING -->
+
+    <div
+      class="doctor-loading"
+      *ngIf="isLoadingDoctors"
+    >
+
+      <mat-spinner
+        diameter="42"
+      >
+      </mat-spinner>
+
+      <p>
+        Loading doctors...
+      </p>
+
+    </div>
+
+
+    <!-- NO DOCTORS -->
+
+    <div
+      class="doctor-empty"
+      *ngIf="
+        !isLoadingDoctors &&
+        doctors.length === 0
+      "
+    >
+
+      <mat-icon>
+        medical_services
+      </mat-icon>
+
+      <h3>
+        No doctors available
+      </h3>
+
+      <p>
+        Please check again later.
+      </p>
+
+    </div>
+
+
+    <!-- DOCTOR SLIDER -->
+
+    <div
+      class="doctor-slider"
+      *ngIf="
+        !isLoadingDoctors &&
+        doctors.length > 0
+      "
+    >
+
+      <!-- LEFT ARROW -->
+
+      <button
+        class="doctor-arrow left-arrow"
+        type="button"
+        (click)="previousDoctors()"
+        [disabled]="!canGoPrevious()"
+        aria-label="Previous doctors"
+      >
+
+        <mat-icon>
+          arrow_back
+        </mat-icon>
+
+      </button>
+
+
+      <!-- DOCTOR CARDS -->
+
+      <div class="doctors-grid">
+
+        <article
+          class="doctor-card"
+          *ngFor="
+            let doctor of visibleDoctors
+          "
+        >
+
+          <!-- IMAGE -->
+
+          <div class="doctor-photo">
+
+  <img
+    *ngIf="doctor.profileImage"
+    [src]="doctor.profileImage"
+    [alt]="doctor.name"
+    class="doctor-profile-image"
+  >
+
+  <div
+    class="doctor-placeholder"
+    *ngIf="!doctor.profileImage"
+  >
+
+    <mat-icon>
+      person
+    </mat-icon>
+
+  </div>
+
+</div>
+
+
+          <!-- INFORMATION -->
+
+          <div class="doctor-info">
+
+            <h3>
+              {{ doctor.name }}
+            </h3>
+
+
+            <p>
+              {{
+                doctor.specialization ||
+                'General Medicine'
+              }}
+            </p>
+
+
+            <button
+              type="button"
+              class="doctor-details-btn"
+              (click)="viewDoctor(doctor)"
+            >
+
+              View Details
+
+              <mat-icon>
+                arrow_forward
+              </mat-icon>
+
+            </button>
+
+          </div>
+
+        </article>
+
+      </div>
+
+
+      <!-- RIGHT ARROW -->
+
+      <button
+        class="doctor-arrow right-arrow"
+        type="button"
+        (click)="nextDoctors()"
+        [disabled]="!canGoNext()"
+        aria-label="Next doctors"
+      >
+
+        <mat-icon>
+          arrow_forward
+        </mat-icon>
+
+      </button>
+
+    </div>
+
+
+    <!-- DOTS -->
+
+    <div
+      class="doctor-dots"
+      *ngIf="
+        !isLoadingDoctors &&
+        doctors.length >
+        doctorsPerPage
+      "
+    >
+
+      <span
+        *ngFor="
+          let doctor of doctors;
+          let i = index
+        "
+        [class.active]="
+          i >= doctorStartIndex &&
+          i <
+          doctorStartIndex +
+          doctorsPerPage
+        "
+      >
+      </span>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       WHY CHOOSE US
+  ====================================================== -->
+
+  <section class="why-section">
+
+    <div class="why-content">
+
+      <span>
+        WHY CHOOSE US
+      </span>
+
+
+      <h2>
+        Better healthcare.
+
+        <strong>
+          Better experience.
+        </strong>
+      </h2>
+
+
+      <p>
+        Our hospital management platform
+        makes healthcare easier for
+        patients, doctors and administrators.
       </p>
 
 
-      <div class="feature-list">
+      <div class="why-list">
 
-        <div class="feature-item">
+        <div>
+
+          <mat-icon>
+            check_circle
+          </mat-icon>
+
+          <span>
+            Secure patient information
+          </span>
+
+        </div>
+
+
+        <div>
+
+          <mat-icon>
+            check_circle
+          </mat-icon>
+
+          <span>
+            Easy online appointment booking
+          </span>
+
+        </div>
+
+
+        <div>
+
+          <mat-icon>
+            check_circle
+          </mat-icon>
+
+          <span>
+            Doctor availability management
+          </span>
+
+        </div>
+
+
+        <div>
+
+          <mat-icon>
+            check_circle
+          </mat-icon>
+
+          <span>
+            Secure Stripe payments
+          </span>
+
+        </div>
+
+
+        <div>
+
+          <mat-icon>
+            check_circle
+          </mat-icon>
+
+          <span>
+            Role-based authentication
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- CAREPLUS CARD -->
+
+    <div class="why-card">
+
+      <mat-icon>
+        local_hospital
+      </mat-icon>
+
+
+      <h2>
+        CarePlus
+      </h2>
+
+
+      <p>
+        Modern hospital management
+      </p>
+
+
+      <div class="role-row">
+
+        <span>
+
+          <mat-icon>
+            person
+          </mat-icon>
+
+          Patient
+
+        </span>
+
+
+        <span>
+
+          <mat-icon>
+            medical_services
+          </mat-icon>
+
+          Doctor
+
+        </span>
+
+
+        <span>
 
           <mat-icon>
             admin_panel_settings
           </mat-icon>
 
-          <div>
-            <strong>Role-based security</strong>
+          Admin
 
-            <span>
-              Separate protected dashboards for
-              patients, doctors and administrators.
-            </span>
-          </div>
-
-        </div>
-
-
-        <div class="feature-item">
-
-          <mat-icon>schedule</mat-icon>
-
-          <div>
-            <strong>Doctor availability</strong>
-
-            <span>
-              Patients can choose from available
-              doctor schedules without duplicate
-              booking.
-            </span>
-          </div>
-
-        </div>
-
-
-        <div class="feature-item">
-
-          <mat-icon>receipt_long</mat-icon>
-
-          <div>
-            <strong>Payment records</strong>
-
-            <span>
-              View payment status, transaction
-              details and payment history.
-            </span>
-          </div>
-
-        </div>
+        </span>
 
       </div>
 
     </div>
 
+  </section>
 
-    <div class="role-panel">
 
-      <div class="role-panel-icon">
-        <mat-icon>dashboard_customize</mat-icon>
+  <!-- =====================================================
+       CTA
+  ====================================================== -->
+
+  <section class="cta">
+
+    <div>
+
+      <span>
+        NEED AN APPOINTMENT?
+      </span>
+
+
+      <h2>
+        Your health journey starts here.
+      </h2>
+
+
+      <p>
+        Create your patient account
+        and schedule an appointment today.
+      </p>
+
+    </div>
+
+
+    <button
+      type="button"
+      (click)="
+        isLoggedIn
+          ? goToDashboard()
+          : goToRegister()
+      "
+    >
+
+      <mat-icon>
+        calendar_month
+      </mat-icon>
+
+
+      {{
+        isLoggedIn
+          ? 'Open Dashboard'
+          : 'Get Appointment'
+      }}
+
+    </button>
+
+  </section>
+
+
+  <!-- =====================================================
+       FOOTER
+  ====================================================== -->
+
+  <footer
+    class="footer"
+    id="contact"
+  >
+
+    <!-- CAREPLUS -->
+
+    <div class="footer-column">
+
+      <div class="footer-logo">
+
+        <mat-icon>
+          local_hospital
+        </mat-icon>
+
+        <div>
+
+          <strong>
+            CarePlus
+          </strong>
+
+          <span>
+            Hospital
+          </span>
+
+        </div>
+
       </div>
 
+
+      <p>
+        Providing convenient and secure
+        digital healthcare management
+        for patients and hospital
+        professionals.
+      </p>
+
+    </div>
+
+
+    <!-- QUICK LINKS -->
+
+    <div class="footer-column">
+
       <h3>
-        Designed for every role
+        Quick Links
       </h3>
 
 
-      <div class="role-item">
-
-        <span>
-          <mat-icon>person</mat-icon>
-        </span>
-
-        <div>
-          <strong>Patient</strong>
-          <small>Book, pay and track appointments</small>
-        </div>
-
-      </div>
-
-
-      <div class="role-item">
-
-        <span>
-          <mat-icon>medical_services</mat-icon>
-        </span>
-
-        <div>
-          <strong>Doctor</strong>
-          <small>Manage consultations and schedules</small>
-        </div>
-
-      </div>
-
-
-      <div class="role-item">
-
-        <span>
-          <mat-icon>admin_panel_settings</mat-icon>
-        </span>
-
-        <div>
-          <strong>Administrator</strong>
-          <small>Manage hospital operations</small>
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- ===================================================
-       CALL TO ACTION
-  ==================================================== -->
-
-  <section class="cta-section">
-
-    <div>
-      <span>Start today</span>
-
-      <h2>
-        Manage your healthcare more easily
-      </h2>
-
-      <p>
-        Create a patient account or log in to your
-        existing hospital portal.
-      </p>
-    </div>
-
-
-    <div class="cta-buttons">
-
-      <button
-        mat-raised-button
-        type="button"
-        (click)="goToRegister()"
-      >
-        Create Patient Account
-      </button>
-
-      <button
-        mat-stroked-button
-        type="button"
-        (click)="goToLogin()"
-      >
-        Login
-      </button>
-
-    </div>
-
-  </section>
-
-
-  <!-- ===================================================
-       FOOTER
-  ==================================================== -->
-
-  <footer
-    id="contact"
-    class="footer"
-  >
-
-    <div class="footer-about">
-
-      <div class="brand footer-brand">
-
-        <span class="brand-icon">
-          <mat-icon>local_hospital</mat-icon>
-        </span>
-
-        <span class="brand-text">
-          <strong>CarePlus</strong>
-          <small>Hospital Management</small>
-        </span>
-
-      </div>
-
-      <p>
-        Secure and convenient digital healthcare
-        management for patients and hospital staff.
-      </p>
-
-    </div>
-
-
-    <div class="footer-links">
-
-      <h3>Quick Links</h3>
-
-      <a routerLink="/">
+      <a href="#home">
         Home
+      </a>
+
+      <a href="#about">
+        About
+      </a>
+
+      <a href="#services">
+        Services
+      </a>
+
+      <a href="#doctors">
+        Doctors
       </a>
 
       <a routerLink="/login">
         Login
       </a>
 
-      <a routerLink="/register">
-        Register
-      </a>
+    </div>
+
+
+    <!-- SERVICES -->
+
+    <div class="footer-column">
+
+      <h3>
+        Services
+      </h3>
+
+      <span>
+        Doctor Consultation
+      </span>
+
+      <span>
+        Online Appointments
+      </span>
+
+      <span>
+        Patient Management
+      </span>
+
+      <span>
+        Online Payments
+      </span>
 
     </div>
 
 
-    <div class="footer-contact">
+    <!-- CONTACT -->
 
-      <h3>Contact</h3>
+    <div class="footer-column">
+
+      <h3>
+        Contact Us
+      </h3>
+
 
       <p>
-        <mat-icon>location_on</mat-icon>
+
+        <mat-icon>
+          location_on
+        </mat-icon>
+
         Sharjah, UAE
+
       </p>
 
+
       <p>
-        <mat-icon>phone</mat-icon>
+
+        <mat-icon>
+          call
+        </mat-icon>
+
         +971 50 123 4567
+
       </p>
 
+
       <p>
-        <mat-icon>email</mat-icon>
+
+        <mat-icon>
+          email
+        </mat-icon>
+
         care@careplus.ae
+
       </p>
 
     </div>
 
 
-    <div class="footer-bottom">
+    <div class="copyright">
+
       © 2026 CarePlus Hospital Management System
+
     </div>
 
   </footer>

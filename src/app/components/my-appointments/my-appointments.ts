@@ -2,6 +2,8 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Appointment } from '../../models/appointment';
 import { Apiservice } from '../../services/apiservice';
 import { Router } from '@angular/router';
+import { PaymentService } from '../../services/payment';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-my-appointments',
@@ -10,6 +12,7 @@ import { Router } from '@angular/router';
   styleUrl: './my-appointments.css',
 })
 export class MyAppointments implements OnInit{
+  payments: any[] = [];
 
    appointments: any[] = [];
 
@@ -29,7 +32,7 @@ export class MyAppointments implements OnInit{
 
 constructor(
 private apiService:Apiservice,
-private cd:ChangeDetectorRef,private router: Router,
+private cd:ChangeDetectorRef,private router: Router, private paymentService: PaymentService,
 ){}
 
 
@@ -42,36 +45,70 @@ this.loadAppointments();
 
 
 
-loadAppointments(){
-   this.isLoading = true;
+loadAppointments(): void {
+  this.isLoading = true;
 
-this.apiService.getAppointments()
-.subscribe({next:(result:any)=>{
+  forkJoin({
+    appointments:
+      this.apiService.getMyAppointments(),
 
-this.appointments=result.appointments ?? result.data ?? result ?? [];
- this.isLoading = false;
-        this.cd.detectChanges();
-this.cd.detectChanges();
+    payments:
+      this.paymentService.getMyPayments()
+  })
+  .subscribe({
+    next: ({
+      appointments,
+      payments
+    }) => {
 
-},
+      this.payments = payments ?? [];
 
+      this.appointments =
+        (appointments ?? []).map(
+          appointment => {
 
-      error: (error) => {
-        console.error(
-          'Appointment loading error:',
-          error
+            const payment =
+              this.payments.find(
+                item => {
+
+                  const paymentAppointmentId =
+                    typeof item.appointmentId ===
+                    'object'
+                      ? item.appointmentId?._id
+                      : item.appointmentId;
+
+                  return (
+                    paymentAppointmentId ===
+                    appointment._id
+                  );
+                }
+              );
+
+            return {
+              ...appointment,
+
+              paymentStatus:
+                payment?.paymentStatus ??
+                'Unpaid'
+            };
+          }
         );
 
-        this.isLoading = false;
-        this.cd.detectChanges();
+      this.isLoading = false;
+      this.cd.detectChanges();
+    },
 
-        alert(
-          error.error?.message ||
-          'Unable to load appointments'
-        );
-      }
-    });
-  }
+    error: error => {
+      console.error(
+        'Appointments loading error:',
+        error
+      );
+
+      this.isLoading = false;
+      this.cd.detectChanges();
+    }
+  });
+}
 
 
 cancelAppointment(

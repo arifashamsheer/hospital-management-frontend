@@ -1,0 +1,39 @@
+<div class="dialog-container">
+
+  <div class="dialog-icon">
+    <mat-icon>
+      {{ data.icon || 'help_outline' }}
+    </mat-icon>
+  </div>
+
+  <h2>
+    {{ data.title }}
+  </h2>
+
+  <p>
+    {{ data.message }}
+  </p>
+
+  <div class="dialog-actions">
+
+    <button
+      mat-stroked-button
+      type="button"
+      *ngIf="data.cancelText"
+      (click)="cancel()"
+    >
+      {{ data.cancelText }}
+    </button>
+
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="confirm()"
+    >
+      {{ data.confirmText || 'Confirm' }}
+    </button>
+
+  </div>
+
+</div>

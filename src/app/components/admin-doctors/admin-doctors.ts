@@ -4,6 +4,8 @@ import { Apiservice } from '../../services/apiservice';
 import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialog } from '../confirm-dialog/confirm-dialog';
 
 @Component({
   selector: 'app-admin-doctors',
@@ -38,7 +40,7 @@ export class AdminDoctors implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
 
-  constructor(
+  constructor( private dialog: MatDialog,
     private api: Apiservice,
     private router: Router,
     private cd: ChangeDetectorRef
@@ -161,66 +163,98 @@ export class AdminDoctors implements OnInit, AfterViewInit {
     }
   }
 
-  changeStatus(doctor: Doctor): void {
-    if (!doctor._id) {
-      return;
-    }
+  changeStatus(
+  doctor: Doctor
+): void {
 
-    const newStatus =
-      !doctor.isActive;
-
-    const message =
-      newStatus
-        ? `Activate Dr. ${doctor.name}?`
-        : `Deactivate Dr. ${doctor.name}?`;
-
-    const confirmed =
-      confirm(message);
-
-    if (!confirmed) {
-      return;
-    }
-
-    this.updatingDoctorId =
-      doctor._id;
-
-    this.api
-      .updateDoctorStatus(
-        doctor._id,
-        newStatus
-      )
-      .subscribe({
-        next: () => {
-          doctor.isActive =
-            newStatus;
-
-          this.updatingDoctorId = '';
-
-          this.dataSource.data = [
-            ...this.doctors
-          ];
-
-          this.cd.detectChanges();
-        },
-
-        error: (error) => {
-          console.error(
-            'Doctor status update error:',
-            error
-          );
-
-          alert(
-            error.error?.message ||
-            'Unable to update doctor status.'
-          );
-
-          this.updatingDoctorId = '';
-
-          this.cd.detectChanges();
-        }
-      });
+  if (!doctor._id) {
+    return;
   }
 
+  const newStatus =
+    !doctor.isActive;
+
+  const actionText =
+    newStatus
+      ? 'Activate'
+      : 'Deactivate';
+
+  const dialogRef =
+    this.dialog.open(
+      ConfirmDialog,
+      {
+        width: '360px',
+        maxWidth: '90vw',
+        disableClose: true,
+
+        data: {
+          title:
+            `${actionText} doctor?`,
+
+          message:
+            `Do you want to ${actionText.toLowerCase()} Dr. ${doctor.name}?`,
+
+          confirmText:
+            actionText,
+
+          cancelText:
+            'Cancel',
+
+          icon:
+            newStatus
+              ? 'person_add'
+              : 'person_off'
+        }
+      }
+    );
+
+  dialogRef
+    .afterClosed()
+    .subscribe(
+      confirmed => {
+
+        if (!confirmed) {
+          return;
+        }
+
+        this.updatingDoctorId =
+          doctor._id!;
+
+        this.api
+          .updateDoctorStatus(
+            doctor._id!,
+            newStatus
+          )
+          .subscribe({
+            next: () => {
+
+              doctor.isActive =
+                newStatus;
+
+              this.updatingDoctorId = '';
+
+              this.dataSource.data = [
+                ...this.doctors
+              ];
+
+              this.cd.detectChanges();
+            },
+
+            error: (error) => {
+
+              console.error(
+                'Doctor status update error:',
+                error
+              );
+
+              this.updatingDoctorId = '';
+
+              this.cd.detectChanges();
+            }
+          });
+      }
+    );
+}
   addDoctor(): void {
     this.router.navigate([
       '/register-doctor'

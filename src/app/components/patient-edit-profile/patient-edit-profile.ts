@@ -3,6 +3,8 @@ import { Patient } from '../../models/patient';
 import { Apiservice } from '../../services/apiservice';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialog } from '../confirm-dialog/confirm-dialog';
 
 @Component({
   selector: 'app-patient-edit-profile',
@@ -61,7 +63,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   constructor(
     private fb: FormBuilder,
     private api: Apiservice,
-    private router: Router,private cd: ChangeDetectorRef
+    private router: Router,
+    private cd: ChangeDetectorRef,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -139,47 +143,171 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
       error: (error) => {
         console.error('Profile loading error:', error);
 
-        alert(
-          error.error?.message ||
-          'Unable to load profile'
-        );
+       this.dialog.open(
+  ConfirmDialog,
+  {
+    width: '360px',
+    maxWidth: '90vw',
+
+    data: {
+      title:
+        'Unable to load profile',
+
+      message:
+        error.error?.message ||
+        'Your profile information could not be loaded.',
+
+      confirmText:
+        'Close',
+
+      cancelText:
+        '',
+
+      icon:
+        'error_outline'
+    }
+  }
+);
 
         this.isLoading = false;
+        this.cd.detectChanges();
       }
     });
   }
 
   updateProfile(): void {
-    if (this.profileForm.invalid) {
-      this.profileForm.markAllAsTouched();
-      return;
-    }
 
-    this.isSubmitting = true;
+  if (this.profileForm.invalid) {
+    this.profileForm.markAllAsTouched();
+    return;
+  }
 
-    const updatedPatient = this.profileForm.getRawValue();
+  const dialogRef =
+    this.dialog.open(
+      ConfirmDialog,
+      {
+        width: '360px',
+        maxWidth: '90vw',
+        disableClose: true,
 
-    this.api.updateMyProfile(updatedPatient).subscribe({
+        data: {
+          title: 'Update profile?',
+          message:
+            'Do you want to save the changes made to your profile?',
+          confirmText: 'Update',
+          cancelText: 'Cancel',
+          icon: 'person'
+        }
+      }
+    );
+
+  dialogRef
+    .afterClosed()
+    .subscribe(
+      confirmed => {
+
+        if (!confirmed) {
+          return;
+        }
+
+        this.saveProfile();
+      }
+    );
+}
+saveProfile(): void {
+
+  this.isSubmitting = true;
+
+  const updatedPatient =
+    this.profileForm.getRawValue();
+
+  this.api
+    .updateMyProfile(
+      updatedPatient
+    )
+    .subscribe({
+
       next: () => {
-        alert('Profile updated successfully');
 
-        this.router.navigate([
-          '/patient-profile'
-        ]);
+        this.isSubmitting = false;
+
+        const successDialog =
+          this.dialog.open(
+            ConfirmDialog,
+            {
+              width: '360px',
+              maxWidth: '90vw',
+              disableClose: true,
+
+              data: {
+                title:
+                  'Profile updated',
+
+                message:
+                  'Your profile information was updated successfully.',
+
+                confirmText:
+                  'OK',
+
+                cancelText:
+                  '',
+
+                icon:
+                  'check_circle'
+              }
+            }
+          );
+
+        successDialog
+          .afterClosed()
+          .subscribe(() => {
+
+            this.router.navigate([
+              '/patient-profile'
+            ]);
+
+          });
       },
 
       error: (error) => {
-        console.error('Profile update error:', error);
 
-        alert(
-          error.error?.message ||
-          'Profile update failed'
+        console.error(
+          'Profile update error:',
+          error
         );
 
         this.isSubmitting = false;
+
+        this.dialog.open(
+          ConfirmDialog,
+          {
+            width: '360px',
+            maxWidth: '90vw',
+
+            data: {
+              title:
+                'Update failed',
+
+              message:
+                error.error?.message ||
+                'Unable to update your profile.',
+
+              confirmText:
+                'Close',
+
+              cancelText:
+                '',
+
+              icon:
+                'error_outline'
+            }
+          }
+        );
+
+        this.cd.detectChanges();
       }
     });
-  }
+}
 
   goBack(): void {
     this.router.navigate([

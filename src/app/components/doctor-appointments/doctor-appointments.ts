@@ -2,6 +2,8 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Appointment } from '../../models/appointment';
 import { Apiservice } from '../../services/apiservice';
 import { FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialog } from '../confirm-dialog/confirm-dialog';
 
 @Component({
   selector: 'app-doctor-appointments',
@@ -30,7 +32,13 @@ export class DoctorAppointments implements OnInit{
     'actions'
   ];
 
-  constructor(private api: Apiservice,private cd:ChangeDetectorRef){}
+  constructor(private api: Apiservice,
+    private cd:ChangeDetectorRef, 
+  private dialog: MatDialog
+
+  ){
+
+  }
 
   ngOnInit(): void {
     this.loadAppointments();

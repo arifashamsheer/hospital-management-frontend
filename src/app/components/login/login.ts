@@ -138,6 +138,9 @@ export class LoginComponents {
       control.hasError(errorName)
     );
   }
+  goHome(): void {
+  this.router.navigate(['/']);
+}
 
 
 }

@@ -166,4 +166,7 @@ export class Register {
       control.hasError(errorName)
     );
   }
+  goHome(): void {
+  this.router.navigate(['/']);
+}
 }

@@ -61,6 +61,7 @@ import { MyPayments } from './components/my-payments/my-payments';
 
 import { authInterceptor } from './interceptors/auth-interceptor';
 import { Home } from './components/home/home';
+import { ConfirmDialog } from './components/confirm-dialog/confirm-dialog';
 
 @NgModule({
   declarations: [
@@ -101,7 +102,8 @@ import { Home } from './components/home/home';
     PaymentStr,
     PaymentSuccess,
     MyPayments,
-    Home
+    Home,
+    ConfirmDialog
   ],
 
   imports: [

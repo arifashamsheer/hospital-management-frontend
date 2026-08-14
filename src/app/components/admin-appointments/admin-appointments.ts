@@ -4,6 +4,8 @@ import { Apiservice } from '../../services/apiservice';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialog } from '../confirm-dialog/confirm-dialog';
 
 @Component({
   selector: 'app-admin-appointments',
@@ -38,7 +40,7 @@ export class AdminAppointments  implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
 
-  constructor(
+  constructor( private dialog: MatDialog,
     private api: Apiservice,
     private cd: ChangeDetectorRef,
   private router: Router
@@ -173,60 +175,67 @@ export class AdminAppointments  implements OnInit, AfterViewInit {
   }
 
   changeStatus(
-    appointment: Appointment,
-    status: string
-  ): void {
-    if (!appointment._id) {
-      return;
-    }
+  appointment: any,
+  status: string
+): void {
 
-    const confirmed = confirm(
-      `Change appointment status to ${status}?`
+  const dialogRef =
+    this.dialog.open(
+      ConfirmDialog,
+      {
+        width: '420px',
+        disableClose: true,
+
+        data: {
+          title: 'Confirm Status Change',
+
+          message:
+            `Are you sure you want to change this appointment status to ${status}?`,
+
+          confirmText:
+            `Yes, ${status}`,
+
+          cancelText:
+            'Cancel',
+
+          icon:
+            status === 'Approved'
+              ? 'check_circle'
+              : 'cancel'
+        }
+      }
     );
 
-    if (!confirmed) {
-      return;
-    }
+  dialogRef
+    .afterClosed()
+    .subscribe(
+      confirmed => {
 
-    this.updatingAppointmentId =
-      appointment._id;
-
-    this.api
-      .updateAppointmentStatus(
-        appointment._id,
-        status
-      )
-      .subscribe({
-        next: () => {
-          appointment.status =
-            status;
-
-          this.updatingAppointmentId = '';
-
-          this.dataSource.data = [
-            ...this.appointments
-          ];
-
-          this.cd.detectChanges();
-        },
-
-        error: (error) => {
-          console.error(
-            'Appointment status error:',
-            error
-          );
-
-          alert(
-            error.error?.message ||
-            'Unable to update appointment status.'
-          );
-
-          this.updatingAppointmentId = '';
-
-          this.cd.detectChanges();
+        if (!confirmed) {
+          return;
         }
-      });
-  }
+
+        this.api
+          .updateAppointmentStatus(
+            appointment._id,
+            status
+          )
+          .subscribe({
+            next: () => {
+              appointment.status =
+                status;
+            },
+
+            error: error => {
+              console.error(
+                'Status update error:',
+                error
+              );
+            }
+          });
+      }
+    );
+}
 
   getPatientName(
     appointment: Appointment

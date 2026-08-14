@@ -60,6 +60,17 @@
 
       <mat-card-content>
 
+        <button
+          mat-button
+          type="button"
+          class="back-home"
+          (click)="goHome()"
+        >
+          <mat-icon>arrow_back</mat-icon>
+          Back to Home
+        </button>
+
+
         <div class="form-header">
 
           <div class="mobile-logo">
@@ -68,7 +79,9 @@
             </mat-icon>
           </div>
 
-          <h2>Welcome Back</h2>
+          <h2>
+            Welcome Back
+          </h2>
 
           <p>
             Enter your account details to log in

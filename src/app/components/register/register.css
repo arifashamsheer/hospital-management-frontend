@@ -1041,3 +1041,16 @@ button[mat-icon-button]:focus-visible {
       auto !important;
   }
 }
+.back-home:hover {
+  transform:
+    translateX(-4px);
+
+  background:
+    rgba(25, 118, 210, 0.07);
+}
+
+.back-home mat-icon {
+  width: 19px;
+  height: 19px;
+  font-size: 19px;
+}

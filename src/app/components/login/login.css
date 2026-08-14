@@ -990,3 +990,40 @@ button[mat-icon-button]:focus-visible {
       auto !important;
   }
 }
+
+.back-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+
+  margin:
+    -8px 0 18px -8px;
+
+  padding:
+    5px 8px;
+
+  border-radius: 10px;
+
+  color: #1565c0 !important;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  transition:
+    transform 0.22s ease,
+    background-color 0.22s ease;
+}
+
+.back-home:hover {
+  transform:
+    translateX(-4px);
+
+  background:
+    rgba(25, 118, 210, 0.07);
+}
+
+.back-home mat-icon {
+  width: 19px;
+  height: 19px;
+  font-size: 19px;
+}

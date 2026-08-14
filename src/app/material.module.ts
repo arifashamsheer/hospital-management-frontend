@@ -18,6 +18,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   exports: [
@@ -40,7 +41,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatDividerModule,MatPaginatorModule,
     MatTooltipModule,
     MatMenuModule,
-    MatSlideToggleModule 
+    MatSlideToggleModule,
+    MatDialogModule
 
   ]
 })
