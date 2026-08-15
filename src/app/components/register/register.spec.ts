@@ -31,7 +31,6 @@ import {
   Register
 } from './register';
 
-
 describe('Register', () => {
 
   let component: Register;
@@ -51,21 +50,15 @@ describe('Register', () => {
       ],
 
       providers: [
-
-        // Modern replacement for RouterTestingModule
         provideRouter([]),
 
-        // Modern HttpClient testing setup
         provideHttpClient(),
         provideHttpClientTesting(),
 
-        // Replacement for NoopAnimationsModule
         provideNoopAnimations()
-
       ]
 
     }).compileComponents();
-
 
     fixture =
       TestBed.createComponent(Register);
@@ -76,15 +69,10 @@ describe('Register', () => {
     fixture.detectChanges();
 
     await fixture.whenStable();
-
   });
 
-
   it('should create', () => {
-
-    expect(component)
-      .toBeTruthy();
-
+    expect(component).toBeTruthy();
   });
 
 });

@@ -2,15 +2,17 @@
 /* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
 {
   "extends": "./tsconfig.json",
+
   "compilerOptions": {
-    "outDir": "./src/out-tsc/app",
-     "rootDir": "./src",
+    "outDir": "./out-tsc/spec",
+    "rootDir": "./src",
     "types": [
       "vitest/globals"
-    ],
+    ]
   },
+
   "include": [
-    "src/**/*.spec.ts",
+    "src/**/*.ts",
     "src/**/*.d.ts"
   ]
 }

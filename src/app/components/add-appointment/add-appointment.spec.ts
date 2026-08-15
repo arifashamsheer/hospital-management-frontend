@@ -1,23 +1,124 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed
+} from '@angular/core/testing';
 
-import { AddAppointment } from './add-appointment';
+import {
+  CommonModule
+} from '@angular/common';
+
+import {
+  FormsModule,
+  ReactiveFormsModule
+} from '@angular/forms';
+
+import {
+  provideRouter
+} from '@angular/router';
+
+import {
+  provideHttpClient
+} from '@angular/common/http';
+
+import {
+  provideHttpClientTesting
+} from '@angular/common/http/testing';
+
+import {
+  MatIconModule
+} from '@angular/material/icon';
+
+import {
+  MatCardModule
+} from '@angular/material/card';
+
+import {
+  MatFormFieldModule
+} from '@angular/material/form-field';
+
+import {
+  MatInputModule
+} from '@angular/material/input';
+
+import {
+  MatSelectModule
+} from '@angular/material/select';
+
+import {
+  MatButtonModule
+} from '@angular/material/button';
+
+import {
+  MatProgressSpinnerModule
+} from '@angular/material/progress-spinner';
+
+import {
+  MatDatepickerModule
+} from '@angular/material/datepicker';
+
+import {
+  MatNativeDateModule
+} from '@angular/material/core';
+
+import {
+  AddAppointment
+} from './add-appointment';
+
 
 describe('AddAppointment', () => {
+
   let component: AddAppointment;
   let fixture: ComponentFixture<AddAppointment>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [AddAppointment]
-    })
-    .compileComponents();
 
-    fixture = TestBed.createComponent(AddAppointment);
-    component = fixture.componentInstance;
-    await fixture.whenStable();
+    await TestBed.configureTestingModule({
+
+      declarations: [
+        AddAppointment
+      ],
+
+      imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+
+        MatIconModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatButtonModule,
+        MatProgressSpinnerModule,
+        MatDatepickerModule,
+        MatNativeDateModule
+      ],
+
+      providers: [
+        provideRouter([]),
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
+
+    }).compileComponents();
+
+
+    fixture =
+      TestBed.createComponent(
+        AddAppointment
+      );
+
+    component =
+      fixture.componentInstance;
+
   });
+
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+
+    expect(component)
+      .toBeTruthy();
+
   });
+
 });
