@@ -5,10 +5,10 @@ import { Doctors } from './components/doctors/doctors';
 import { Appointments } from './components/appointments/appointments';
 import { Register } from './components/register/register';
 import { LoginComponents } from './components/login/login';
-import { PatientDashboard } from './components/patient-dashboard/patient-dashboard';
-import { PatientProfile } from './components/patient-profile/patient-profile';
-import { BookAppointment } from './components/book-appointment/book-appointment';
-import { MyAppointments } from './components/my-appointments/my-appointments';
+//import { PatientDashboard } from './components/patient-dashboard/patient-dashboard';
+//import { PatientProfile } from './components/patient-profile/patient-profile';
+//import { BookAppointment } from './components/book-appointment/book-appointment';
+//import { MyAppointments } from './components/my-appointments/my-appointments';
 import { DoctorDashboard } from './components/doctor-dashboard/doctor-dashboard';
 import { DoctorAppointments } from './components/doctor-appointments/doctor-appointments';
 import { DoctorProfile } from './components/doctor-profile/doctor-profile';
@@ -22,7 +22,7 @@ import { RegisterDoctor } from './components/register-doctor/register-doctor';
 import { authGuard } from './guards/auth-guard';
 import { roleGuard } from './guards/role-guard';
 import { AccessDenied } from './components/access-denied/access-denied';
-import { PatientEditProfile } from './components/patient-edit-profile/patient-edit-profile';
+//import { PatientEditProfile } from './components/patient-edit-profile/patient-edit-profile';
 import { MainLayout } from './components/main-layout/main-layout';
 import { AddPatient } from './components/add-patient/add-patient';
 import { AddAppointment } from './components/add-appointment/add-appointment';
@@ -30,9 +30,9 @@ import { EditPatient } from './components/edit-patient/edit-patient';
 import { AdminDoctorDetails } from './components/admin-doctor-details/admin-doctor-details';
 import { EditDoctor } from './components/edit-doctor/edit-doctor';
 import { AdminAppointmentDetails } from './components/admin-appointment-details/admin-appointment-details';
-import { PaymentStr } from './components/payment-str/payment-str';
-import { PaymentSuccess } from './components/payment-success/payment-success';
-import { MyPayments } from './components/my-payments/my-payments';
+//import { PaymentStr } from './components/payment-str/payment-str';
+//import { PaymentSuccess } from './components/payment-success/payment-success';
+//import { MyPayments } from './components/my-payments/my-payments';
 import { AdminPayments } from './components/admin-payments/admin-payments';
 import { Home } from './components/home/home';
 
@@ -468,105 +468,13 @@ const routes: Routes = [
       // -----------------------------
       // Patient routes
       // -----------------------------
-
-      {
-        path: 'patient-dashboard',
-        component: PatientDashboard,
-        canActivate: [
-          authGuard,
-          roleGuard
-        ],
-        data: {
-          roles: ['patient']
-        }
-      },
-
-      {
-        path: 'patient-profile',
-        component: PatientProfile,
-        canActivate: [
-          authGuard,
-          roleGuard
-        ],
-        data: {
-          roles: ['patient']
-        }
-      },
-
-      {
-        path: 'patient-edit-profile',
-        component: PatientEditProfile,
-        canActivate: [
-          authGuard,
-          roleGuard
-        ],
-        data: {
-          roles: ['patient']
-        }
-      },
-
-      {
-        path: 'book-appointment',
-        component: BookAppointment,
-        canActivate: [
-          authGuard,
-          roleGuard
-        ],
-        data: {
-          roles: ['patient']
-        }
-      },
-
-      {
-        path: 'my-appointments',
-        component: MyAppointments,
-        canActivate: [
-          authGuard,
-          roleGuard
-        ],
-        data: {
-          roles: ['patient']
-        }
-      },
-
-      {
-        path: 'payment/:appointmentId',
-        component: PaymentStr,
-        canActivate: [
-          authGuard,
-          roleGuard
-        ],
-        data: {
-          roles: ['patient']
-        }
-      },
-
-      {
-        path: 'payment-success',
-        component: PaymentSuccess,
-        canActivate: [
-          authGuard,
-          roleGuard
-        ],
-        data: {
-          roles: ['patient']
-        }
-      },
-
-      {
-        path: 'my-payments',
-        component: MyPayments,
-        canActivate: [
-          authGuard,
-          roleGuard
-        ],
-        data: {
-          roles: ['patient']
-        }
-      },
-
-
-      // -----------------------------
+// {
+//   path: '',
+//   loadChildren: () =>
+//     import('./patient/patient-module').then(
+//       m => m.PatientModule
+//     )
+// },   // -----------------------------
       // Doctor routes
       // -----------------------------
 

@@ -25,10 +25,10 @@ import { App } from './app';
 
 import { Register } from './components/register/register';
 import { LoginComponents } from './components/login/login';
-import { PatientDashboard } from './components/patient-dashboard/patient-dashboard';
-import { PatientProfile } from './components/patient-profile/patient-profile';
-import { BookAppointment } from './components/book-appointment/book-appointment';
-import { MyAppointments } from './components/my-appointments/my-appointments';
+//import { PatientDashboard } from './components/patient-dashboard/patient-dashboard';
+//import { PatientProfile } from './components/patient-profile/patient-profile';
+//import { BookAppointment } from './components/book-appointment/book-appointment';
+//import { MyAppointments } from './components/my-appointments/my-appointments';
 
 import { DoctorDashboard } from './components/doctor-dashboard/doctor-dashboard';
 import { DoctorAppointments } from './components/doctor-appointments/doctor-appointments';
@@ -47,7 +47,7 @@ import { AdminPayments } from './components/admin-payments/admin-payments';
 import { Appointments } from './components/appointments/appointments';
 import { RegisterDoctor } from './components/register-doctor/register-doctor';
 import { AccessDenied } from './components/access-denied/access-denied';
-import { PatientEditProfile } from './components/patient-edit-profile/patient-edit-profile';
+//import { PatientEditProfile } from './components/patient-edit-profile/patient-edit-profile';
 
 import { MainLayout } from './components/main-layout/main-layout';
 import { AddPatient } from './components/add-patient/add-patient';
@@ -55,9 +55,9 @@ import { AddAppointment } from './components/add-appointment/add-appointment';
 import { EditPatient } from './components/edit-patient/edit-patient';
 import { EditDoctor } from './components/edit-doctor/edit-doctor';
 
-import { PaymentStr } from './components/payment-str/payment-str';
-import { PaymentSuccess } from './components/payment-success/payment-success';
-import { MyPayments } from './components/my-payments/my-payments';
+//import { PaymentStr } from './components/payment-str/payment-str';
+//import { PaymentSuccess } from './components/payment-success/payment-success';
+//import { MyPayments } from './components/my-payments/my-payments';
 
 
 
@@ -72,11 +72,11 @@ import { ConfirmDialog } from './components/confirm-dialog/confirm-dialog';
     Appointments,
     LoginComponents,
 
-    PatientDashboard,
-    PatientProfile,
-    PatientEditProfile,
-    BookAppointment,
-    MyAppointments,
+
+
+
+
+
 
     DoctorDashboard,
     DoctorAppointments,
@@ -101,9 +101,8 @@ import { ConfirmDialog } from './components/confirm-dialog/confirm-dialog';
     EditPatient,
     EditDoctor,
 
-    PaymentStr,
-    PaymentSuccess,
-    MyPayments,
+
+
     Home,
     ConfirmDialog
   ],
@@ -134,4 +133,4 @@ import { ConfirmDialog } from './components/confirm-dialog/confirm-dialog';
     App
   ]
 })
-export class AppModule {}
+export class AppModule { }

@@ -78,48 +78,47 @@ import {
 
 
 @NgModule({
-
-  exports: [
-
+  imports: [
     MatToolbarModule,
-
     MatSidenavModule,
-
     MatListModule,
-
     MatButtonModule,
-
     MatIconModule,
-
     MatCardModule,
-
     MatFormFieldModule,
-
     MatInputModule,
-
     MatSelectModule,
-
     MatTableModule,
-
     MatDividerModule,
-
     MatProgressSpinnerModule,
-
     MatDatepickerModule,
-
     MatNativeDateModule,
-
     MatPaginatorModule,
-
     MatTooltipModule,
-
     MatMenuModule,
-
     MatSlideToggleModule,
-
     MatDialogModule
-
+  ],
+  exports: [
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatTableModule,
+    MatDividerModule,
+    MatProgressSpinnerModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatPaginatorModule,
+    MatTooltipModule,
+    MatMenuModule,
+    MatSlideToggleModule,
+    MatDialogModule
   ]
-
 })
 export class MaterialModule {}
