@@ -8,6 +8,7 @@ export interface ConfirmDialogData {
   confirmText?: string;
   cancelText?: string;
   icon?: string;
+  showCancel?: boolean;
 }
 
 

@@ -41,7 +41,9 @@ export class AdminPayments implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.configureFilter();
     this.loadPayments();
+
   }
 
   loadPayments(): void {
@@ -134,5 +136,63 @@ export class AdminPayments implements OnInit {
   ): string {
     return `status-${status.toLowerCase()}`;
   }
+  configureFilter(): void {
+  this.dataSource.filterPredicate = (
+    payment: any,
+    filter: string
+  ) => {
+    const searchText =
+      filter.trim().toLowerCase();
+
+    const patientName =
+      payment.patientId?.name ??
+      payment.patient?.name ??
+      payment.appointmentId?.patientId?.name ??
+      payment.patientName ??
+      '';
+
+    const doctorName =
+      payment.doctorId?.name ??
+      payment.doctor?.name ??
+      payment.appointmentId?.doctorId?.name ??
+      payment.doctorName ??
+      '';
+
+    const appointmentDate =
+      payment.appointmentId?.date ??
+      payment.appointmentDate ??
+      '';
+
+    const transactionId =
+      payment.paymentIntentId ??
+      payment.transactionId ??
+      '';
+
+    const status =
+      payment.paymentStatus ??
+      payment.status ??
+      '';
+
+    const searchableText = [
+      patientName,
+      doctorName,
+      appointmentDate,
+      transactionId,
+      status,
+      payment.amount
+    ]
+      .filter(
+        value =>
+          value !== null &&
+          value !== undefined
+      )
+      .join(' ')
+      .toLowerCase();
+
+    return searchableText.includes(
+      searchText
+    );
+  };
+}
 
 }

@@ -223,76 +223,176 @@ export class DoctorAppointments implements OnInit{
   }
 
   updateStatus(
-    appointment: any,
-    status: string
-  ): void {
-    let confirmationMessage =
-      'Update this appointment?';
+  appointment: any,
+  status: string
+): void {
 
-    if (status === 'Approved') {
-      confirmationMessage =
-        'Are you sure you want to approve this appointment?';
-    }
+  let title =
+    'Update Appointment';
 
-    if (status === 'Completed') {
-      confirmationMessage =
-        'Are you sure you want to mark this appointment as completed?';
-    }
+  let message =
+    'Do you want to update this appointment?';
 
-    if (status === 'Cancelled') {
-      confirmationMessage =
-        'Are you sure you want to cancel this appointment?';
-    }
+  let icon =
+    'help_outline';
 
-    const confirmed = confirm(
-      confirmationMessage
-    );
 
-    if (!confirmed) {
-      return;
-    }
+  if (status === 'Approved') {
+    title = 'Approve Appointment?';
 
-    this.updatingId = appointment._id;
+    message =
+      'Are you sure you want to approve this appointment?';
 
-    this.api
-      .updateAppointmentStatus(
-        appointment._id,
-        status
-      )
-      .subscribe({
-        next: (response: any) => {
-          appointment.status =
-            response.appointment?.status ??
-            response.status ??
-            status;
-
-          this.updatingId = null;
-
-          this.applyFilters();
-          this.cd.detectChanges();
-
-          alert(
-            `Appointment ${status.toLowerCase()} successfully`
-          );
-        },
-
-        error: (error) => {
-          console.error(
-            'Appointment update error:',
-            error
-          );
-
-          this.updatingId = null;
-          this.cd.detectChanges();
-
-          alert(
-            error.error?.message ||
-            'Unable to update appointment'
-          );
-        }
-      });
+    icon = 'check_circle';
   }
 
+
+  if (status === 'Completed') {
+    title = 'Complete Appointment?';
+
+    message =
+      'Are you sure you want to mark this appointment as completed?';
+
+    icon = 'task_alt';
+  }
+
+
+  if (status === 'Cancelled') {
+    title = 'Cancel Appointment?';
+
+    message =
+      'Are you sure you want to cancel this appointment?';
+
+    icon = 'cancel';
+  }
+
+
+  const dialogRef =
+    this.dialog.open(
+      ConfirmDialog,
+      {
+        width: '380px',
+        disableClose: true,
+
+        data: {
+          title: title,
+          message: message,
+          confirmText:
+            status === 'Completed'
+              ? 'Complete'
+              : status === 'Approved'
+              ? 'Approve'
+              : 'Cancel',
+          cancelText: 'Back',
+          icon: icon
+        }
+      }
+    );
+
+
+  dialogRef
+    .afterClosed()
+    .subscribe(
+      confirmed => {
+
+        if (!confirmed) {
+          return;
+        }
+
+        this.performStatusUpdate(
+          appointment,
+          status
+        );
+      }
+    );
+}
+
+private performStatusUpdate(
+  appointment: any,
+  status: string
+): void {
+
+  this.updatingId =
+    appointment._id;
+
+
+  this.api
+    .updateAppointmentStatus(
+      appointment._id,
+      status
+    )
+    .subscribe({
+
+      next: (response: any) => {
+
+        appointment.status =
+          response.appointment?.status ??
+          response.status ??
+          status;
+
+        this.updatingId = null;
+
+        this.applyFilters();
+        this.cd.detectChanges();
+
+
+        this.dialog.open(
+          ConfirmDialog,
+          {
+            width: '380px',
+            disableClose: true,
+
+            data: {
+              title:
+                'Appointment Updated!',
+              message:
+                `Appointment ${status.toLowerCase()} successfully.`,
+              confirmText:
+                'OK',
+              icon:
+                'check_circle'
+            }
+          }
+        );
+
+      },
+
+
+      error: (error) => {
+
+        console.error(
+          'Appointment update error:',
+          error
+        );
+
+        this.updatingId = null;
+
+        this.cd.detectChanges();
+
+
+        this.dialog.open(
+          ConfirmDialog,
+          {
+            width: '380px',
+
+            data: {
+              title:
+                'Update Failed',
+              message:
+                error.error?.message ||
+                'Unable to update appointment.',
+              confirmText:
+                'OK',
+              icon:
+                'error_outline'
+            }
+          }
+        );
+
+      }
+
+    });
+}
   canApprove(
     appointment: any
   ): boolean {

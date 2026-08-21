@@ -3,6 +3,13 @@ import { Doctor } from '../../models/doctor';
 import { Apiservice } from '../../services/apiservice';
 import { Router } from '@angular/router';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  MatDialog
+} from '@angular/material/dialog';
+
+import {
+  ConfirmDialog
+} from '../confirm-dialog/confirm-dialog';
 
 @Component({
   selector: 'app-edit-doctor-profile',
@@ -24,7 +31,8 @@ export class EditDoctorProfile implements OnInit {
     private formBuilder: FormBuilder,
     private api: Apiservice,
     private router: Router,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+  private dialog: MatDialog
   ) {
     this.createForm();
   }
@@ -153,10 +161,45 @@ export class EditDoctorProfile implements OnInit {
   }
 
   updateProfile(): void {
+
   if (this.doctorForm.invalid) {
     this.doctorForm.markAllAsTouched();
     return;
   }
+
+  const dialogRef =
+    this.dialog.open(
+      ConfirmDialog,
+      {
+        width: '380px',
+        disableClose: true,
+
+        data: {
+          title: 'Update profile?',
+          message:
+            'Do you want to save the changes made to your profile?',
+          confirmText: 'Update',
+          cancelText: 'Cancel',
+          icon: 'person'
+        }
+      }
+    );
+
+
+  dialogRef
+    .afterClosed()
+    .subscribe(
+      confirmed => {
+
+        if (!confirmed) {
+          return;
+        }
+
+        this.saveProfile();
+      }
+    );
+}
+private saveProfile(): void {
 
   const formValue =
     this.doctorForm.getRawValue() as {
@@ -167,54 +210,132 @@ export class EditDoctorProfile implements OnInit {
       availability: string[];
     };
 
+
   const cleanedSlots: string[] =
     formValue.availability
-      .map((slot: string) => slot.trim())
-      .filter((slot: string) => slot !== '');
+      .map(
+        (slot: string) =>
+          slot.trim()
+      )
+      .filter(
+        (slot: string) =>
+          slot !== ''
+      );
+
 
   const uniqueSlots: string[] = [
-    ...new Set<string>(cleanedSlots)
+    ...new Set<string>(
+      cleanedSlots
+    )
   ];
 
-  const updateData: Partial<Doctor> = {
-    name: formValue.name.trim(),
-    phone: formValue.phone.trim(),
-    specialization:
-      formValue.specialization.trim(),
-    availability: uniqueSlots
-  };
+
+  const updateData:
+    Partial<Doctor> = {
+
+      name:
+        formValue.name.trim(),
+
+      phone:
+        formValue.phone.trim(),
+
+      specialization:
+        formValue.specialization.trim(),
+
+      availability:
+        uniqueSlots
+    };
+
 
   this.isSaving = true;
 
+
   this.api
-    .updateDoctorProfile(updateData)
+    .updateDoctorProfile(
+      updateData
+    )
     .subscribe({
-      next: (updatedDoctor: Doctor) => {
+
+      next: (
+        updatedDoctor: Doctor
+      ) => {
+
         this.isSaving = false;
 
-        alert(
-          'Profile updated successfully'
-        );
+        this.cd.detectChanges();
 
-        this.router.navigate([
-          '/doctor-profile'
-        ]);
+
+        const successDialog =
+          this.dialog.open(
+            ConfirmDialog,
+            {
+              width: '380px',
+              disableClose: true,
+
+              data: {
+                title:
+                  'Profile Updated!',
+                message:
+                  'Your profile has been updated successfully.',
+                confirmText:
+                  'OK',
+                cancelText:
+                  'Close',
+                icon:
+                  'check_circle'
+              }
+            }
+          );
+
+
+        successDialog
+          .afterClosed()
+          .subscribe(() => {
+
+            this.router.navigate([
+              '/doctor-profile'
+            ]);
+
+          });
+
       },
 
+
       error: (error) => {
+
         console.error(
           'Profile update error:',
           error
         );
 
         this.isSaving = false;
+
         this.cd.detectChanges();
 
-        alert(
-          error.error?.message ||
-          'Update failed'
+
+        this.dialog.open(
+          ConfirmDialog,
+          {
+            width: '380px',
+
+            data: {
+              title:
+                'Update Failed',
+              message:
+                error.error?.message ||
+                'Unable to update your profile.',
+              confirmText:
+                'OK',
+              cancelText:
+                'Close',
+              icon:
+                'error_outline'
+            }
+          }
         );
+
       }
+
     });
 }
 

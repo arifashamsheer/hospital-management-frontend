@@ -4,6 +4,8 @@ import { Apiservice } from '../../services/apiservice';
 import { Router } from '@angular/router';
 import { PaymentService } from '../../services/payment';
 import { forkJoin } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialog } from '../confirm-dialog/confirm-dialog';
 
 @Component({
   selector: 'app-my-appointments',
@@ -33,6 +35,7 @@ export class MyAppointments implements OnInit{
 constructor(
 private apiService:Apiservice,
 private cd:ChangeDetectorRef,private router: Router, private paymentService: PaymentService,
+  private dialog: MatDialog
 ){}
 
 
@@ -112,55 +115,136 @@ loadAppointments(): void {
 
 
 cancelAppointment(
-    appointment: any
-  ): void {
-    if (
-      appointment.status === 'Cancelled' ||
-      appointment.status === 'Completed'
-    ) {
-      return;
-    }
+  appointment: any
+): void {
 
-    const confirmed = confirm(
-      'Are you sure you want to cancel this appointment?'
+  if (
+    appointment.status === 'Cancelled' ||
+    appointment.status === 'Completed'
+  ) {
+    return;
+  }
+
+
+  const dialogRef =
+    this.dialog.open(
+      ConfirmDialog,
+      {
+        width: '380px',
+        disableClose: true,
+
+        data: {
+          title: 'Cancel Appointment?',
+          message:
+            'Are you sure you want to cancel this appointment?',
+          confirmText: 'Cancel Appointment',
+          cancelText: 'Back',
+          icon: 'cancel'
+        }
+      }
     );
 
-    if (!confirmed) {
-      return;
-    }
 
-    this.cancellingId = appointment._id;
+  dialogRef
+    .afterClosed()
+    .subscribe(
+      confirmed => {
 
-    this.apiService
-      .cancelAppointment(appointment._id)
-      .subscribe({
-        next: () => {
-          appointment.status = 'Cancelled';
-          this.cancellingId = null;
-
-          this.cd.detectChanges();
-
-          alert(
-            'Appointment cancelled successfully'
-          );
-        },
-
-        error: (error) => {
-          console.error(
-            'Appointment cancellation error:',
-            error
-          );
-
-          this.cancellingId = null;
-          this.cd.detectChanges();
-
-          alert(
-            error.error?.message ||
-            'Unable to cancel appointment'
-          );
+        if (!confirmed) {
+          return;
         }
-      });
-  }
+
+        this.performCancellation(
+          appointment
+        );
+
+      }
+    );
+}
+
+private performCancellation(
+  appointment: any
+): void {
+
+  this.cancellingId =
+    appointment._id;
+
+
+  this.apiService
+    .cancelAppointment(
+      appointment._id
+    )
+    .subscribe({
+
+      next: () => {
+
+        appointment.status =
+          'Cancelled';
+
+        this.cancellingId =
+          null;
+
+        this.cd.detectChanges();
+
+
+        this.dialog.open(
+          ConfirmDialog,
+          {
+            width: '380px',
+            disableClose: true,
+
+            data: {
+              title:
+                'Appointment Cancelled',
+              message:
+                'Your appointment has been cancelled successfully.',
+              confirmText:
+                'OK',
+              icon:
+                'check_circle'
+            }
+          }
+        );
+
+      },
+
+
+      error: (error) => {
+
+        console.error(
+          'Appointment cancellation error:',
+          error
+        );
+
+        this.cancellingId =
+          null;
+
+        this.cd.detectChanges();
+
+
+        this.dialog.open(
+          ConfirmDialog,
+          {
+            width: '380px',
+
+            data: {
+              title:
+                'Cancellation Failed',
+              message:
+                error.error?.message ||
+                'Unable to cancel appointment.',
+              confirmText:
+                'OK',
+              icon:
+                'error_outline'
+            }
+          }
+        );
+
+      }
+
+    });
+}
 
   bookNewAppointment(): void {
     this.router.navigate([
