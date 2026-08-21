@@ -18,7 +18,8 @@ import { AppointmentRequest } from '../models/appointment-request';
 })
 export class Apiservice {
 
-baseUrl = 'http://localhost:3000/api';
+// baseUrl = 'http://localhost:3000/api';
+baseUrl = 'https://hospitalmng-backend.onrender.com/api'
 
 
 constructor(
